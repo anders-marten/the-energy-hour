@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="theme-color" content="#000000" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="The Energy Hour" />
@@ -43,14 +43,55 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      padding: 24px;
+      padding-bottom: 88px;
+      box-sizing: border-box;
+      background: #000000;
       font-family: sans-serif;
     }
-    h1 {
-      font-size: 3rem;
+    img {
+      max-width: min(90vw, 640px);
+      height: auto;
+      display: block;
+    }
+    .social-links {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      justify-content: center;
+    }
+    .social-links a {
+      height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+    .social-links img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
   </style>
 </head>
 <body>
-  <h1>The Energy Hour</h1>
+  <img src="/images/lovers-power-cover-red-heart.jpg" alt="Lovers power cover red heart" />
+  <nav class="social-links" aria-label="Artist social links">
+    <a href="https://open.spotify.com/artist/0QpQBk3Gu2aW99YiDHOBLe?si=dKN4cefASNOYD81G93tKgA" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
+      <img src="/images/spotify.png" alt="Spotify" />
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    </a>
+    <a href="https://www.facebook.com/theenergyhour" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+      <img src="/images/facebook.png" alt="Facebook" />
+    </a>
+    <a href="https://soundcloud.com/the_energy_hour" target="_blank" rel="noopener noreferrer" aria-label="SoundCloud">
+      <img src="/images/soundcloud-2.png" alt="SoundCloud" style="height: 140%;"/>
+    </a>
+  </nav>
 </body>
 </html>
