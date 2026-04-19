@@ -51,9 +51,26 @@
       background: #000000;
       font-family: sans-serif;
     }
-    img {
+    img,
+    .embed-container {
       max-width: min(90vw, 640px);
+      width: 100%;
+      display: block;
+      margin: 0 auto;
+    }
+    img {
       height: auto;
+    }
+    .embed-container {
+      aspect-ratio: 1 / 1;
+      position: relative;
+    }
+    .embed-container iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
       display: block;
     }
     .social-links {
@@ -61,12 +78,14 @@
       left: 50%;
       bottom: 24px;
       transform: translateX(-50%);
+      width: clamp(450px, 90vw, 600px);
       display: flex;
       gap: 18px;
       align-items: center;
       justify-content: center;
     }
     .social-links a {
+      min-width: 0;
       height: 50px;
       display: inline-flex;
       align-items: center;
@@ -82,7 +101,9 @@
   </style>
 </head>
 <body>
-  <img src="/images/lovers-power-cover-red-heart.jpg" alt="Lovers power cover red heart" />
+  <div class="embed-container">
+    <iframe scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2304212519&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
+  </div>
   <nav class="social-links" aria-label="Artist social links">
     <a href="https://open.spotify.com/artist/0QpQBk3Gu2aW99YiDHOBLe?si=dKN4cefASNOYD81G93tKgA" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
       <img src="/images/spotify.png" alt="Spotify" />
