@@ -241,7 +241,7 @@
     const previousButton = document.querySelector(".playlist-button.previous");
     const nextButton = document.querySelector(".playlist-button.next");
     const playButton = document.querySelector(".play-button");
-    const widget = SC.Widget(player);
+    let widget = SC.Widget(player);
     let playlist = fallbackPlaylist;
     let currentTrackIndex = 0;
     let isPlaying = false;
@@ -249,13 +249,12 @@
     let playHistory = [];
     let historyPosition = -1;
     let playedTrackIds = new Set();
-    let shouldPlayWhenReady = false;
 
-    function buildSoundCloudSrc(trackId) {
+    function buildSoundCloudSrc(trackId, autoPlay = false) {
       return "https://w.soundcloud.com/player/?" +
         `url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A${encodeURIComponent(trackId)}` +
         "&color=%23ff5500" +
-        "&auto_play=false" +
+        `&auto_play=${autoPlay ? "true" : "false"}` +
         "&hide_related=true" +
         "&show_comments=true" +
         "&show_user=true" +
@@ -264,12 +263,8 @@
         "&visual=true";
     }
 
-    function buildSoundCloudTrackUrl(trackId) {
-      return `https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A${encodeURIComponent(trackId)}`;
-    }
-
     function updatePlayButton() {
-      playButton.classList.toggle("is-hidden", isPlaying || shouldPlayWhenReady);
+      playButton.classList.toggle("is-hidden", isPlaying);
     }
 
     function markTrackAsPlayed(index) {
@@ -293,19 +288,12 @@
       currentTrackIndex = index;
       const track = playlist[currentTrackIndex];
       markTrackAsPlayed(currentTrackIndex);
-      shouldPlayWhenReady = shouldPlay;
 
-      widget.load(buildSoundCloudTrackUrl(track.id), {
-        auto_play: false,
-        color: "#ff5500",
-        hide_related: true,
-        show_comments: true,
-        show_user: true,
-        show_reposts: false,
-        show_teaser: false,
-        visual: true
-      });
+      player.src = buildSoundCloudSrc(track.id, shouldPlay);
+      widget = SC.Widget(player);
+      bindWidgetEvents();
       player.title = track.title ? `SoundCloud player: ${track.title}` : "SoundCloud player";
+      isPlaying = shouldPlay;
       updatePlayButton();
     }
 
@@ -396,41 +384,26 @@
         return;
       }
 
-      shouldPlayWhenReady = false;
       isPlaying = true;
       updatePlayButton();
       widget.play();
     });
 
-    widget.bind(SC.Widget.Events.READY, () => {
-      if (!shouldPlayWhenReady) {
-        return;
-      }
+    function bindWidgetEvents() {
+      widget.bind(SC.Widget.Events.PLAY, () => {
+        isPlaying = true;
+        updatePlayButton();
+      });
 
-      shouldPlayWhenReady = false;
-      isPlaying = true;
-      updatePlayButton();
-      widget.play();
-    });
+      widget.bind(SC.Widget.Events.PAUSE, () => {
+        isPlaying = false;
+        updatePlayButton();
+      });
 
-    widget.bind(SC.Widget.Events.PLAY, () => {
-      shouldPlayWhenReady = false;
-      isPlaying = true;
-      updatePlayButton();
-    });
-
-    widget.bind(SC.Widget.Events.PAUSE, () => {
-      if (shouldPlayWhenReady) {
-        return;
-      }
-
-      isPlaying = false;
-      updatePlayButton();
-    });
-
-    widget.bind(SC.Widget.Events.FINISH, () => {
-      showRandomNextTrack(true);
-    });
+      widget.bind(SC.Widget.Events.FINISH, () => {
+        showRandomNextTrack(true);
+      });
+    }
 
     loadPlaylist();
   </script>
