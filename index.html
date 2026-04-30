@@ -9,7 +9,8 @@
   <meta name="apple-mobile-web-app-title" content="The Energy Hour" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="description" content="The Energy Hour is an electronic music project from Stockholm blending rave roots, synth textures, funk, pop, and AI-assisted songwriting." />
-  <title>The Energy Hour | AI-assisted electronic music from Stockholm</title>
+  <title>The Energy Hour | Electronic music from Stockholm
+  </title>
   <link rel="canonical" href="https://the-energy-hour.com" />
 
   <meta property="og:title" content="The Energy Hour" />
@@ -293,6 +294,7 @@
     let historyPosition = -1;
     let playedTrackIds = new Set();
     let playerStateTimer = 0;
+    let isAdvancingAfterFinish = false;
 
     function buildSoundCloudSrc(trackId, autoPlay = false) {
       return "https://w.soundcloud.com/player/?" +
@@ -318,9 +320,38 @@
       });
     }
 
+    function checkTrackFinished() {
+      widget.getDuration((duration) => {
+        if (!duration || isAdvancingAfterFinish) {
+          return;
+        }
+
+        widget.getPosition((position) => {
+          const remainingTime = duration - position;
+          const isAtEnd = position > 0 && remainingTime <= 1000;
+
+          if (isAtEnd) {
+            handleTrackFinished();
+          }
+        });
+      });
+    }
+
     function startPlayerStatePolling() {
       window.clearInterval(playerStateTimer);
-      playerStateTimer = window.setInterval(syncPlayerState, 1000);
+      playerStateTimer = window.setInterval(() => {
+        syncPlayerState();
+        checkTrackFinished();
+      }, 1000);
+    }
+
+    function handleTrackFinished() {
+      if (isAdvancingAfterFinish) {
+        return;
+      }
+
+      isAdvancingAfterFinish = true;
+      showRandomNextTrack(true);
     }
 
     function markTrackAsPlayed(index) {
@@ -344,6 +375,7 @@
       currentTrackIndex = index;
       const track = playlist[currentTrackIndex];
       markTrackAsPlayed(currentTrackIndex);
+      isAdvancingAfterFinish = false;
 
       player.src = buildSoundCloudSrc(track.id, shouldPlay);
       widget = SC.Widget(player);
@@ -462,7 +494,7 @@
       });
 
       widget.bind(SC.Widget.Events.FINISH, () => {
-        showRandomNextTrack(true);
+        handleTrackFinished();
       });
     }
 
