@@ -249,6 +249,7 @@
     let playHistory = [];
     let historyPosition = -1;
     let playedTrackIds = new Set();
+    let playerStateTimer = 0;
 
     function buildSoundCloudSrc(trackId, autoPlay = false) {
       return "https://w.soundcloud.com/player/?" +
@@ -265,6 +266,18 @@
 
     function updatePlayButton() {
       playButton.classList.toggle("is-hidden", isPlaying);
+    }
+
+    function syncPlayerState() {
+      widget.isPaused((paused) => {
+        isPlaying = !paused;
+        updatePlayButton();
+      });
+    }
+
+    function startPlayerStatePolling() {
+      window.clearInterval(playerStateTimer);
+      playerStateTimer = window.setInterval(syncPlayerState, 1000);
     }
 
     function markTrackAsPlayed(index) {
@@ -292,6 +305,7 @@
       player.src = buildSoundCloudSrc(track.id, shouldPlay);
       widget = SC.Widget(player);
       bindWidgetEvents();
+      startPlayerStatePolling();
       player.title = track.title ? `SoundCloud player: ${track.title}` : "SoundCloud player";
       isPlaying = shouldPlay;
       updatePlayButton();
@@ -390,14 +404,18 @@
     });
 
     function bindWidgetEvents() {
+      widget.bind(SC.Widget.Events.READY, () => {
+        syncPlayerState();
+        startPlayerStatePolling();
+      });
+
       widget.bind(SC.Widget.Events.PLAY, () => {
         isPlaying = true;
         updatePlayButton();
       });
 
       widget.bind(SC.Widget.Events.PAUSE, () => {
-        isPlaying = false;
-        updatePlayButton();
+        syncPlayerState();
       });
 
       widget.bind(SC.Widget.Events.FINISH, () => {
