@@ -8,19 +8,19 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="The Energy Hour" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="description" content="Raised by the classics. Forged by rave. Evolving with AI." />
-  <title>The Energy Hour</title>
+  <meta name="description" content="The Energy Hour is an electronic music project from Stockholm blending rave roots, synth textures, funk, pop, and AI-assisted songwriting." />
+  <title>The Energy Hour | AI-assisted electronic music from Stockholm</title>
   <link rel="canonical" href="https://the-energy-hour.com" />
 
   <meta property="og:title" content="The Energy Hour" />
-  <meta property="og:description" content="Raised by the classics. Forged by rave. Evolving with AI." />
+  <meta property="og:description" content="Electronic music from Stockholm blending rave roots, synth textures, funk, pop, and AI-assisted songwriting." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://the-energy-hour.com" />
   <meta property="og:image" content="https://the-energy-hour.com/images/og-image-2.jpg" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The Energy Hour" />
-  <meta name="twitter:description" content="Raised by the classics. Forged by rave. Evolving with AI." />
+  <meta name="twitter:description" content="Electronic music from Stockholm blending rave roots, synth textures, funk, pop, and AI-assisted songwriting." />
   <meta name="twitter:image" content="https://the-energy-hour.com/images/og-image-2.jpg" />
   <link rel="icon" href="/images/favicon.ico" sizes="any" />
   <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png" />
@@ -32,10 +32,25 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Music Label",
+      "@type": "MusicGroup",
       "name": "The Energy Hour",
       "url": "https://the-energy-hour.com",
-      "description": "Raised by the classics. Forged by rave. Evolving with AI."
+      "description": "Electronic music from Stockholm blending rave roots, synth textures, funk, pop, and AI-assisted songwriting.",
+      "genre": [
+        "Electronic",
+        "Synth",
+        "Funk",
+        "Pop",
+        "Rave"
+      ],
+      "foundingLocation": {
+        "@type": "Place",
+        "name": "Stockholm, Sweden"
+      },
+      "sameAs": [
+        "https://soundcloud.com/the_energy_hour",
+        "https://open.spotify.com/artist/0QpQBk3Gu2aW99YiDHOBLe"
+      ]
     }
   </script>
   <style>
@@ -46,10 +61,15 @@
       align-items: center;
       min-height: 100vh;
       padding: 24px;
-      padding-bottom: 88px;
+      padding-bottom: 104px;
       box-sizing: border-box;
       background: #000000;
       font-family: sans-serif;
+    }
+    main {
+      width: min(90vw, 640px);
+      display: grid;
+      gap: 18px;
     }
     img,
     .embed-container {
@@ -157,6 +177,23 @@
       opacity: 0;
       pointer-events: none;
     }
+    .artist-intro {
+      color: #ffffff;
+      text-align: center;
+    }
+    .artist-intro h1 {
+      margin: 0;
+      font-size: clamp(1.25rem, 4vw, 1.75rem);
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+    .artist-intro p {
+      margin: 8px auto 0;
+      max-width: 58ch;
+      color: rgb(255 255 255 / 72%);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
     .social-links {
       position: fixed;
       left: 50%;
@@ -207,18 +244,24 @@
   </style>
 </head>
 <body>
-  <div class="embed-container">
-    <iframe id="soundcloud-player" title="SoundCloud player" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2304212519&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
-    <button class="playlist-button previous" type="button" aria-label="Previous track">
-      <img src="/images/arrow_back.svg" alt="" aria-hidden="true" />
-    </button>
-    <button class="playlist-button next" type="button" aria-label="Next track">
-      <img src="/images/arrow_forward.svg" alt="" aria-hidden="true" />
-    </button>
-    <button class="play-button" type="button" aria-label="Play track">
-      <img src="/images/play_arrow.svg" alt="" aria-hidden="true" />
-    </button>
-  </div>
+  <main>
+    <div class="embed-container">
+      <iframe id="soundcloud-player" title="SoundCloud player" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2304212519&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
+      <button class="playlist-button previous" type="button" aria-label="Previous track">
+        <img src="/images/arrow_back.svg" alt="" aria-hidden="true" />
+      </button>
+      <button class="playlist-button next" type="button" aria-label="Next track">
+        <img src="/images/arrow_forward.svg" alt="" aria-hidden="true" />
+      </button>
+      <button class="play-button" type="button" aria-label="Play track">
+        <img src="/images/play_arrow.svg" alt="" aria-hidden="true" />
+      </button>
+    </div>
+    <section class="artist-intro" aria-labelledby="artist-title">
+      <h1 id="artist-title">The Energy Hour</h1>
+      <p>Electronic music from Stockholm, blending rave roots, synth textures, funk, pop, and AI-assisted songwriting.</p>
+    </section>
+  </main>
   <nav class="social-links" aria-label="Artist social links">
     <a href="https://open.spotify.com/artist/0QpQBk3Gu2aW99YiDHOBLe?si=dKN4cefASNOYD81G93tKgA" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
       <img src="/images/spotify.png" alt="Spotify" />
