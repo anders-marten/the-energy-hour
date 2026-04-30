@@ -120,6 +120,15 @@
       outline: 2px solid #ffffff;
       outline-offset: 3px;
     }
+    .playlist-button:disabled {
+      cursor: default;
+      opacity: 0.34;
+      transform: translateY(-50%);
+    }
+    .playlist-button:disabled:hover {
+      background: rgb(0 0 0 / 44%);
+      transform: translateY(-50%);
+    }
     .playlist-button img {
       width: 40px;
       height: 40px;
@@ -287,12 +296,10 @@
     const playButton = document.querySelector(".play-button");
     let widget = SC.Widget(player);
     let playlist = fallbackPlaylist;
+    let shuffledPlaylist = [];
     let currentTrackIndex = 0;
     let isPlaying = false;
     let playlistComplete = false;
-    let playHistory = [];
-    let historyPosition = -1;
-    let playedTrackIds = new Set();
     let playerStateTimer = 0;
     let isAdvancingAfterFinish = false;
 
@@ -313,10 +320,16 @@
       playButton.classList.toggle("is-hidden", isPlaying);
     }
 
+    function updatePlaylistButtons() {
+      previousButton.disabled = currentTrackIndex <= 0;
+      nextButton.disabled = currentTrackIndex >= shuffledPlaylist.length - 1;
+    }
+
     function syncPlayerState() {
       widget.isPaused((paused) => {
         isPlaying = !paused;
         updatePlayButton();
+        updatePlaylistButtons();
       });
     }
 
@@ -351,30 +364,30 @@
       }
 
       isAdvancingAfterFinish = true;
-      showRandomNextTrack(true);
+      showForwardTrack(true);
     }
 
-    function markTrackAsPlayed(index) {
-      playedTrackIds.add(playlist[index].id);
-    }
+    function shuffleTracks(tracks) {
+      const shuffledTracks = [...tracks];
 
-    function getRandomUnplayedTrackIndex() {
-      const unplayedIndexes = playlist
-        .map((track, index) => ({ track, index }))
-        .filter(({ track }) => !playedTrackIds.has(track.id))
-        .map(({ index }) => index);
+      for (let index = shuffledTracks.length - 1; index > 0; index -= 1) {
+        const randomIndex = Math.floor(Math.random() * (index + 1));
+        const currentTrack = shuffledTracks[index];
 
-      if (!unplayedIndexes.length) {
-        return -1;
+        shuffledTracks[index] = shuffledTracks[randomIndex];
+        shuffledTracks[randomIndex] = currentTrack;
       }
 
-      return unplayedIndexes[Math.floor(Math.random() * unplayedIndexes.length)];
+      return shuffledTracks;
     }
 
     function showTrack(index, shouldPlay = false) {
+      if (!shuffledPlaylist.length) {
+        return;
+      }
+
       currentTrackIndex = index;
-      const track = playlist[currentTrackIndex];
-      markTrackAsPlayed(currentTrackIndex);
+      const track = shuffledPlaylist[currentTrackIndex];
       isAdvancingAfterFinish = false;
 
       player.src = buildSoundCloudSrc(track.id, shouldPlay);
@@ -384,50 +397,33 @@
       player.title = track.title ? `SoundCloud player: ${track.title}` : "SoundCloud player";
       isPlaying = shouldPlay;
       updatePlayButton();
+      updatePlaylistButtons();
     }
 
     function showInitialTrack() {
-      const initialIndex = getRandomUnplayedTrackIndex();
-      const index = initialIndex === -1 ? 0 : initialIndex;
-
-      playHistory = [index];
-      historyPosition = 0;
-      showTrack(index, false);
-    }
-
-    function showRandomNextTrack(shouldPlay = isPlaying) {
-      const nextIndex = getRandomUnplayedTrackIndex();
-
-      if (nextIndex === -1) {
-        isPlaying = false;
-        playlistComplete = true;
-        updatePlayButton();
-        return;
-      }
-
-      playHistory = playHistory.slice(0, historyPosition + 1);
-      playHistory.push(nextIndex);
-      historyPosition = playHistory.length - 1;
-      showTrack(nextIndex, shouldPlay);
+      shuffledPlaylist = shuffleTracks(playlist);
+      currentTrackIndex = 0;
+      showTrack(currentTrackIndex, false);
     }
 
     function showPreviousTrack(shouldPlay = isPlaying) {
-      if (historyPosition <= 0) {
+      if (currentTrackIndex <= 0) {
         return;
       }
 
-      historyPosition -= 1;
-      showTrack(playHistory[historyPosition], shouldPlay);
+      showTrack(currentTrackIndex - 1, shouldPlay);
     }
 
     function showForwardTrack(shouldPlay = isPlaying) {
-      if (historyPosition < playHistory.length - 1) {
-        historyPosition += 1;
-        showTrack(playHistory[historyPosition], shouldPlay);
+      if (currentTrackIndex >= shuffledPlaylist.length - 1) {
+        isPlaying = false;
+        playlistComplete = true;
+        updatePlayButton();
+        updatePlaylistButtons();
         return;
       }
 
-      showRandomNextTrack(shouldPlay);
+      showTrack(currentTrackIndex + 1, shouldPlay);
     }
 
     function normalizePlaylist(items) {
