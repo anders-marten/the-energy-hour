@@ -73,6 +73,90 @@
       border: 0;
       display: block;
     }
+    .playlist-button {
+      position: absolute;
+      top: 50%;
+      z-index: 2;
+      width: 56px;
+      height: 56px;
+      padding: 8px;
+      border: 0;
+      border-radius: 50%;
+      background: rgb(0 0 0 / 44%);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateY(-50%);
+      transition: background 160ms ease, transform 160ms ease;
+    }
+    .playlist-button:hover,
+    .playlist-button:focus-visible {
+      background: rgb(0 0 0 / 68%);
+      transform: translateY(-50%) scale(1.04);
+    }
+    .playlist-button:focus-visible {
+      outline: 2px solid #ffffff;
+      outline-offset: 3px;
+    }
+    .playlist-button img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      pointer-events: none;
+      display: block;
+      margin: 0;
+    }
+    .playlist-button.previous {
+      left: 16px;
+    }
+    .playlist-button.previous img {
+      transform: translateX(8px);
+    }
+    .playlist-button.next {
+      right: 16px;
+    }
+    .playlist-button.next img {
+      transform: translateX(4px);
+    }
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 3;
+      width: 92px;
+      height: 92px;
+      padding: 18px;
+      border: 0;
+      border-radius: 50%;
+      background: rgb(0 0 0 / 58%);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transform: translate(-50%, -50%);
+      transition: background 160ms ease, transform 160ms ease, opacity 160ms ease;
+    }
+    .play-button:hover,
+    .play-button:focus-visible {
+      background: rgb(0 0 0 / 76%);
+      transform: translate(-50%, -50%) scale(1.04);
+    }
+    .play-button:focus-visible {
+      outline: 2px solid #ffffff;
+      outline-offset: 4px;
+    }
+    .play-button img {
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+      pointer-events: none;
+      transform: translateX(4px);
+    }
+    .play-button.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
     .social-links {
       position: fixed;
       left: 50%;
@@ -98,11 +182,42 @@
       object-fit: contain;
       display: block;
     }
+    @media (max-width: 520px) {
+      .playlist-button {
+        width: 48px;
+        height: 48px;
+        padding: 6px;
+      }
+      .playlist-button.previous {
+        left: 10px;
+      }
+      .playlist-button.next {
+        right: 10px;
+      }
+      .play-button {
+        width: 78px;
+        height: 78px;
+        padding: 14px;
+      }
+      .play-button img {
+        width: 50px;
+        height: 50px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="embed-container">
-    <iframe scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2304212519&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
+    <iframe id="soundcloud-player" title="SoundCloud player" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2304212519&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
+    <button class="playlist-button previous" type="button" aria-label="Previous track">
+      <img src="/images/arrow_back.svg" alt="" aria-hidden="true" />
+    </button>
+    <button class="playlist-button next" type="button" aria-label="Next track">
+      <img src="/images/arrow_forward.svg" alt="" aria-hidden="true" />
+    </button>
+    <button class="play-button" type="button" aria-label="Play track">
+      <img src="/images/play_arrow.svg" alt="" aria-hidden="true" />
+    </button>
   </div>
   <nav class="social-links" aria-label="Artist social links">
     <a href="https://open.spotify.com/artist/0QpQBk3Gu2aW99YiDHOBLe?si=dKN4cefASNOYD81G93tKgA" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
@@ -116,5 +231,188 @@
       <img src="/images/ungap-icon-logo.png" alt="ungap" style="height: 140%;"/>
     </a>
   </nav>
+  <script src="https://w.soundcloud.com/player/api.js"></script>
+  <script>
+    const fallbackPlaylist = [
+      { title: "Track 1", id: "2304212519" }
+    ];
+
+    const player = document.querySelector("#soundcloud-player");
+    const previousButton = document.querySelector(".playlist-button.previous");
+    const nextButton = document.querySelector(".playlist-button.next");
+    const playButton = document.querySelector(".play-button");
+    const widget = SC.Widget(player);
+    let playlist = fallbackPlaylist;
+    let currentTrackIndex = 0;
+    let isPlaying = false;
+    let playlistComplete = false;
+    let playHistory = [];
+    let historyPosition = -1;
+    let playedTrackIds = new Set();
+
+    function buildSoundCloudSrc(trackId) {
+      return "https://w.soundcloud.com/player/?" +
+        `url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A${encodeURIComponent(trackId)}` +
+        "&color=%23ff5500" +
+        "&auto_play=false" +
+        "&hide_related=true" +
+        "&show_comments=true" +
+        "&show_user=true" +
+        "&show_reposts=false" +
+        "&show_teaser=false" +
+        "&visual=true";
+    }
+
+    function buildSoundCloudTrackUrl(trackId) {
+      return `https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A${encodeURIComponent(trackId)}`;
+    }
+
+    function updatePlayButton() {
+      playButton.classList.toggle("is-hidden", isPlaying);
+    }
+
+    function markTrackAsPlayed(index) {
+      playedTrackIds.add(playlist[index].id);
+    }
+
+    function getRandomUnplayedTrackIndex() {
+      const unplayedIndexes = playlist
+        .map((track, index) => ({ track, index }))
+        .filter(({ track }) => !playedTrackIds.has(track.id))
+        .map(({ index }) => index);
+
+      if (!unplayedIndexes.length) {
+        return -1;
+      }
+
+      return unplayedIndexes[Math.floor(Math.random() * unplayedIndexes.length)];
+    }
+
+    function showTrack(index, shouldPlay = false) {
+      currentTrackIndex = index;
+      const track = playlist[currentTrackIndex];
+      markTrackAsPlayed(currentTrackIndex);
+
+      widget.load(buildSoundCloudTrackUrl(track.id), {
+        auto_play: shouldPlay,
+        color: "#ff5500",
+        hide_related: true,
+        show_comments: true,
+        show_user: true,
+        show_reposts: false,
+        show_teaser: false,
+        visual: true
+      });
+      player.title = track.title ? `SoundCloud player: ${track.title}` : "SoundCloud player";
+    }
+
+    function showInitialTrack() {
+      const initialIndex = getRandomUnplayedTrackIndex();
+      const index = initialIndex === -1 ? 0 : initialIndex;
+
+      playHistory = [index];
+      historyPosition = 0;
+      showTrack(index, false);
+    }
+
+    function showRandomNextTrack(shouldPlay = isPlaying) {
+      const nextIndex = getRandomUnplayedTrackIndex();
+
+      if (nextIndex === -1) {
+        isPlaying = false;
+        playlistComplete = true;
+        updatePlayButton();
+        return;
+      }
+
+      playHistory = playHistory.slice(0, historyPosition + 1);
+      playHistory.push(nextIndex);
+      historyPosition = playHistory.length - 1;
+      showTrack(nextIndex, shouldPlay);
+    }
+
+    function showPreviousTrack(shouldPlay = isPlaying) {
+      if (historyPosition <= 0) {
+        return;
+      }
+
+      historyPosition -= 1;
+      showTrack(playHistory[historyPosition], shouldPlay);
+    }
+
+    function showForwardTrack(shouldPlay = isPlaying) {
+      if (historyPosition < playHistory.length - 1) {
+        historyPosition += 1;
+        showTrack(playHistory[historyPosition], shouldPlay);
+        return;
+      }
+
+      showRandomNextTrack(shouldPlay);
+    }
+
+    function normalizePlaylist(items) {
+      if (!Array.isArray(items)) {
+        return [];
+      }
+
+      return items
+        .map((item) => ({
+          title: typeof item.title === "string" ? item.title : "",
+          id: String(item.id || "").trim()
+        }))
+        .filter((item) => item.id);
+    }
+
+    async function loadPlaylist() {
+      try {
+        const response = await fetch("/playlist.json", { cache: "no-cache" });
+
+        if (!response.ok) {
+          throw new Error(`Playlist request failed with ${response.status}`);
+        }
+
+        const loadedPlaylist = normalizePlaylist(await response.json());
+        playlist = loadedPlaylist.length ? loadedPlaylist : fallbackPlaylist;
+      } catch (error) {
+        console.warn("Using fallback playlist.", error);
+      }
+
+      showInitialTrack();
+    }
+
+    previousButton.addEventListener("click", () => {
+      showPreviousTrack(isPlaying);
+    });
+
+    nextButton.addEventListener("click", () => {
+      showForwardTrack(isPlaying);
+    });
+
+    playButton.addEventListener("click", () => {
+      if (playlistComplete) {
+        return;
+      }
+
+      isPlaying = true;
+      updatePlayButton();
+      widget.play();
+    });
+
+    widget.bind(SC.Widget.Events.PLAY, () => {
+      isPlaying = true;
+      updatePlayButton();
+    });
+
+    widget.bind(SC.Widget.Events.PAUSE, () => {
+      isPlaying = false;
+      updatePlayButton();
+    });
+
+    widget.bind(SC.Widget.Events.FINISH, () => {
+      showRandomNextTrack(true);
+    });
+
+    loadPlaylist();
+  </script>
 </body>
 </html>
