@@ -225,7 +225,7 @@
       <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
     </a>
     <a href="https://soundcloud.com/the_energy_hour" target="_blank" rel="noopener noreferrer" aria-label="SoundCloud">
-      <img src="/images/soundcloud-2.png" alt="SoundCloud" style="height: 140%;"/>
+      <img src="/images/soundcloud-2.png" alt="SoundCloud" style="height: 200%;"/>
     </a>
     <a href="https://ungap.com/" target="_blank" rel="noopener noreferrer" aria-label="Ungap">
       <img src="/images/ungap-icon-logo.png" alt="ungap" style="height: 140%;"/>
@@ -249,6 +249,7 @@
     let playHistory = [];
     let historyPosition = -1;
     let playedTrackIds = new Set();
+    let shouldPlayWhenReady = false;
 
     function buildSoundCloudSrc(trackId) {
       return "https://w.soundcloud.com/player/?" +
@@ -268,7 +269,7 @@
     }
 
     function updatePlayButton() {
-      playButton.classList.toggle("is-hidden", isPlaying);
+      playButton.classList.toggle("is-hidden", isPlaying || shouldPlayWhenReady);
     }
 
     function markTrackAsPlayed(index) {
@@ -292,9 +293,10 @@
       currentTrackIndex = index;
       const track = playlist[currentTrackIndex];
       markTrackAsPlayed(currentTrackIndex);
+      shouldPlayWhenReady = shouldPlay;
 
       widget.load(buildSoundCloudTrackUrl(track.id), {
-        auto_play: shouldPlay,
+        auto_play: false,
         color: "#ff5500",
         hide_related: true,
         show_comments: true,
@@ -304,6 +306,7 @@
         visual: true
       });
       player.title = track.title ? `SoundCloud player: ${track.title}` : "SoundCloud player";
+      updatePlayButton();
     }
 
     function showInitialTrack() {
@@ -393,17 +396,34 @@
         return;
       }
 
+      shouldPlayWhenReady = false;
+      isPlaying = true;
+      updatePlayButton();
+      widget.play();
+    });
+
+    widget.bind(SC.Widget.Events.READY, () => {
+      if (!shouldPlayWhenReady) {
+        return;
+      }
+
+      shouldPlayWhenReady = false;
       isPlaying = true;
       updatePlayButton();
       widget.play();
     });
 
     widget.bind(SC.Widget.Events.PLAY, () => {
+      shouldPlayWhenReady = false;
       isPlaying = true;
       updatePlayButton();
     });
 
     widget.bind(SC.Widget.Events.PAUSE, () => {
+      if (shouldPlayWhenReady) {
+        return;
+      }
+
       isPlaying = false;
       updatePlayButton();
     });
