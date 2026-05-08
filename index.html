@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,20 +9,23 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Welcome to - The Energy Hour" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="description" content="The Energy Hour is an electronic music project from Stockholm blending rave roots, synth textures, funk, pop, and AI-assisted songwriting." />
+  <meta name="description"
+    content="The Energy Hour is an electronic music project from Stockholm blending rave roots, synth textures, funk, pop, and AI-assisted songwriting." />
   <title>Welcome to - The Energy Hour
   </title>
   <link rel="canonical" href="https://the-energy-hour.com" />
 
   <meta property="og:title" content="Welcome to - The Energy Hour" />
-  <meta property="og:description" content="The Energy Hour is an electronic music project from Stockholm blending rave roots, synth textures, funk, pop, and AI-assisted songwriting." />
+  <meta property="og:description"
+    content="The Energy Hour is an electronic music project from Stockholm blending rave roots, synth textures, funk, pop, and AI-assisted songwriting." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://the-energy-hour.com" />
   <meta property="og:image" content="https://the-energy-hour.com/images/og-image-2.jpg" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Welcome to - The Energy Hour" />
-  <meta name="twitter:description" content="The Energy Hour is an electronic music project from Stockholm blending rave roots, synth textures, funk, pop, and AI-assisted songwriting." />
+  <meta name="twitter:description"
+    content="The Energy Hour is an electronic music project from Stockholm blending rave roots, synth textures, funk, pop, and AI-assisted songwriting." />
   <meta name="twitter:image" content="https://the-energy-hour.com/images/og-image-2.jpg" />
   <link rel="icon" href="/images/favicon.ico" sizes="any" />
   <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png" />
@@ -67,11 +71,13 @@
       background: #000000;
       font-family: sans-serif;
     }
+
     main {
       width: min(90vw, 640px);
       display: grid;
       gap: 18px;
     }
+
     img,
     .embed-container {
       max-width: min(90vw, 640px);
@@ -79,13 +85,16 @@
       display: block;
       margin: 0 auto;
     }
+
     img {
       height: auto;
     }
+
     .embed-container {
       aspect-ratio: 1 / 1;
       position: relative;
     }
+
     .embed-container iframe {
       position: absolute;
       inset: 0;
@@ -94,6 +103,7 @@
       border: 0;
       display: block;
     }
+
     .playlist-button {
       position: absolute;
       top: 50%;
@@ -111,24 +121,29 @@
       transform: translateY(-50%);
       transition: background 160ms ease, transform 160ms ease;
     }
+
     .playlist-button:hover,
     .playlist-button:focus-visible {
       background: rgb(0 0 0 / 68%);
       transform: translateY(-50%) scale(1.04);
     }
+
     .playlist-button:focus-visible {
       outline: 2px solid #ffffff;
       outline-offset: 3px;
     }
+
     .playlist-button:disabled {
       cursor: default;
       opacity: 0.34;
       transform: translateY(-50%);
     }
+
     .playlist-button:disabled:hover {
       background: rgb(0 0 0 / 44%);
       transform: translateY(-50%);
     }
+
     .playlist-button img {
       width: 40px;
       height: 40px;
@@ -137,18 +152,23 @@
       display: block;
       margin: 0;
     }
+
     .playlist-button.previous {
       left: 16px;
     }
+
     .playlist-button.previous img {
       transform: translateX(8px);
     }
+
     .playlist-button.next {
       right: 16px;
     }
+
     .playlist-button.next img {
       transform: translateX(4px);
     }
+
     .play-button {
       position: absolute;
       top: 50%;
@@ -167,15 +187,18 @@
       transform: translate(-50%, -50%);
       transition: background 160ms ease, transform 160ms ease, opacity 160ms ease;
     }
+
     .play-button:hover,
     .play-button:focus-visible {
       background: rgb(0 0 0 / 76%);
       transform: translate(-50%, -50%) scale(1.04);
     }
+
     .play-button:focus-visible {
       outline: 2px solid #ffffff;
       outline-offset: 4px;
     }
+
     .play-button img {
       width: 56px;
       height: 56px;
@@ -183,20 +206,24 @@
       pointer-events: none;
       transform: translateX(4px);
     }
+
     .play-button.is-hidden {
       opacity: 0;
       pointer-events: none;
     }
+
     .artist-intro {
       color: #ffffff;
       text-align: center;
     }
+
     .artist-intro h1 {
       margin: 0;
       font-size: clamp(1.25rem, 4vw, 1.75rem);
       font-weight: 700;
       letter-spacing: 0;
     }
+
     .artist-intro p {
       margin: 8px auto 0;
       max-width: 58ch;
@@ -204,6 +231,7 @@
       font-size: 0.95rem;
       line-height: 1.5;
     }
+
     .social-links {
       position: fixed;
       left: 50%;
@@ -215,6 +243,7 @@
       align-items: center;
       justify-content: center;
     }
+
     .social-links a {
       min-width: 0;
       height: 50px;
@@ -223,29 +252,35 @@
       justify-content: center;
       text-decoration: none;
     }
+
     .social-links img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       display: block;
     }
+
     @media (max-width: 520px) {
       .playlist-button {
         width: 48px;
         height: 48px;
         padding: 6px;
       }
+
       .playlist-button.previous {
         left: 10px;
       }
+
       .playlist-button.next {
         right: 10px;
       }
+
       .play-button {
         width: 78px;
         height: 78px;
         padding: 14px;
       }
+
       .play-button img {
         width: 50px;
         height: 50px;
@@ -253,10 +288,12 @@
     }
   </style>
 </head>
+
 <body>
   <main>
     <div class="embed-container">
-      <iframe id="soundcloud-player" title="SoundCloud player" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2304212519&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
+      <iframe id="soundcloud-player" title="SoundCloud player" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2304212519&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
       <button class="playlist-button previous" type="button" aria-label="Previous track">
         <img src="/images/arrow_back.svg" alt="" aria-hidden="true" />
       </button>
@@ -269,21 +306,22 @@
     </div>
     <section class="artist-intro" aria-labelledby="artist-title">
       <h1 id="artist-title">The Energy Hour</h1>
-      <p>Music with themes ranging from outer space to my heart.<br>
-From the nineties until now, I’ve been making electronic music, blending rave roots, synth textures, funk, pop, and AI-assisted arrangements.
-</p>
+      <p>From outer space to my heart 🧡<br>
+        Music shaped by 90s rave culture, synths, funk, pop, and my curiosity about AI
+      </p>
     </section>
   </main>
   <nav class="social-links" aria-label="Artist social links">
-    <a href="https://open.spotify.com/artist/0QpQBk3Gu2aW99YiDHOBLe?si=dKN4cefASNOYD81G93tKgA" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
+    <a href="https://open.spotify.com/artist/0QpQBk3Gu2aW99YiDHOBLe?si=dKN4cefASNOYD81G93tKgA" target="_blank"
+      rel="noopener noreferrer" aria-label="Spotify">
       <img src="/images/spotify.png" alt="Spotify" />
       <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
     </a>
     <a href="https://soundcloud.com/the_energy_hour" target="_blank" rel="noopener noreferrer" aria-label="SoundCloud">
-      <img src="/images/soundcloud-2.png" alt="SoundCloud" style="height: 200%;"/>
+      <img src="/images/soundcloud-2.png" alt="SoundCloud" style="height: 200%;" />
     </a>
     <a href="https://ungap.com/" target="_blank" rel="noopener noreferrer" aria-label="Ungap">
-      <img src="/images/ungap-icon-logo.png" alt="ungap" style="height: 140%;"/>
+      <img src="/images/ungap-icon-logo.png" alt="ungap" style="height: 140%;" />
     </a>
   </nav>
   <script src="https://w.soundcloud.com/player/api.js"></script>
@@ -499,4 +537,5 @@ From the nineties until now, I’ve been making electronic music, blending rave 
     loadPlaylist();
   </script>
 </body>
+
 </html>
