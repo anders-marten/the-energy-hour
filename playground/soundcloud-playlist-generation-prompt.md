@@ -19,8 +19,7 @@ Include every public track that belongs to the SoundCloud profile user `The Ener
 
 Use the numeric SoundCloud track id, because the site builds embeds with:
 
-https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A{TRACK_ID}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=false&visual=true
+https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{TRACK_ID}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=false&visual=true
 
 Do not include playlist ids, user ids, reposts, likes, or external tracks from other profiles. Output only valid formatted JSON.
 ```
-

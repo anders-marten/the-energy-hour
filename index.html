@@ -293,7 +293,8 @@
   <main>
     <div class="embed-container">
       <iframe id="soundcloud-player" title="SoundCloud player" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2304212519&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
+        sandbox="allow-scripts allow-same-origin allow-popups"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2304212519&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
       <button class="playlist-button previous" type="button" aria-label="Previous track">
         <img src="/images/arrow_back.svg" alt="" aria-hidden="true" />
       </button>
@@ -342,12 +343,13 @@
     let playlistComplete = false;
     let playerStateTimer = 0;
     let isAdvancingAfterFinish = false;
+    let shouldPlayWhenReady = false;
 
-    function buildSoundCloudSrc(trackId, autoPlay = false) {
+    function buildSoundCloudSrc(trackId) {
       return "https://w.soundcloud.com/player/?" +
-        `url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A${encodeURIComponent(trackId)}` +
+        `url=https%3A//api.soundcloud.com/tracks/${encodeURIComponent(trackId)}` +
         "&color=%23ff5500" +
-        `&auto_play=${autoPlay ? "true" : "false"}` +
+        "&auto_play=false" +
         "&hide_related=true" +
         "&show_comments=true" +
         "&show_user=true" +
@@ -429,8 +431,9 @@
       currentTrackIndex = index;
       const track = shuffledPlaylist[currentTrackIndex];
       isAdvancingAfterFinish = false;
+      shouldPlayWhenReady = shouldPlay;
 
-      player.src = buildSoundCloudSrc(track.id, shouldPlay);
+      player.src = buildSoundCloudSrc(track.id);
       widget = SC.Widget(player);
       bindWidgetEvents();
       startPlayerStatePolling();
@@ -516,6 +519,11 @@
 
     function bindWidgetEvents() {
       widget.bind(SC.Widget.Events.READY, () => {
+        if (shouldPlayWhenReady) {
+          shouldPlayWhenReady = false;
+          widget.play();
+        }
+
         syncPlayerState();
         startPlayerStatePolling();
       });
