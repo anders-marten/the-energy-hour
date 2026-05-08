@@ -345,11 +345,20 @@
     let isAdvancingAfterFinish = false;
     let shouldPlayWhenReady = false;
 
-    function buildSoundCloudSrc(trackId) {
+    function isAppleMobileSafari() {
+      const userAgent = window.navigator.userAgent;
+      const isIOS = /iP(ad|hone|od)/.test(userAgent) ||
+        (window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
+      const isSafari = /Safari/.test(userAgent) && !/CriOS|FxiOS|EdgiOS/.test(userAgent);
+
+      return isIOS && isSafari;
+    }
+
+    function buildSoundCloudSrc(trackId, autoPlay = false) {
       return "https://w.soundcloud.com/player/?" +
         `url=https%3A//api.soundcloud.com/tracks/${encodeURIComponent(trackId)}` +
         "&color=%23ff5500" +
-        "&auto_play=false" +
+        `&auto_play=${autoPlay ? "true" : "false"}` +
         "&hide_related=true" +
         "&show_comments=true" +
         "&show_user=true" +
@@ -431,9 +440,10 @@
       currentTrackIndex = index;
       const track = shuffledPlaylist[currentTrackIndex];
       isAdvancingAfterFinish = false;
-      shouldPlayWhenReady = shouldPlay;
+      const shouldUseEmbedAutoplay = shouldPlay && !isAppleMobileSafari();
+      shouldPlayWhenReady = shouldPlay && !shouldUseEmbedAutoplay;
 
-      player.src = buildSoundCloudSrc(track.id);
+      player.src = buildSoundCloudSrc(track.id, shouldUseEmbedAutoplay);
       widget = SC.Widget(player);
       bindWidgetEvents();
       startPlayerStatePolling();
