@@ -1,0 +1,239 @@
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 24px;
+  padding-bottom: 104px;
+  box-sizing: border-box;
+  background: #000000;
+  font-family: sans-serif;
+}
+
+main {
+  width: min(90vw, 640px);
+  display: grid;
+  gap: 18px;
+}
+
+img,
+.embed-container {
+  max-width: min(90vw, 640px);
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+img {
+  height: auto;
+}
+
+.embed-container {
+  aspect-ratio: 1 / 1;
+  position: relative;
+}
+
+.embed-container iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.playlist-button {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: 56px;
+  height: 56px;
+  padding: 8px;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 44%);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.playlist-button:hover,
+.playlist-button:focus-visible {
+  background: rgb(0 0 0 / 68%);
+  transform: translateY(-50%) scale(1.04);
+}
+
+.playlist-button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.playlist-button:disabled {
+  cursor: default;
+  opacity: 0.34;
+  transform: translateY(-50%);
+}
+
+.playlist-button:disabled:hover {
+  background: rgb(0 0 0 / 44%);
+  transform: translateY(-50%);
+}
+
+.playlist-button img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  pointer-events: none;
+  display: block;
+  margin: 0;
+}
+
+.playlist-button.previous {
+  left: 16px;
+}
+
+.playlist-button.previous img {
+  transform: translateX(8px);
+}
+
+.playlist-button.next {
+  right: 16px;
+}
+
+.playlist-button.next img {
+  transform: translateX(4px);
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: 92px;
+  height: 92px;
+  padding: 18px;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 58%);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  transition: background 160ms ease, transform 160ms ease, opacity 160ms ease;
+}
+
+.play-button:hover,
+.play-button:focus-visible {
+  background: rgb(0 0 0 / 76%);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+.play-button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
+}
+
+.play-button img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  pointer-events: none;
+  transform: translateX(4px);
+}
+
+.play-button-icon {
+  margin-right: 5px;
+}
+
+.play-button.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.artist-intro {
+  color: #ffffff;
+  text-align: center;
+}
+
+.artist-intro h1 {
+  margin: 0;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.artist-intro p {
+  margin: 8px auto 0;
+  max-width: 58ch;
+  color: rgb(255 255 255 / 72%);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.social-links {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  width: min(90%, 600px);
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-links a {
+  min-width: 0;
+  height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.social-links img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.social-links .soundcloud-logo {
+  height: 200%;
+}
+
+.social-links .ungap-logo {
+  height: 100%;
+}
+
+@media (max-width: 520px) {
+  .playlist-button {
+    width: 48px;
+    height: 48px;
+    padding: 6px;
+  }
+
+  .playlist-button.previous {
+    left: 10px;
+  }
+
+  .playlist-button.next {
+    right: 10px;
+  }
+
+  .play-button {
+    width: 78px;
+    height: 78px;
+    padding: 14px;
+  }
+
+  .play-button img {
+    width: 50px;
+    height: 50px;
+  }
+}
