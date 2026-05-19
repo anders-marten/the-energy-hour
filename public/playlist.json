@@ -1,234 +1,582 @@
 [
   {
     "title": "Vad vet jag",
-    "id": "2322475403"
+    "id": "2322475403",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/vad-vet-jag-wav",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Mama (english version)",
-    "id": "2298091322"
+    "id": "2298091322",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/mama",
+      "spotify": "https://open.spotify.com/track/5NW0G6NRAVNUKrrJ4rMzzL",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Mamma",
-    "id": "2297934956"
+    "id": "2297934956",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/mamma",
+      "spotify": "https://open.spotify.com/track/0iumyO4lRXAm1zkmDi8di8",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Luxury",
-    "id": "2287088489"
+    "id": "2287088489",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/luxury",
+      "spotify": "https://open.spotify.com/track/35KFLhjjRysRHQAfQnRee9",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Synth Lab One",
-    "id": "2285131661"
+    "id": "2285131661",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/synth_lab_one",
+      "spotify": "https://open.spotify.com/track/2DloDR0nrDuDpcMU15qPys",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Godhetssignal",
-    "id": "2279831405"
+    "id": "2279831405",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/godhetssignal",
+      "spotify": "https://open.spotify.com/track/1AqzqVl0SyONm8O7Z8YPG3",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Man cave",
-    "id": "2258416265"
+    "id": "2258416265",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/man-cave",
+      "spotify": "https://open.spotify.com/track/5X1prXSUPMsbWrsOk2Zrts",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Crack in the dance floor",
-    "id": "2251892351"
+    "id": "2251892351",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/crack-in-the-dance-floor",
+      "spotify": "https://open.spotify.com/track/0HQjeaQVv2URVlllOTQJNA",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Haze 2026",
-    "id": "2247806234"
+    "id": "2247806234",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/haze-2026",
+      "spotify": "https://open.spotify.com/track/7cwscBWCgK302mInfzngya",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Goodness signal",
-    "id": "2239157618"
+    "id": "2239157618",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/goodness-signal",
+      "spotify": "https://open.spotify.com/track/4UFWxEIM3tl861yz87qBko",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "I collect",
-    "id": "2233811534"
+    "id": "2233811534",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/i-collect",
+      "spotify": "https://open.spotify.com/track/4SMe975gComeRTP6t0Wt8q",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Bow of love (Holiday Edit)",
-    "id": "2216860634"
+    "id": "2216860634",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/bow-of-love-holiday-edit-3",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "En strimma av hopp (Holiday Edit)",
-    "id": "2216860631"
+    "id": "2216860631",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/en-strimma-av-hopp-holiday-edit-2",
+      "spotify": "https://open.spotify.com/track/16bCIfdg84ATQVGUbZpYQE",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "När första ljuset brinner (Holiday Edit)",
-    "id": "2216860637"
+    "id": "2216860637",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/nar-forsta-ljuset-brinner-holiday-edit-1",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Rocket Funk",
-    "id": "2200194103"
+    "id": "2200194103",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/raketfunk-bounce",
+      "spotify": "https://open.spotify.com/track/79jWpF4ccV1V69pEV5wEOV?si=57813aefe0134f6a",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "You make my heart",
-    "id": "2186965518"
+    "id": "2186965518",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/u-make-my-heart",
+      "spotify": "https://open.spotify.com/track/4QiPqoDkXpbZEdG1JmEnRq?si=cbac7128c1044474",
+      "appleMusic": "",
+      "tidal": ""
+    }
+  },
+  {
+    "title": "U make my heart",
+    "id": "2308189358",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/you-make-my-heart",
+      "spotify": "https://open.spotify.com/track/4GcwTM6Y0gPm5e557pOJPK",
+      "appleMusic": "https://music.apple.com/se/song/u-make-my-heart/6763500057",
+      "tidal": "https://tidal.com/track/518947254"
+    }
   },
   {
     "title": "Act of balance (Spectrum mix)",
-    "id": "2180214895"
+    "id": "2180214895",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/act-of-balance-second-gender-extended",
+      "spotify": "https://open.spotify.com/track/6Vi0ecrokYZ0MFYEjXjqWE?si=b78f167db3764b40",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Act of balance",
-    "id": "2178180507"
+    "id": "2178180507",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/act-of-balance",
+      "spotify": "https://open.spotify.com/track/1SnRQbCu5SNLmvhlKLn83h?si=ef9409f637f247ca",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Mälarfunk",
-    "id": "2165333457"
+    "id": "2165333457",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/malarfunk",
+      "spotify": "https://open.spotify.com/track/6LEeO5a0fkvATAK4xrzvEc",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Feeling low (Trance)",
-    "id": "2164466322"
+    "id": "2164466322",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/feeling-low-trance",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Feeling low (Deep house)",
-    "id": "2163943317"
+    "id": "2163943317",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/feeling-low-deep-house",
+      "spotify": "https://open.spotify.com/track/5Q1NjhOAv27V1IvEAMssMg",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Säg funk funk",
-    "id": "2159859330"
+    "id": "2159859330",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/say-funk-funk-rocky-3",
+      "spotify": "https://open.spotify.com/track/0SC8gawDtq8IgloFhoAKex",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Boot out that punk (space mission)",
-    "id": "2134941870"
+    "id": "2134941870",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/boot-out-that-punk-1-1",
+      "spotify": "https://open.spotify.com/track/023uF0MMm9xoWiJTU5mo10",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Mid Summer",
-    "id": "2114298273"
+    "id": "2114298273",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/mid-summer",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Feels like new",
-    "id": "2111051817"
+    "id": "2111051817",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/feels-like-new",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Varje morgon är du ny",
-    "id": "2106087543"
+    "id": "2106087543",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/varje-dag-ar-du-ny-rhodos-juni-2025",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Poly - Goa mix 2025",
-    "id": "2100196611"
+    "id": "2100196611",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/poly-2025-goa-mix",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Let yourself go - Body mix 2025",
-    "id": "2097959391"
+    "id": "2097959391",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/let-yourself-go-body-music-mix-2025",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
-    "title": "Wild One - 3",
-    "id": "2092408632"
+    "title": "Wild One - Stockholm Archipelago Raid 2025",
+    "id": "2092408632",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/wild-one-3-3",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "We got the funk (teaser)",
-    "id": "2015140323"
+    "id": "2015140323",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/we-got-the-funk",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Gränsö funk",
-    "id": "2081787027"
+    "id": "2081787027",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/granso-funk",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Älgö funk",
-    "id": "2078448168"
+    "id": "2078448168",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/algo-funk-improvisation",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Bow of love",
-    "id": "2004157815"
+    "id": "2004157815",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/bow-of-love",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "En strimma av hopp (Julen 2024)",
-    "id": "1971962695"
+    "id": "1971962695",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/en-strimma-av-hopp",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "It was you",
-    "id": "1968310423"
+    "id": "1968310423",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/it-was-you-1",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Mörkrum - Hip hop remix",
-    "id": "1966208795"
+    "id": "1966208795",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/mo-rkrum-hip-hop-remix",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
-    "title": "Mörkrum",
-    "id": "1950178355"
+    "title": "Mörkrum - Dansband-ish",
+    "id": "1950178355",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/morkrum-dansband-ii",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Uno 50",
-    "id": "1006082302"
-  },
-  {
-    "title": "Vi seglar runt",
-    "id": "1908044240"
+    "id": "1006082302",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/uno-50",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Minnen by the synth",
-    "id": "1908048179"
+    "id": "1908048179",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/minnen-by-the-synth-wav",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Sending it high - Stockholm Archipelago Raid 2024",
-    "id": "1908008435"
+    "id": "1908008435",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/sending-it-high-stockholm-archipelago-raid-2024",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Som allt du gör",
-    "id": "1850442969"
+    "id": "1850442969",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/majken-som-allt-du-gor-take-1",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Hjalmar - Skog Med Siri",
-    "id": "1543733125"
+    "id": "1543733125",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/hjalmar-skog-med-siri",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Julen på radion",
-    "id": "1184957014"
+    "id": "1184957014",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/julen-pa-radion-mp3",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Vox On Vox",
-    "id": "1120683526"
+    "id": "1120683526",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/vox-on-vox",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "THE ONE - The Energy Hour Remix",
-    "id": "959745685"
+    "id": "959745685",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/the-one-remix",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Cowboys By The Waterhole - The Energy Hour Remix II",
-    "id": "500086116"
+    "id": "500086116",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/cowboys-by-the-waterhole-the-energy-hour-remix-ii",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Black Friday",
-    "id": "541810173"
+    "id": "541810173",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/black-friday",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Farr 30",
-    "id": "341387088"
+    "id": "341387088",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/farr-take-1",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "T-Bone Band - Cowboys By The Waterhole (The Energy Hour Remix)",
-    "id": "303577489"
+    "id": "303577489",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/cowboys-by-the-waterhole-the-energy-hour-remix",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Sleepy",
-    "id": "286640127"
+    "id": "286640127",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/sleepy",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Alva - När Världen Håller Andan - The Energy Hour Remix",
-    "id": "264027908"
+    "id": "264027908",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/alva-nar-varlden-haller-andan-the-energy-hour-reggae-remix-preview",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Soundave - Symmetric Circles (The Energy Hour Remix)",
-    "id": "207790827"
+    "id": "207790827",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/soundave-symetric-circles-the-energy-hour-remix",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
-    "title": "Techno Bitch",
-    "id": "186345237"
+    "title": "Techno Bitch- 1991",
+    "id": "186345237",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/techno-bitch",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
-    "title": "Analog Bass Sweep",
-    "id": "32767315"
+    "title": "Analog Bass Sweep - 1994",
+    "id": "32767315",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/analog-bass-sweep",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
-    "title": "House Break",
-    "id": "32522641"
+    "title": "House Break - 1994",
+    "id": "32522641",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/house-break",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
-    "title": "The Energy Hour",
-    "id": "32397380"
+    "title": "The Energy Hour - 1994",
+    "id": "32397380",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/the-energy-hour",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   },
   {
     "title": "Old tekno (2026 refresh)",
-    "id": "2322499256"
+    "id": "2322499256",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/old-tekno-2026-instrumental",
+      "spotify": "",
+      "appleMusic": "",
+      "tidal": ""
+    }
   }
 ]

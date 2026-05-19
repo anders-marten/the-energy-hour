@@ -1,24 +1,28 @@
 body {
   margin: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  height: 100vh;
   padding: 24px;
-  padding-bottom: 104px;
   box-sizing: border-box;
   background: #000000;
   font-family: sans-serif;
+  overflow: hidden;
 }
 
 main {
   width: min(90vw, 640px);
   display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
   gap: 18px;
+  min-height: 0;
+  margin: 0 auto;
+  flex: 1 1 auto;
 }
 
-img,
-.embed-container {
+img {
   max-width: min(90vw, 640px);
   width: 100%;
   display: block;
@@ -30,8 +34,11 @@ img {
 }
 
 .embed-container {
+  width: min(90vw, 640px, 43vh);
   aspect-ratio: 1 / 1;
   position: relative;
+  display: block;
+  margin: 0 auto;
 }
 
 .embed-container iframe {
@@ -175,12 +182,75 @@ img {
   line-height: 1.5;
 }
 
+.track-list {
+  margin-top: 14px;
+  padding-top: 20px;
+  border-top: 1px solid rgb(255 255 255 / 14%);
+  color: #ffffff;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 8px;
+  scrollbar-color: rgb(255 255 255 / 28%) transparent;
+}
+
+.track-list h2 {
+  margin: 0 0 12px;
+  color: rgb(255 255 255 / 52%);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.track-list ol {
+  columns: 2;
+  column-gap: 28px;
+  margin: 0;
+  padding-left: 1.35rem;
+}
+
+.track-list li {
+  break-inside: avoid;
+  margin: 0 0 8px;
+  color: rgb(255 255 255 / 36%);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.track-title {
+  color: rgb(255 255 255 / 68%);
+}
+
+.track-row {
+  display: inline;
+}
+
+.track-services {
+  display: inline-flex;
+  gap: 7px;
+  margin-left: 9px;
+  vertical-align: 0.03em;
+}
+
+.track-service {
+  color: rgb(255 255 255 / 44%);
+  font-size: 0.72rem;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.track-service:hover,
+.track-service:focus-visible {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .social-links {
-  position: fixed;
-  left: 50%;
-  bottom: 24px;
-  transform: translateX(-50%);
   width: min(90%, 600px);
+  margin: 22px auto 0;
+  flex: 0 0 auto;
   display: flex;
   gap: 18px;
   align-items: center;
@@ -212,6 +282,18 @@ img {
 }
 
 @media (max-width: 520px) {
+  body {
+    padding: 18px;
+  }
+
+  main {
+    gap: 14px;
+  }
+
+  .embed-container {
+    width: min(90vw, 640px, 38vh);
+  }
+
   .playlist-button {
     width: 48px;
     height: 48px;
@@ -235,5 +317,9 @@ img {
   .play-button img {
     width: 50px;
     height: 50px;
+  }
+
+  .track-list ol {
+    columns: 1;
   }
 }
