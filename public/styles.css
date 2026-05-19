@@ -1,11 +1,10 @@
 body {
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  height: 100vh;
-  padding: 24px;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: clamp(18px, 3vh, 32px) 24px 22px;
   box-sizing: border-box;
   background: #000000;
   font-family: sans-serif;
@@ -16,10 +15,10 @@ main {
   width: min(90vw, 640px);
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
-  gap: 18px;
+  align-self: stretch;
+  gap: clamp(12px, 2vh, 18px);
   min-height: 0;
   margin: 0 auto;
-  flex: 1 1 auto;
 }
 
 img {
@@ -34,7 +33,8 @@ img {
 }
 
 .embed-container {
-  width: min(90vw, 640px, 43vh);
+  width: min(90vw, 640px, 54dvh);
+  max-height: min(640px, 54dvh);
   aspect-ratio: 1 / 1;
   position: relative;
   display: block;
@@ -183,8 +183,8 @@ img {
 }
 
 .track-list {
-  margin-top: 14px;
-  padding-top: 20px;
+  margin-top: 2px;
+  padding-top: 16px;
   border-top: 1px solid rgb(255 255 255 / 14%);
   color: #ffffff;
   min-height: 0;
@@ -249,8 +249,7 @@ img {
 
 .social-links {
   width: min(90%, 600px);
-  margin: 22px auto 0;
-  flex: 0 0 auto;
+  margin: 18px auto 0;
   display: flex;
   gap: 18px;
   align-items: center;
@@ -291,7 +290,8 @@ img {
   }
 
   .embed-container {
-    width: min(90vw, 640px, 38vh);
+    width: min(90vw, 640px, 42dvh);
+    max-height: min(640px, 42dvh);
   }
 
   .playlist-button {
@@ -321,5 +321,26 @@ img {
 
   .track-list ol {
     columns: 1;
+  }
+}
+
+@media (max-height: 760px) {
+  body {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .artist-intro p {
+    font-size: 0.88rem;
+    line-height: 1.35;
+  }
+
+  .embed-container {
+    width: min(90vw, 640px, 45dvh);
+    max-height: min(640px, 45dvh);
+  }
+
+  .social-links {
+    margin-top: 14px;
   }
 }
