@@ -71,6 +71,8 @@ function renderTrackList(tracks) {
       const title = escapeHtml(track.title);
       const soundcloud = track.links.soundcloud;
       const spotify = track.links.spotify;
+      const titleHref = soundcloud || "#";
+      const titleHtml = `<a class="track-title track-play-link" href="${escapeHtml(titleHref)}" data-track-id="${escapeHtml(track.id)}">${title}</a>`;
       const serviceLinks = [
         soundcloud
           ? `<a class="track-service" href="${escapeHtml(soundcloud)}" target="_blank" rel="noopener noreferrer">SoundCloud</a>`
@@ -83,7 +85,7 @@ function renderTrackList(tracks) {
         ? `\n            <span class="track-services" aria-label="Listen links">${serviceLinks.join("\n              ")}</span>`
         : "";
 
-      return `        <li>\n          <span class="track-row">\n            <span class="track-title">${title}</span>${servicesHtml}\n          </span>\n        </li>`;
+      return `        <li>\n          <span class="track-row">\n            ${titleHtml}${servicesHtml}\n          </span>\n        </li>`;
     })
     .join("\n");
 

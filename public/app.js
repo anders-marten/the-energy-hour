@@ -6,6 +6,7 @@ const player = document.querySelector("#soundcloud-player");
 const previousButton = document.querySelector(".playlist-button.previous");
 const nextButton = document.querySelector(".playlist-button.next");
 const playButton = document.querySelector(".play-button");
+const trackList = document.querySelector(".track-list");
 let widget = SC.Widget(player);
 let playlist = fallbackPlaylist;
 let shuffledPlaylist = [];
@@ -45,6 +46,21 @@ function updatePlayButton() {
 function updatePlaylistButtons() {
   previousButton.disabled = currentTrackIndex <= 0;
   nextButton.disabled = currentTrackIndex >= shuffledPlaylist.length - 1;
+}
+
+function updateActiveTrackLink() {
+  const currentTrack = shuffledPlaylist[currentTrackIndex];
+
+  document.querySelectorAll(".track-play-link").forEach((link) => {
+    const isActive = Boolean(currentTrack && link.dataset.trackId === currentTrack.id);
+    link.classList.toggle("is-active", isActive);
+
+    if (isActive) {
+      link.setAttribute("aria-current", "true");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
 }
 
 function syncPlayerState() {
@@ -110,6 +126,7 @@ function showTrack(index, shouldPlay = false) {
 
   currentTrackIndex = index;
   const track = shuffledPlaylist[currentTrackIndex];
+  playlistComplete = false;
   isAdvancingAfterFinish = false;
   const shouldUseEmbedAutoplay = shouldPlay && !isAppleMobileSafari();
   shouldPlayWhenReady = shouldPlay && !shouldUseEmbedAutoplay;
@@ -122,6 +139,7 @@ function showTrack(index, shouldPlay = false) {
   isPlaying = shouldPlay;
   updatePlayButton();
   updatePlaylistButtons();
+  updateActiveTrackLink();
 }
 
 function showInitialTrack() {
@@ -148,6 +166,17 @@ function showForwardTrack(shouldPlay = isPlaying) {
   }
 
   showTrack(currentTrackIndex + 1, shouldPlay);
+}
+
+function showTrackById(trackId) {
+  const trackIndex = shuffledPlaylist.findIndex((track) => track.id === trackId);
+
+  if (trackIndex < 0) {
+    return false;
+  }
+
+  showTrack(trackIndex, true);
+  return true;
 }
 
 function normalizePlaylist(items) {
@@ -197,6 +226,22 @@ playButton.addEventListener("click", () => {
   updatePlayButton();
   widget.play();
 });
+
+if (trackList) {
+  trackList.addEventListener("click", (event) => {
+    const trackLink = event.target.closest(".track-play-link");
+
+    if (!trackLink) {
+      return;
+    }
+
+    const shouldHandleClick = showTrackById(trackLink.dataset.trackId || "");
+
+    if (shouldHandleClick) {
+      event.preventDefault();
+    }
+  });
+}
 
 function bindWidgetEvents() {
   widget.bind(SC.Widget.Events.READY, () => {
