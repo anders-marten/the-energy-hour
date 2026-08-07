@@ -1,10 +1,20 @@
 [
   {
+    "title": "När kommer du hem",
+    "id": "2376580448",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/nar-kommer-du-hem",
+      "spotify": "https://open.spotify.com/track/1wCX83tdQCy8tLCtbLVGNh",
+      "appleMusic": "",
+      "tidal": ""
+    }
+  },
+  {
     "title": "All In",
     "id": "2365131305",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/all-in",
-      "spotify": "",
+      "spotify": "https://open.spotify.com/track/69hbOiOPjHC6yALVgfjvqD",
       "appleMusic": "",
       "tidal": ""
     }
