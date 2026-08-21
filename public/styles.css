@@ -287,10 +287,6 @@ img {
   height: 200%;
 }
 
-.social-links .ungap-logo {
-  height: 100%;
-}
-
 @media (max-width: 520px) {
   body {
     padding: 18px;
