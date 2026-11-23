@@ -1,111 +1,79 @@
 # the-energy-hour
 
-Det här projektet är ett statiskt webbprojekt byggt med Vite och distribuerat till AWS. Repositoryt innehåller en enkel frontend utan ramverk, där byggprocessen genererar filer till `dist/` som sedan publiceras till en S3-bucket och levereras via CloudFront.
+En lättviktig statisk musiksite för The Energy Hour, byggd med Vite och plain HTML, CSS och JavaScript.
 
-## Om projektet
+## Lokal utveckling
 
-Repositoryt ägs av `anders-marten` och fokuserar på en lättviktig webbapplikation med enkel byggkedja och automatiserad deployment.
+```sh
+npm ci
+npm run dev
+```
 
-## Teknikstack
+Produktionsbyggnad:
 
-Projektet använder en avsiktligt liten och enkel teknikstack:
+```sh
+npm run build
+npm run preview
+```
 
-- **HTML** som huvudspråk i projektet
-- **Vite** som byggverktyg och lokal utvecklingsserver
-- **Node.js 20** i CI/CD-miljön
-- **npm** för pakethantering och skript
-- **AWS S3** för hosting av den byggda sajten
-- **AWS CloudFront** för distribution, cache och publicering
-- **AWS CodeBuild** för att köra byggsteget
-- **AWS CodePipeline** för att koppla GitHub till bygg och publicering
+Builden genererar SEO-innehåll från `public/playlist.json` och skriver den färdiga sajten till `dist/`.
 
-`package.json` visar att projektet använder Vite utan något extra frontend-ramverk, vilket tyder på att lösningen är byggd som en enkel statisk webbapp.
+## Teknik
 
-## Utvecklingsflöde
+- HTML, CSS och JavaScript
+- Vite
+- Node.js 20 i CI/CD
+- GitHub Actions
+- Scaleway Object Storage
+- Scaleway Edge Services
+- AWS Route 53
+- AWS CloudFront
 
-Det nuvarande utvecklingsflödet ser ut att vara:
+## Production
 
-1. Klona repositoryt lokalt.
-2. Installera beroenden med `npm ci` eller `npm install`.
-3. Starta lokal utvecklingsserver med `npm run dev`.
-4. Bygg produktionsversionen med `npm run build`.
-5. Förhandsgranska byggd version med `npm run preview`.
-6. Committa och pusha ändringar till GitHub.
-7. Låt AWS CodePipeline/CodeBuild bygga och publicera den nya versionen automatiskt.
+Sajten ligger primärt på Scaleway:
 
-### Viktiga npm-skript
+```text
+Besökare
+  -> Route 53
+  -> AWS CloudFront
+  -> Scaleway Edge Services
+  -> Scaleway Object Storage
+```
 
-- `npm run dev` – startar Vites utvecklingsserver
-- `npm run build` – bygger projektet till `dist/`
-- `npm run preview` – förhandsgranskar den byggda versionen lokalt
+AWS CloudFront är en temporär proxy som gör det möjligt att behålla Apex-domänen i Route 53. Scaleway Edge Services är primär origin.
 
-## Deployment och konfiguration
+Användaren når samma domän oavsett backend:
 
-Deployflödet är definierat i `buildspec.yml` och dokumenterat i `aws_cicd_guide.md`.
+- `the-energy-hour.com`
+- `www.the-energy-hour.com`
 
-### Bygg- och deployprocess
+AWS Route 53 och CloudFront kan tas bort eller ersättas när Scaleway stöder samma apexdomän på ett lämpligt DNS/CDN-sätt.
 
-CI/CD-flödet fungerar i huvudsak så här:
+## Scaleway-resurser
 
-1. GitHub används som källa för koden.
-2. AWS CodePipeline triggar en build när ändringar pushas.
-3. AWS CodeBuild kör `npm ci` och därefter `npm run build`.
-4. Byggresultatet i `dist/` synkas till S3-bucketen `s3://the-energy-hour`.
-5. En CloudFront-invalidation körs för distributionen `E7A8JILDM72BF` så att nya filer blir synliga direkt.
+Produktionen använder ett separat Scaleway-projekt:
 
-### Viktiga konfigurationspunkter
-
-- **Byggutdata:** `dist/`
-- **Node-version i CI:** `20`
-- **Deploymål:** S3-bucketen `the-energy-hour`
-- **CDN/cache-invalidering:** CloudFront-distribution `E7A8JILDM72BF`
-- **Byggspecifikation:** `buildspec.yml` i repositoryts rot
-
-### AWS-komponenter som används
-
-- **S3** för lagring och hosting av statiska filer
-- **CloudFront** för distribution av webbplatsen
-- **CodeBuild** för buildsteget
-- **CodePipeline** för automatiserad CI/CD
-- **IAM** för åtkomst till artifact bucket, webb-bucket, CloudFront och loggar
-
-## Drift och innehåll
-
-Repositoryt innehåller även en `public/`-katalog, vilket följer Vites standardmönster för statiska tillgångar. Där finns bland annat:
-
-- `manifest.webmanifest`
-- `playlist.json`
-- en bildkatalog under `public/images`
-
-Det tyder på att projektet publicerar statiska resurser direkt tillsammans med den byggda sajten.
-
-## Vidare förbättringar av README
-
-README:n kan senare kompletteras ytterligare med:
-
-- lokal installationsguide steg för steg
-- exempel på mappstruktur
-- beskrivning av syftet med `playlist.json`
-- hur domännamn och HTTPS hanteras i CloudFront
-- eventuella rutiner för versionshantering och releaseflöde
-
-## Scaleway production deployment
-
-Productioninfrastrukturen ligger i `deploy/infra` och använder OpenTofu,
-Scaleway Object Storage och Scaleway Edge Services.
-
-- State: `s3://ungap-live-tofu-state/the-energy-hour/terraform.tfstate`
+- Projekt: `ungap-the-energy-hour`
+- Projekt-ID: `2b51727e-5099-4e8e-ba86-70dab30a8261`
 - Region: `fr-par`
-- Bucket: `ungap-the-energy-hour-prod`
-- Edge endpoint:
-  `af3a7f64-0728-49da-8637-65941dc6d3a1.svc.edge.scw.cloud`
-- Project:
-  `2b51727e-5099-4e8e-ba86-70dab30a8261`
-- Edge pipeline:
-  `af3a7f64-0728-49da-8637-65941dc6d3a1`
+- Privat bucket: `ungap-the-energy-hour-prod`
+- Edge pipeline: `af3a7f64-0728-49da-8637-65941dc6d3a1`
+- Edge endpoint: `af3a7f64-0728-49da-8637-65941dc6d3a1.svc.edge.scw.cloud`
+- State: `s3://ungap-live-tofu-state/the-energy-hour/terraform.tfstate`
 
-GitHub Actions deployar pushes to `main` directly to production after
-`npm ci` and `npm run build`. The deployment requires these GitHub Secrets:
+Infrastrukturen definieras i `deploy/infra` och hanteras med OpenTofu.
+
+## Deploy från GitHub
+
+Pushar till `main` kör `.github/workflows/deploy.yml`:
+
+1. Installera Node.js beroenden.
+2. Bygg sajten med `npm run build`.
+3. Synka `dist/` till Scaleway Object Storage.
+4. Rensa Edge Services-cache.
+
+Arbetsflödet använder följande GitHub Secrets:
 
 - `SCW_DEPLOY_ACCESS_KEY`
 - `SCW_DEPLOY_SECRET_KEY`
@@ -113,26 +81,11 @@ GitHub Actions deployar pushes to `main` directly to production after
 - `SCW_PROJECT_ID`
 - `SCW_EDGE_PIPELINE_ID`
 
-The private production bucket is kept in a separate Scaleway project. Public
-object reads are allowed through the bucket policy so Edge Services can serve
-the static site. Scaleway Edge Services is the primary production origin behind
-the existing AWS CloudFront distribution. AWS Route 53 therefore continues to
-point to CloudFront, which forwards traffic to Scaleway while keeping the
-existing AWS S3 bucket as a failover origin.
+Hemligheterna ska aldrig committas till repositoryt.
 
-Public traffic flow:
+## Lokal OpenTofu
 
-```text
-Route 53
-  -> AWS CloudFront
-  -> Scaleway Edge Services
-  -> Scaleway Object Storage
-```
-
-If Scaleway is unavailable, CloudFront failover routes traffic to the existing
-AWS S3 origin.
-
-Local infrastructure commands:
+Lokal konfiguration sparas i den ignorerade filen `config/the-energy-hour-deploy.local.json`.
 
 ```sh
 python3 deploy/tofu.py init
@@ -142,10 +95,19 @@ python3 deploy/tofu.py plan \
 python3 deploy/tofu.py apply deployment.tfplan
 ```
 
-Local configuration is ignored by Git.
+Planer och statefiler får inte committas.
 
-## Repositoryinformation
+## Innehåll
 
-- **Namn:** the-energy-hour
-- **Ägare:** anders-marten
-- **Repository ID:** 1212362677
+Statiska resurser ligger under `public/`:
+
+- `public/playlist.json` — låtlistan och externa länkar
+- `public/images/` — logotyper, favicon och appikoner
+- `public/styles.css` — webbplatsens stil
+- `public/app.js` — spelare och playlistlogik
+
+Repository:
+
+- Namn: `the-energy-hour`
+- Ägare: `anders-marten`
+- Repository ID: `1212362677`
