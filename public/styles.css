@@ -262,14 +262,13 @@ img {
   margin: 22px auto 0;
   flex: 0 0 auto;
   display: flex;
-  gap: 20px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .social-links a {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -281,6 +280,10 @@ img {
   height: 100%;
   object-fit: contain;
   display: block;
+}
+
+.social-links .soundcloud-logo {
+  height: 80%;
 }
 
 @media (max-width: 520px) {
