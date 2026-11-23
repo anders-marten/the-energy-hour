@@ -1,2 +1,9 @@
 node_modules/
 dist/
+config/*.local.json
+config/*.local.env
+config/the-energy-hour-deploy.local.json
+*.tfplan
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup

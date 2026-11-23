@@ -89,6 +89,45 @@ README:n kan senare kompletteras ytterligare med:
 - hur domännamn och HTTPS hanteras i CloudFront
 - eventuella rutiner för versionshantering och releaseflöde
 
+## Scaleway production deployment
+
+Productioninfrastrukturen ligger i `deploy/infra` och använder OpenTofu,
+Scaleway Object Storage och Scaleway Edge Services.
+
+- State: `s3://ungap-live-tofu-state/the-energy-hour/terraform.tfstate`
+- Region: `fr-par`
+- Bucket: `ungap-the-energy-hour-prod`
+- Edge endpoint:
+  `af3a7f64-0728-49da-8637-65941dc6d3a1.svc.edge.scw.cloud`
+- Project:
+  `2b51727e-5099-4e8e-ba86-70dab30a8261`
+
+GitHub Actions deployar pushes to `main` directly to production after
+`npm ci` and `npm run build`. The deployment requires these GitHub Secrets:
+
+- `SCW_DEPLOY_ACCESS_KEY`
+- `SCW_DEPLOY_SECRET_KEY`
+- `SCW_BUCKET_NAME`
+- `SCW_PROJECT_ID`
+- `SCW_EDGE_PIPELINE_ID`
+
+The private production bucket is kept in a separate Scaleway project. Public
+object reads are allowed through the bucket policy so Edge Services can serve
+the static site. AWS fallback infrastructure remains active until Route 53
+is switched to Scaleway.
+
+Local infrastructure commands:
+
+```sh
+python3 deploy/tofu.py init
+python3 deploy/tofu.py plan \
+  -var-file=../../config/the-energy-hour-deploy.local.json \
+  -out=deployment.tfplan
+python3 deploy/tofu.py apply deployment.tfplan
+```
+
+Local configuration is ignored by Git.
+
 ## Repositoryinformation
 
 - **Namn:** the-energy-hour

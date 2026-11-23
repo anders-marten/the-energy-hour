@@ -1,0 +1,57 @@
+name: Deploy to Scaleway
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: the-energy-hour-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Sync production bucket
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.SCW_DEPLOY_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SCW_DEPLOY_SECRET_KEY }}
+          AWS_DEFAULT_REGION: fr-par
+        run: |
+          aws s3 sync dist/ s3://${{ secrets.SCW_BUCKET_NAME }}/ \
+            --delete \
+            --endpoint-url https://s3.fr-par.scw.cloud
+
+      - name: Install Scaleway CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/scaleway/scaleway-cli/master/scripts/get.sh | sh
+
+      - name: Purge Edge Services cache
+        env:
+          SCW_ACCESS_KEY: ${{ secrets.SCW_DEPLOY_ACCESS_KEY }}
+          SCW_SECRET_KEY: ${{ secrets.SCW_DEPLOY_SECRET_KEY }}
+          SCW_DEFAULT_PROJECT_ID: ${{ secrets.SCW_PROJECT_ID }}
+          SCW_DEFAULT_REGION: fr-par
+        run: |
+          scw edge-services purge-request create \
+            pipeline-id=${{ secrets.SCW_EDGE_PIPELINE_ID }} \
+            all=true
