@@ -101,6 +101,8 @@ Scaleway Object Storage och Scaleway Edge Services.
   `af3a7f64-0728-49da-8637-65941dc6d3a1.svc.edge.scw.cloud`
 - Project:
   `2b51727e-5099-4e8e-ba86-70dab30a8261`
+- Edge pipeline:
+  `af3a7f64-0728-49da-8637-65941dc6d3a1`
 
 GitHub Actions deployar pushes to `main` directly to production after
 `npm ci` and `npm run build`. The deployment requires these GitHub Secrets:
@@ -113,8 +115,22 @@ GitHub Actions deployar pushes to `main` directly to production after
 
 The private production bucket is kept in a separate Scaleway project. Public
 object reads are allowed through the bucket policy so Edge Services can serve
-the static site. AWS fallback infrastructure remains active until Route 53
-is switched to Scaleway.
+the static site. Scaleway Edge Services is the primary production origin behind
+the existing AWS CloudFront distribution. AWS Route 53 therefore continues to
+point to CloudFront, which forwards traffic to Scaleway while keeping the
+existing AWS S3 bucket as a failover origin.
+
+Public traffic flow:
+
+```text
+Route 53
+  -> AWS CloudFront
+  -> Scaleway Edge Services
+  -> Scaleway Object Storage
+```
+
+If Scaleway is unavailable, CloudFront failover routes traffic to the existing
+AWS S3 origin.
 
 Local infrastructure commands:
 
