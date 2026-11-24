@@ -33,745 +33,931 @@
   {
     "title": "You or the Funk",
     "id": "2393656881",
+    "cover": "/images/covers/you-or-the-funk.jpg",
+    "thumbnail": "/images/covers/thumb/you-or-the-funk.jpg",
+    "teaser": "Soul and funk built around a simple choice: I choose you.",
+    "story": "",
+    "lyrics": "/lyrics/you-or-the-funk.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/you-or-the-funk",
       "spotify": "https://open.spotify.com/track/5hdPTbCKu50BOHVYU7bcvp",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/you-or-the-funk.jpg",
-    "thumbnail": "/images/covers/thumb/you-or-the-funk.jpg"
+    }
   },
   {
     "title": "Hold the balance",
     "id": "2381647056",
+    "cover": "/images/covers/hold-the-balance.jpg",
+    "thumbnail": "/images/covers/thumb/hold-the-balance.jpg",
+    "teaser": "A dark, poetic folk song about power, resistance and the voices that refuse to disappear.",
+    "story": "Towers may rise and borders may be drawn, but beneath them the roots keep moving. The song stays with the voices that will not be silenced.",
+    "lyrics": "/lyrics/hold-the-balance.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/hold-the-balance",
       "spotify": "https://open.spotify.com/album/1p4exuYGzDDkf8oSa60QfE",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/hold-the-balance.jpg",
-    "thumbnail": "/images/covers/thumb/hold-the-balance.jpg"
+    }
   },
   {
     "title": "När kommer du hem",
     "id": "2376580448",
+    "cover": "/images/covers/nar-kommer-du-hem.jpg",
+    "thumbnail": "/images/covers/thumb/nar-kommer-du-hem.jpg",
+    "teaser": "En synthpoplåt om att leta efter hemmet – och hitta det någon annanstans.",
+    "story": "Resan gick norrut till Strömsund för att hitta hem. Men det hemmet visade sig vara en illusion, en barndomsdröm.\n\nHemmet finns hos familj och vänner i Stockholm. Ändå blir det fler resor tillbaka, och de fina minnena finns kvar där.",
+    "lyrics": "/lyrics/nar-kommer-du-hem.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/nar-kommer-du-hem",
       "spotify": "https://open.spotify.com/track/1wCX83tdQCy8tLCtbLVGNh",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/nar-kommer-du-hem.jpg",
-    "thumbnail": "/images/covers/thumb/nar-kommer-du-hem.jpg"
+    }
   },
   {
     "title": "All In",
     "id": "2365131305",
+    "cover": "/images/covers/all-in.jpg",
+    "thumbnail": "/images/covers/thumb/all-in.jpg",
+    "teaser": "2-step och UK garage om att gå all in.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/all-in",
       "spotify": "https://open.spotify.com/track/69hbOiOPjHC6yALVgfjvqD",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/all-in.jpg",
-    "thumbnail": "/images/covers/thumb/all-in.jpg"
+    }
   },
   {
     "title": "I love tomatoes",
     "id": "2336081048",
+    "cover": "/images/covers/i-love-tomatoes.jpg",
+    "thumbnail": "/images/covers/thumb/i-love-tomatoes.jpg",
+    "teaser": "A summer song about tomatoes and the child we all carry inside.",
+    "story": "",
+    "lyrics": "/lyrics/i-love-tomatoes.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/i-love-tomatoes",
       "spotify": "https://open.spotify.com/album/5QPPtRaWSgMGVweoKPNWZz",
       "appleMusic": "https://music.apple.com/se/album/i-love-tomatoes/6778599164?i=6778599165",
       "tidal": "https://tidal.com/album/532111657/u"
-    },
-    "cover": "/images/covers/i-love-tomatoes.jpg",
-    "thumbnail": "/images/covers/thumb/i-love-tomatoes.jpg"
+    }
   },
   {
     "title": "Vad vet jag",
     "id": "2322475403",
+    "cover": "/images/covers/vad-vet-jag.jpg",
+    "thumbnail": "/images/covers/thumb/vad-vet-jag.jpg",
+    "teaser": "Techno om att lyssna mer på sin kropp.",
+    "story": "",
+    "lyrics": "/lyrics/vad-vet-jag.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/vad-vet-jag-wav",
       "spotify": "https://open.spotify.com/track/3qfKaguKgKOdlBwTltK7gI",
       "appleMusic": "https://music.apple.com/se/album/vad-vet-jag-single/6774033653",
       "tidal": "https://tidal.com/track/526851826/u"
-    },
-    "cover": "/images/covers/vad-vet-jag.jpg",
-    "thumbnail": "/images/covers/thumb/vad-vet-jag.jpg"
+    }
   },
   {
     "title": "Mama (english version)",
     "id": "2298091322",
+    "cover": "/images/covers/mama-english-version.jpg",
+    "thumbnail": "/images/covers/thumb/mama-english-version.jpg",
+    "teaser": "The English version of Mamma – a reggae song that carries a promise.",
+    "story": "",
+    "lyrics": "/lyrics/mama-english-version.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/mama",
       "spotify": "https://open.spotify.com/track/5NW0G6NRAVNUKrrJ4rMzzL",
       "appleMusic": "https://music.apple.com/se/album/mama-english-version-single/1891771503",
       "tidal": "https://tidal.com/album/513978431/u"
-    },
-    "cover": "/images/covers/mama-english-version.jpg",
-    "thumbnail": "/images/covers/thumb/mama-english-version.jpg"
+    }
   },
   {
     "title": "Mamma",
     "id": "2297934956",
+    "cover": "/images/covers/mamma.jpg",
+    "thumbnail": "/images/covers/thumb/mamma.jpg",
+    "teaser": "Reggae från The Energy Hour. Låten finns också i en engelsk version, Mama.",
+    "story": "",
+    "lyrics": "/lyrics/mamma.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/mamma",
       "spotify": "https://open.spotify.com/track/0iumyO4lRXAm1zkmDi8di8",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/mamma.jpg",
-    "thumbnail": "/images/covers/thumb/mamma.jpg"
+    }
   },
   {
     "title": "Luxury",
     "id": "2287088489",
+    "cover": "/images/covers/luxury.jpg",
+    "thumbnail": "/images/covers/thumb/luxury.jpg",
+    "teaser": "An electronic track built around one line: we live in luxury.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/luxury",
       "spotify": "https://open.spotify.com/track/35KFLhjjRysRHQAfQnRee9",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/luxury.jpg",
-    "thumbnail": "/images/covers/thumb/luxury.jpg"
+    }
   },
   {
     "title": "Synth Lab One",
     "id": "2285131661",
+    "cover": "/images/covers/synth-lab-one.jpg",
+    "thumbnail": "/images/covers/thumb/synth-lab-one.jpg",
+    "teaser": "An experimental synth jam recorded on hardware.",
+    "story": "Synth Lab One started as a hardware jam with a Roland TR-8S, a Moog Grandmother and a Behringer Pro-800. The vocals were made with Suno and chopped in the DAW for extra energy.",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/synth_lab_one",
       "spotify": "https://open.spotify.com/track/2DloDR0nrDuDpcMU15qPys",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/synth-lab-one.jpg",
-    "thumbnail": "/images/covers/thumb/synth-lab-one.jpg"
+    }
   },
   {
     "title": "Godhetssignal",
     "id": "2279831405",
+    "cover": "/images/covers/godhetssignal.jpg",
+    "thumbnail": "/images/covers/thumb/godhetssignal.jpg",
+    "teaser": "Reggae och dub som sänder en godhetssignal.",
+    "story": "",
+    "lyrics": "/lyrics/godhetssignal.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/godhetssignal",
       "spotify": "https://open.spotify.com/track/1AqzqVl0SyONm8O7Z8YPG3",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/godhetssignal.jpg",
-    "thumbnail": "/images/covers/thumb/godhetssignal.jpg"
+    }
   },
   {
     "title": "Man cave",
     "id": "2258416265",
+    "cover": "/images/covers/man-cave.jpg",
+    "thumbnail": "/images/covers/thumb/man-cave.jpg",
+    "teaser": "Funk om att slå sig ner i soffan och knäppa en bira.",
+    "story": "",
+    "lyrics": "/lyrics/man-cave.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/man-cave",
       "spotify": "https://open.spotify.com/track/5X1prXSUPMsbWrsOk2Zrts",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/man-cave.jpg",
-    "thumbnail": "/images/covers/thumb/man-cave.jpg"
+    }
   },
   {
     "title": "Crack in the dance floor",
     "id": "2251892351",
+    "cover": "/images/covers/crack-in-the-dance-floor.jpg",
+    "thumbnail": "/images/covers/thumb/crack-in-the-dance-floor.jpg",
+    "teaser": "A disco and French house track about refusing love demanded by force.",
+    "story": "When trust is threatened, the dance floor cracks. But the music brings people back together: one rhythm, one tribe, all voices.",
+    "lyrics": "/lyrics/crack-in-the-dance-floor.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/crack-in-the-dance-floor",
       "spotify": "https://open.spotify.com/track/0HQjeaQVv2URVlllOTQJNA",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/crack-in-the-dance-floor.jpg",
-    "thumbnail": "/images/covers/thumb/crack-in-the-dance-floor.jpg"
+    }
   },
   {
     "title": "Haze 2026",
     "id": "2247806234",
+    "cover": "/images/covers/haze-2026.jpg",
+    "thumbnail": "/images/covers/thumb/haze-2026.jpg",
+    "teaser": "Deep house about an Earth covered in haze.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/haze-2026",
       "spotify": "https://open.spotify.com/track/7cwscBWCgK302mInfzngya",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/haze-2026.jpg",
-    "thumbnail": "/images/covers/thumb/haze-2026.jpg"
+    }
   },
   {
     "title": "Goodness signal",
     "id": "2239157618",
+    "cover": "/images/covers/goodness-signal.jpg",
+    "thumbnail": "/images/covers/thumb/goodness-signal.jpg",
+    "teaser": "Reggae, dub and dancehall with a signal of goodness.",
+    "story": "Goodness signal breathes new life into a track The Energy Hour made twenty years ago, reworked as a reggaeton dancehall banger.",
+    "lyrics": "/lyrics/goodness-signal.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/goodness-signal",
       "spotify": "https://open.spotify.com/track/4UFWxEIM3tl861yz87qBko",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/goodness-signal.jpg",
-    "thumbnail": "/images/covers/thumb/goodness-signal.jpg"
+    }
   },
   {
     "title": "I collect",
     "id": "2233811534",
+    "cover": "/images/covers/i-collect.jpg",
+    "thumbnail": "/images/covers/thumb/i-collect.jpg",
+    "teaser": "Deep house about collecting everything that made you who you are.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/i-collect",
       "spotify": "https://open.spotify.com/track/4SMe975gComeRTP6t0Wt8q",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/i-collect.jpg",
-    "thumbnail": "/images/covers/thumb/i-collect.jpg"
+    }
   },
   {
     "title": "Bow of love (Holiday Edit)",
     "id": "2216860634",
+    "cover": "/images/covers/bow-of-love-holiday-edit.jpg",
+    "thumbnail": "/images/covers/thumb/bow-of-love-holiday-edit.jpg",
+    "teaser": "A holiday edit of Bow of love, a song about letting a grown child go.",
+    "story": "Bow of love is about the moment a child grows up, moves away and steps into adult life. It holds a bittersweet mix of pride, love and letting go.\n\nThis is the holiday edit of the song.",
+    "lyrics": "/lyrics/bow-of-love.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/bow-of-love-holiday-edit-3",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/bow-of-love-holiday-edit.jpg",
-    "thumbnail": "/images/covers/thumb/bow-of-love-holiday-edit.jpg"
+    }
   },
   {
     "title": "En strimma av hopp (Holiday Edit)",
     "id": "2216860631",
+    "cover": "/images/covers/en-strimma-av-hopp-holiday-edit.jpg",
+    "thumbnail": "/images/covers/thumb/en-strimma-av-hopp-holiday-edit.jpg",
+    "teaser": "Holiday Edit-versionen av En strimma av hopp – om rädsla och det sköra hopp som finns kvar.",
+    "story": "En strimma av hopp handlar om de mörka och osäkra tider vi lever i. Låten reflekterar över rädsla, spänning och det sköra hopp som ändå finns kvar.",
+    "lyrics": "/lyrics/en-strimma-av-hopp.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/en-strimma-av-hopp-holiday-edit-2",
       "spotify": "https://open.spotify.com/track/16bCIfdg84ATQVGUbZpYQE",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/en-strimma-av-hopp-holiday-edit.jpg",
-    "thumbnail": "/images/covers/thumb/en-strimma-av-hopp-holiday-edit.jpg"
+    }
   },
   {
     "title": "När första ljuset brinner (Holiday Edit)",
     "id": "2216860637",
+    "cover": "/images/covers/nar-forsta-ljuset-brinner-holiday-edit.jpg",
+    "thumbnail": "/images/covers/thumb/nar-forsta-ljuset-brinner-holiday-edit.jpg",
+    "teaser": "Svensk traditionell julsång möter rap, arabiska influenser och djup bas.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/nar-forsta-ljuset-brinner-holiday-edit-1",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/nar-forsta-ljuset-brinner-holiday-edit.jpg",
-    "thumbnail": "/images/covers/thumb/nar-forsta-ljuset-brinner-holiday-edit.jpg"
+    }
   },
   {
     "title": "Rocket Funk",
     "id": "2200194103",
+    "cover": "/images/covers/rocket-funk.jpg",
+    "thumbnail": "/images/covers/thumb/rocket-funk.jpg",
+    "teaser": "Funk från FUNKMA, med ambienta och elektroniska inslag.",
+    "story": "",
+    "lyrics": "/lyrics/rocket-funk.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/raketfunk-bounce",
       "spotify": "https://open.spotify.com/track/79jWpF4ccV1V69pEV5wEOV?si=57813aefe0134f6a",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/rocket-funk.jpg",
-    "thumbnail": "/images/covers/thumb/rocket-funk.jpg"
+    }
   },
   {
     "title": "You make my heart",
     "id": "2186965518",
+    "cover": "/images/covers/you-make-my-heart.jpg",
+    "thumbnail": "/images/covers/thumb/you-make-my-heart.jpg",
+    "teaser": "A modern electronic love story about time, aging and connection.",
+    "story": "With a steady pulse, warm analog textures and intimate vocals, the track moves between melancholy and hope. Love is what keeps the rhythm alive.",
+    "lyrics": "/lyrics/you-make-my-heart.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/u-make-my-heart",
       "spotify": "https://open.spotify.com/track/4QiPqoDkXpbZEdG1JmEnRq?si=cbac7128c1044474",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/you-make-my-heart.jpg",
-    "thumbnail": "/images/covers/thumb/you-make-my-heart.jpg"
+    }
   },
   {
     "title": "U make my heart",
     "id": "2308189358",
+    "cover": "/images/covers/u-make-my-heart.jpg",
+    "thumbnail": "/images/covers/thumb/u-make-my-heart.jpg",
+    "teaser": "A song written while waiting for a cardiac ablation.",
+    "story": "The Energy Hour wrote U make my heart while waiting for a cardiac ablation. The procedure went well.",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/you-make-my-heart",
       "spotify": "https://open.spotify.com/track/4GcwTM6Y0gPm5e557pOJPK",
       "appleMusic": "https://music.apple.com/se/song/u-make-my-heart/6763500057",
       "tidal": "https://tidal.com/track/518947254"
-    },
-    "cover": "/images/covers/u-make-my-heart.jpg",
-    "thumbnail": "/images/covers/thumb/u-make-my-heart.jpg"
+    }
   },
   {
     "title": "Act of balance (Spectrum mix)",
     "id": "2180214895",
+    "cover": "/images/covers/act-of-balance-spectrum-mix.jpg",
+    "thumbnail": "/images/covers/thumb/act-of-balance-spectrum-mix.jpg",
+    "teaser": "A melancholic deep house and trance mix of Act of balance.",
+    "story": "",
+    "lyrics": "/lyrics/act-of-balance.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/act-of-balance-second-gender-extended",
       "spotify": "https://open.spotify.com/track/6Vi0ecrokYZ0MFYEjXjqWE?si=b78f167db3764b40",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/act-of-balance-spectrum-mix.jpg",
-    "thumbnail": "/images/covers/thumb/act-of-balance-spectrum-mix.jpg"
+    }
   },
   {
     "title": "Act of balance",
     "id": "2178180507",
+    "cover": "/images/covers/act-of-balance.jpg",
+    "thumbnail": "/images/covers/thumb/act-of-balance.jpg",
+    "teaser": "Synth-driven industrial techno about an act of balance.",
+    "story": "",
+    "lyrics": "/lyrics/act-of-balance.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/act-of-balance",
       "spotify": "https://open.spotify.com/track/1SnRQbCu5SNLmvhlKLn83h?si=ef9409f637f247ca",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/act-of-balance.jpg",
-    "thumbnail": "/images/covers/thumb/act-of-balance.jpg"
+    }
   },
   {
     "title": "Mälarfunk",
     "id": "2165333457",
+    "cover": "/images/covers/malarfunk.jpg",
+    "thumbnail": "/images/covers/thumb/malarfunk.jpg",
+    "teaser": "A sparse funk jam from FUNKMA.",
+    "story": "Mälarfunk started as a live, raw recording by FUNKMA. It was then reworked with AI into a sparse funk jam where the groove keeps growing.",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/malarfunk",
       "spotify": "https://open.spotify.com/track/6LEeO5a0fkvATAK4xrzvEc",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/malarfunk.jpg",
-    "thumbnail": "/images/covers/thumb/malarfunk.jpg"
+    }
   },
   {
     "title": "Feeling low (Trance)",
     "id": "2164466322",
+    "cover": "/images/covers/feeling-low-trance.jpg",
+    "thumbnail": "/images/covers/thumb/feeling-low-trance.jpg",
+    "teaser": "A trance version of Feeling low, about life's ups and downs.",
+    "story": "",
+    "lyrics": "/lyrics/feeling-low.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/feeling-low-trance",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/feeling-low-trance.jpg",
-    "thumbnail": "/images/covers/thumb/feeling-low-trance.jpg"
+    }
   },
   {
     "title": "Feeling low (Deep house)",
     "id": "2163943317",
+    "cover": "/images/covers/feeling-low-deep-house.jpg",
+    "thumbnail": "/images/covers/thumb/feeling-low-deep-house.jpg",
+    "teaser": "Deep house for the lows and the highs – we dance through it.",
+    "story": "",
+    "lyrics": "/lyrics/feeling-low.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/feeling-low-deep-house",
       "spotify": "https://open.spotify.com/track/5Q1NjhOAv27V1IvEAMssMg",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/feeling-low-deep-house.jpg",
-    "thumbnail": "/images/covers/thumb/feeling-low-deep-house.jpg"
+    }
   },
   {
     "title": "Säg funk funk",
     "id": "2159859330",
+    "cover": "/images/covers/sag-funk-funk.jpg",
+    "thumbnail": "/images/covers/thumb/sag-funk-funk.jpg",
+    "teaser": "Funk från FUNKMA.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/say-funk-funk-rocky-3",
       "spotify": "https://open.spotify.com/track/0SC8gawDtq8IgloFhoAKex",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/sag-funk-funk.jpg",
-    "thumbnail": "/images/covers/thumb/sag-funk-funk.jpg"
+    }
   },
   {
     "title": "Boot out that punk (space mission)",
     "id": "2134941870",
+    "cover": "/images/covers/boot-out-that-punk-space-mission.jpg",
+    "thumbnail": "/images/covers/thumb/boot-out-that-punk-space-mission.jpg",
+    "teaser": "A groove-driven call to action, laced with soul and sass.",
+    "story": "",
+    "lyrics": "/lyrics/boot-out-that-punk.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/boot-out-that-punk-1-1",
       "spotify": "https://open.spotify.com/track/023uF0MMm9xoWiJTU5mo10",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/boot-out-that-punk-space-mission.jpg",
-    "thumbnail": "/images/covers/thumb/boot-out-that-punk-space-mission.jpg"
+    }
   },
   {
     "title": "Mid Summer",
     "id": "2114298273",
+    "cover": "/images/covers/mid-summer.jpg",
+    "thumbnail": "/images/covers/thumb/mid-summer.jpg",
+    "teaser": "A hypnotic acid techno track with flute.",
+    "story": "Mid Summer was made for a live Midsummer ritual in 2025.",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/mid-summer",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/mid-summer.jpg",
-    "thumbnail": "/images/covers/thumb/mid-summer.jpg"
+    }
   },
   {
     "title": "Feels like new",
     "id": "2111051817",
+    "cover": "/images/covers/feels-like-new.jpg",
+    "thumbnail": "/images/covers/thumb/feels-like-new.jpg",
+    "teaser": "A Goa trance version of a wedding song about a heart that is always ready for love.",
+    "story": "When a friend got married in Greece, The Energy Hour wrote a song in Swedish about how the heart is always ready for love. Feels like new is a Goa trance version of that song.",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/feels-like-new",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/feels-like-new.jpg",
-    "thumbnail": "/images/covers/thumb/feels-like-new.jpg"
+    }
   },
   {
     "title": "Varje morgon är du ny",
     "id": "2106087543",
+    "cover": "/images/covers/varje-morgon-ar-du-ny.jpg",
+    "thumbnail": "/images/covers/thumb/varje-morgon-ar-du-ny.jpg",
+    "teaser": "En bröllopslåt om att hjärtat alltid har tid för kärlek.",
+    "story": "Låten är tillägnad ett brudpar på deras bröllopsdag, Rhodos den 6 juni 2025.",
+    "lyrics": "/lyrics/varje-morgon-ar-du-ny.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/varje-dag-ar-du-ny-rhodos-juni-2025",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/varje-morgon-ar-du-ny.jpg",
-    "thumbnail": "/images/covers/thumb/varje-morgon-ar-du-ny.jpg"
+    }
   },
   {
     "title": "Poly - Goa mix 2025",
     "id": "2100196611",
+    "cover": "/images/covers/poly-goa-mix-2025.jpg",
+    "thumbnail": "/images/covers/thumb/poly-goa-mix-2025.jpg",
+    "teaser": "A 1990s favorite, remixed as progressive Goa trance.",
+    "story": "Poly was one of The Energy Hour's favorite tracks in the 1990s. It was made on an Atari ST with a Roland MKS-50 and a Yamaha TX sampler.\n\nThe 2025 Goa mix uses AI to remix the original and give it new life.",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/poly-2025-goa-mix",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/poly-goa-mix-2025.jpg",
-    "thumbnail": "/images/covers/thumb/poly-goa-mix-2025.jpg"
+    }
   },
   {
     "title": "Let yourself go - Body mix 2025",
     "id": "2097959391",
+    "cover": "/images/covers/let-yourself-go-body-mix-2025.jpg",
+    "thumbnail": "/images/covers/thumb/let-yourself-go-body-mix-2025.jpg",
+    "teaser": "1990s techno with a fresh pulse: body music meets EBM.",
+    "story": "Let yourself go is one of The Energy Hour's 1990s techno tracks, given a new mix in 2025. Old school energy meets a newer sound, with deeper bass and a new ride through the rave years.",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/let-yourself-go-body-music-mix-2025",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/let-yourself-go-body-mix-2025.jpg",
-    "thumbnail": "/images/covers/thumb/let-yourself-go-body-mix-2025.jpg"
+    }
   },
   {
     "title": "Wild One - Stockholm Archipelago Raid 2025",
     "id": "2092408632",
+    "cover": "/images/covers/wild-one-stockholm-archipelago-raid-2025.jpg",
+    "thumbnail": "/images/covers/thumb/wild-one-stockholm-archipelago-raid-2025.jpg",
+    "teaser": "A funk song about a catamaran that will not be tamed.",
+    "story": "",
+    "lyrics": "/lyrics/wild-one.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/wild-one-3-3",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/wild-one-stockholm-archipelago-raid-2025.jpg",
-    "thumbnail": "/images/covers/thumb/wild-one-stockholm-archipelago-raid-2025.jpg"
+    }
   },
   {
     "title": "We got the funk (teaser)",
     "id": "2015140323",
+    "cover": "/images/covers/we-got-the-funk-teaser.jpg",
+    "thumbnail": "/images/covers/thumb/we-got-the-funk-teaser.jpg",
+    "teaser": "A short teaser of FUNKMA's We got the funk.",
+    "story": "The track was first recorded in 2003, and it still resonates with the band today.",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/we-got-the-funk",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/we-got-the-funk-teaser.jpg",
-    "thumbnail": "/images/covers/thumb/we-got-the-funk-teaser.jpg"
+    }
   },
   {
     "title": "Gränsö funk",
     "id": "2081787027",
+    "cover": "/images/covers/granso-funk.jpg",
+    "thumbnail": "/images/covers/thumb/granso-funk.jpg",
+    "teaser": "Another take from the Älgö funk session: same spirit, different flavor.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/granso-funk",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/granso-funk.jpg",
-    "thumbnail": "/images/covers/thumb/granso-funk.jpg"
+    }
   },
   {
     "title": "Älgö funk",
     "id": "2078448168",
+    "cover": "/images/covers/algo-funk.jpg",
+    "thumbnail": "/images/covers/thumb/algo-funk.jpg",
+    "teaser": "A funk fusion jam over a polyrhythmic bassline.",
+    "story": "Älgö funk started as a funk fusion jam recorded at Raketbasen in April 2025, with drums and synth playing over a polyrhythmic bassline. The recording was then reworked with Suno AI.",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/algo-funk-improvisation",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/algo-funk.jpg",
-    "thumbnail": "/images/covers/thumb/algo-funk.jpg"
+    }
   },
   {
     "title": "Bow of love",
     "id": "2004157815",
+    "cover": "/images/covers/bow-of-love.jpg",
+    "thumbnail": "/images/covers/thumb/bow-of-love.jpg",
+    "teaser": "An intimate acoustic song with violin and guitar about a bond that holds wherever life leads.",
+    "story": "Bow of love is about letting go when a child grows up, moves away and steps into adult life – a bittersweet mix of pride, love and letting go.",
+    "lyrics": "/lyrics/bow-of-love.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/bow-of-love",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/bow-of-love.jpg",
-    "thumbnail": "/images/covers/thumb/bow-of-love.jpg"
+    }
   },
   {
     "title": "En strimma av hopp (Julen 2024)",
     "id": "1971962695",
+    "cover": "/images/covers/en-strimma-av-hopp-julen-2024.jpg",
+    "thumbnail": "/images/covers/thumb/en-strimma-av-hopp-julen-2024.jpg",
+    "teaser": "En samtida jullåt. Inte för den julstämningskänslige.",
+    "story": "",
+    "lyrics": "/lyrics/en-strimma-av-hopp.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/en-strimma-av-hopp",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/en-strimma-av-hopp-julen-2024.jpg",
-    "thumbnail": "/images/covers/thumb/en-strimma-av-hopp-julen-2024.jpg"
+    }
   },
   {
     "title": "It was you",
     "id": "1968310423",
+    "cover": "/images/covers/it-was-you.jpg",
+    "thumbnail": "/images/covers/thumb/it-was-you.jpg",
+    "teaser": "A love song dedicated to a meeting at a party in 1996.",
+    "story": "It was you is dedicated to The Energy Hour's wife. They met in 1996 at a party at Café Bojan, during a DJ set.\n\nThe lyrics were written entirely by The Energy Hour. The music was composed with Suno AI.",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/it-was-you-1",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/it-was-you.jpg",
-    "thumbnail": "/images/covers/thumb/it-was-you.jpg"
+    }
   },
   {
     "title": "Mörkrum - Hip hop remix",
     "id": "1966208795",
+    "cover": "/images/covers/morkrum-hip-hop-remix.jpg",
+    "thumbnail": "/images/covers/thumb/morkrum-hip-hop-remix.jpg",
+    "teaser": "En hiphopremix av Mörkrum.",
+    "story": "Mörkrum handlar om att se sitt liv genom en kameralins – och att man kanske missar något då.",
+    "lyrics": "/lyrics/morkrum.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/mo-rkrum-hip-hop-remix",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/morkrum-hip-hop-remix.jpg",
-    "thumbnail": "/images/covers/thumb/morkrum-hip-hop-remix.jpg"
+    }
   },
   {
     "title": "Mörkrum - Dansband-ish",
     "id": "1950178355",
+    "cover": "/images/covers/morkrum-dansband-ish.jpg",
+    "thumbnail": "/images/covers/thumb/morkrum-dansband-ish.jpg",
+    "teaser": "Mörkrum i dansbandsinspirerad tappning.",
+    "story": "Mörkrum handlar om att se sitt liv genom en kameralins – och att man kanske missar något då.\n\nSångtext och AI-prompt är skrivna av The Energy Hour. Musiken är genererad med Suno AI.",
+    "lyrics": "/lyrics/morkrum.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/morkrum-dansband-ii",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/morkrum-dansband-ish.jpg",
-    "thumbnail": "/images/covers/thumb/morkrum-dansband-ish.jpg"
+    }
   },
   {
     "title": "Uno 50",
     "id": "1006082302",
+    "cover": "/images/covers/uno-50.jpg",
+    "thumbnail": "/images/covers/thumb/uno-50.jpg",
+    "teaser": "Elektronisk musik till en femtioårsdag.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/uno-50",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/uno-50.jpg",
-    "thumbnail": "/images/covers/thumb/uno-50.jpg"
+    }
   },
   {
     "title": "Minnen by the synth",
     "id": "1908048179",
+    "cover": "/images/covers/minnen-by-the-synth.jpg",
+    "thumbnail": "/images/covers/thumb/minnen-by-the-synth.jpg",
+    "teaser": "Synthpop om tiden som tickar på och minnen vid vattnet.",
+    "story": "",
+    "lyrics": "/lyrics/minnen-vid-vattnet.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/minnen-by-the-synth-wav",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/minnen-by-the-synth.jpg",
-    "thumbnail": "/images/covers/thumb/minnen-by-the-synth.jpg"
+    }
   },
   {
     "title": "Sending it high - Stockholm Archipelago Raid 2024",
     "id": "1908008435",
+    "cover": "/images/covers/sending-it-high-stockholm-archipelago-raid-2024.jpg",
+    "thumbnail": "/images/covers/thumb/sending-it-high-stockholm-archipelago-raid-2024.jpg",
+    "teaser": "A sailing anthem for the Stockholm Archipelago Raid 2024.",
+    "story": "The Energy Hour made Sending it high for the film from the Stockholm Archipelago Raid 2024.\n\nCover photo: Henrik Trygg.",
+    "lyrics": "/lyrics/sending-it-high.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/sending-it-high-stockholm-archipelago-raid-2024",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/sending-it-high-stockholm-archipelago-raid-2024.jpg",
-    "thumbnail": "/images/covers/thumb/sending-it-high-stockholm-archipelago-raid-2024.jpg"
+    }
   },
   {
     "title": "Som allt du gör",
     "id": "1850442969",
+    "cover": "/images/covers/som-allt-du-gor.jpg",
+    "thumbnail": "/images/covers/thumb/som-allt-du-gor.jpg",
+    "teaser": "En studentlåt om att följa sina drömmar och göra sin egen grej.",
+    "story": "",
+    "lyrics": "/lyrics/som-allt-du-gor.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/majken-som-allt-du-gor-take-1",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/som-allt-du-gor.jpg",
-    "thumbnail": "/images/covers/thumb/som-allt-du-gor.jpg"
+    }
   },
   {
     "title": "Hjalmar - Skog Med Siri",
     "id": "1543733125",
+    "cover": "/images/covers/hjalmar-skog-med-siri.jpg",
+    "thumbnail": "/images/covers/thumb/hjalmar-skog-med-siri.jpg",
+    "teaser": "En remix av Hjalmars låt Skog, gjord en regnig dag.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/hjalmar-skog-med-siri",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/hjalmar-skog-med-siri.jpg",
-    "thumbnail": "/images/covers/thumb/hjalmar-skog-med-siri.jpg"
+    }
   },
   {
     "title": "Julen på radion",
     "id": "1184957014",
+    "cover": "/images/covers/julen-pa-radion.jpg",
+    "thumbnail": "/images/covers/thumb/julen-pa-radion.jpg",
+    "teaser": "En jullåt från The Energy Hour.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/julen-pa-radion-mp3",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/julen-pa-radion.jpg",
-    "thumbnail": "/images/covers/thumb/julen-pa-radion.jpg"
+    }
   },
   {
     "title": "Vox On Vox",
     "id": "1120683526",
+    "cover": "/images/covers/vox-on-vox.jpg",
+    "thumbnail": "/images/covers/thumb/vox-on-vox.jpg",
+    "teaser": "Dance music from The Energy Hour.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/vox-on-vox",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/vox-on-vox.jpg",
-    "thumbnail": "/images/covers/thumb/vox-on-vox.jpg"
+    }
   },
   {
     "title": "THE ONE - The Energy Hour Remix",
     "id": "959745685",
+    "cover": "/images/covers/the-one-the-energy-hour-remix.jpg",
+    "thumbnail": "/images/covers/thumb/the-one-the-energy-hour-remix.jpg",
+    "teaser": "A rock-driven remix of Hjalmar's The One.",
+    "story": "The idea was to keep the remix simple enough to play live, and to keep the rock energy of the original.",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/the-one-remix",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/the-one-the-energy-hour-remix.jpg",
-    "thumbnail": "/images/covers/thumb/the-one-the-energy-hour-remix.jpg"
+    }
   },
   {
     "title": "Cowboys By The Waterhole - The Energy Hour Remix II",
     "id": "500086116",
+    "cover": "/images/covers/cowboys-by-the-waterhole-the-energy-hour-remix-ii.jpg",
+    "thumbnail": "/images/covers/thumb/cowboys-by-the-waterhole-the-energy-hour-remix-ii.jpg",
+    "teaser": "A second Energy Hour remix of T-Bone Band's Cowboys by the waterhole.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/cowboys-by-the-waterhole-the-energy-hour-remix-ii",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/cowboys-by-the-waterhole-the-energy-hour-remix-ii.jpg",
-    "thumbnail": "/images/covers/thumb/cowboys-by-the-waterhole-the-energy-hour-remix-ii.jpg"
+    }
   },
   {
     "title": "Black Friday",
     "id": "541810173",
+    "cover": "/images/covers/black-friday.jpg",
+    "thumbnail": "/images/covers/thumb/black-friday.jpg",
+    "teaser": "An electronic track from The Energy Hour.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/black-friday",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/black-friday.jpg",
-    "thumbnail": "/images/covers/thumb/black-friday.jpg"
+    }
   },
   {
     "title": "Farr 30",
     "id": "341387088",
+    "cover": "/images/covers/farr-30.jpg",
+    "thumbnail": "/images/covers/thumb/farr-30.jpg",
+    "teaser": "Electronic music named after the Farr 30 sailing boat.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/farr-take-1",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/farr-30.jpg",
-    "thumbnail": "/images/covers/thumb/farr-30.jpg"
+    }
   },
   {
     "title": "T-Bone Band - Cowboys By The Waterhole (The Energy Hour Remix)",
     "id": "303577489",
+    "cover": "/images/covers/t-bone-band-cowboys-by-the-waterhole-the-energy-hour-remix.jpg",
+    "thumbnail": "/images/covers/thumb/t-bone-band-cowboys-by-the-waterhole-the-energy-hour-remix.jpg",
+    "teaser": "Country meets dance in The Energy Hour's remix of T-Bone Band.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/cowboys-by-the-waterhole-the-energy-hour-remix",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/t-bone-band-cowboys-by-the-waterhole-the-energy-hour-remix.jpg",
-    "thumbnail": "/images/covers/thumb/t-bone-band-cowboys-by-the-waterhole-the-energy-hour-remix.jpg"
+    }
   },
   {
     "title": "Sleepy",
     "id": "286640127",
+    "cover": "/images/covers/sleepy.jpg",
+    "thumbnail": "/images/covers/thumb/sleepy.jpg",
+    "teaser": "Ambient music from playing around with synth pads.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/sleepy",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/sleepy.jpg",
-    "thumbnail": "/images/covers/thumb/sleepy.jpg"
+    }
   },
   {
     "title": "Alva - När Världen Håller Andan - The Energy Hour Remix",
     "id": "264027908",
+    "cover": "/images/covers/alva-nar-varlden-haller-andan-the-energy-hour-remix.jpg",
+    "thumbnail": "/images/covers/thumb/alva-nar-varlden-haller-andan-the-energy-hour-remix.jpg",
+    "teaser": "En reggaeremix av Alvas När världen håller andan.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/alva-nar-varlden-haller-andan-the-energy-hour-reggae-remix-preview",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/alva-nar-varlden-haller-andan-the-energy-hour-remix.jpg",
-    "thumbnail": "/images/covers/thumb/alva-nar-varlden-haller-andan-the-energy-hour-remix.jpg"
+    }
   },
   {
     "title": "Soundave - Symmetric Circles (The Energy Hour Remix)",
     "id": "207790827",
+    "cover": "/images/covers/soundave-symmetric-circles-the-energy-hour-remix.jpg",
+    "thumbnail": "/images/covers/thumb/soundave-symmetric-circles-the-energy-hour-remix.jpg",
+    "teaser": "The Energy Hour's remix of Symmetric Circles by Soundave.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/soundave-symetric-circles-the-energy-hour-remix",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/soundave-symmetric-circles-the-energy-hour-remix.jpg",
-    "thumbnail": "/images/covers/thumb/soundave-symmetric-circles-the-energy-hour-remix.jpg"
+    }
   },
   {
     "title": "Techno Bitch- 1991",
     "id": "186345237",
+    "cover": "/images/covers/techno-bitch-1991.jpg",
+    "thumbnail": "/images/covers/thumb/techno-bitch-1991.jpg",
+    "teaser": "Rave-era techno from the 1990s.",
+    "story": "Techno Bitch was recorded in the 1990s, with two guest vocalists. It comes from the years of raving in the woods and DJing at parties.",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/techno-bitch",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/techno-bitch-1991.jpg",
-    "thumbnail": "/images/covers/thumb/techno-bitch-1991.jpg"
+    }
   },
   {
     "title": "Analog Bass Sweep - 1994",
     "id": "32767315",
+    "cover": "/images/covers/analog-bass-sweep-1994.jpg",
+    "thumbnail": "/images/covers/thumb/analog-bass-sweep-1994.jpg",
+    "teaser": "Early 1990s techno built on an analog bass sweep.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/analog-bass-sweep",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/analog-bass-sweep-1994.jpg",
-    "thumbnail": "/images/covers/thumb/analog-bass-sweep-1994.jpg"
+    }
   },
   {
     "title": "House Break - 1994",
     "id": "32522641",
+    "cover": "/images/covers/house-break-1994.jpg",
+    "thumbnail": "/images/covers/thumb/house-break-1994.jpg",
+    "teaser": "Fast synth and piano chords with old school house energy.",
+    "story": "The goal was a track built on fast synth and piano chords. Listening back years later, it still has the energy it was made for.",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/house-break",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/house-break-1994.jpg",
-    "thumbnail": "/images/covers/thumb/house-break-1994.jpg"
+    }
   },
   {
     "title": "The Energy Hour - 1994",
     "id": "32397380",
+    "cover": "/images/covers/the-energy-hour-1994.jpg",
+    "thumbnail": "/images/covers/thumb/the-energy-hour-1994.jpg",
+    "teaser": "Old school techno – the track that shares its name with the project.",
+    "story": "",
+    "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/the-energy-hour",
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    },
-    "cover": "/images/covers/the-energy-hour-1994.jpg",
-    "thumbnail": "/images/covers/thumb/the-energy-hour-1994.jpg"
+    }
   }
 ]
