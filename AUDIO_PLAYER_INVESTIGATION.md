@@ -1,6 +1,6 @@
 # Investigation: own audio player instead of the SoundCloud widget
 
-Status: investigation, updated with decisions. No code changed. Date: 2026-11-24.
+Status: investigation, updated with decisions. All 64 originals downloaded (2026-11-24). No code changed. Updated: 2026-11-25.
 
 ## Decisions (Anders, 2026-11-24)
 
@@ -43,38 +43,68 @@ SoundCloud and Spotify stay as links in Discover → Info.
 - Fix 3 and Fix 4 are no longer worth building, because the widget will be removed.
 - Fix 1 and Fix 2 are worth doing only if getting the audio files takes several weeks.
 
-## 1. Getting the files from SoundCloud
+## 1. Getting the files from SoundCloud: done
 
-Checked against the current SoundCloud API spec (`developers.soundcloud.com/docs/api/explorer/api.json`, 2026-11-24):
+All 64 originals were downloaded on 2026-11-24, without a SoundCloud API app and without changing any track settings.
 
-- **There is no `/tracks/{id}/download` endpoint in the current spec.**
-- **The track object has `download_url`.** The spec describes it as "URL to download a track. Omitted or null when track is not downloadable." It points to the originally uploaded file.
-- **`downloadable` can be changed through the API.** `PUT /tracks/{track_urn}` accepts `downloadable`.
-- **Transcoded streams are available.** `GET /tracks/{track_urn}/streams` returns lossy versions (MP3 128 kbps, AAC 160 kbps HLS).
-- **Authentication:** OAuth 2.1 with PKCE against `secure.soundcloud.com`. All API use requires a registered application. Tokens expire after about an hour.
+### Result
 
-**Unverified:** whether the owner receives `download_url` for their own tracks when downloads are switched off. Test this first, with one track.
+- **Folder:** `~/Desktop/desktop/The Energy Hour 2024/soundcloud-originals/`, outside the repo. 2.4 GB.
+- **File names:** `<soundcloud-slug>.<ext>`, for example `tokyo.wav`. The slug is the last part of the track's SoundCloud link in `playlist.json`.
+- **`manifest.tsv`** lists, per track:
+  - `id` and `title` from `playlist.json`
+  - SoundCloud slug and local file
+  - the original upload file name
+  - codec, sample rate, bit depth and bitrate
+  - length
+- **`original-names.tsv`** lists slug → original upload file name.
+- **Checked:** every file was read with `ffprobe` and has an audio stream. Spot checks match the SoundCloud lengths: Tokyo 4:05, Morning Can Wait 4:19, U Make My Heart 3:57.
 
-### Order of preference
+| Original format | Tracks |
+| --- | --- |
+| WAV/AIFF 24-bit | 12 |
+| WAV/AIFF 16-bit | 34 |
+| AAC (`.m4a`) | 9 |
+| MP3 | 9 |
 
-1. **The owner receives `download_url` with downloads switched off.** A script fetches every original directly. Best case.
-2. **Downloads are switched on per track for a moment.** A script does this for one track at a time:
-   - sets `downloadable: true`
-   - downloads the original
-   - sets `downloadable: false` again
+The 18 lossy files are mostly older tracks, remixes and short pieces. That is what was uploaded, so better versions do not exist on SoundCloud.
 
-   The track can be downloaded publicly for a few seconds, which should be acceptable. The script must record each track's original `downloadable` value and restore it, also if it fails halfway.
-3. **Transcoded streams from `/streams`.** Use this only if 1 and 2 fail. These files are already lossy. Serve them as they are, with a remux at most (`ffmpeg -c copy`), not a second lossy encode. The quality is lower than the originals.
+Several original names include "DRAFT" or "BOUNCE", for example `Tokyo DRAFT.wav`. They are still the files that are published on SoundCloud.
 
-Do not use tools that scrape SoundCloud with the website's own client id (for example `scdl` or `yt-dlp`). That breaks SoundCloud's terms.
+### Method
 
-The track `id` in `public/playlist.json` is the SoundCloud track id, so mapping files to tracks is automatic (`track_urn` = `soundcloud:tracks:<id>`).
+In SoundCloud's Artist Studio (`soundcloud.com/artists`), each track's edit panel has a **"Ladda ner fil"** (Download file) button. Pressing it makes a request to the studio's own backend. The backend returns `trackDownloadLink`: a signed CloudFront URL on `cf-media.sndcdn.com` that is valid for about two minutes. The file's original name is in the `Content-Disposition` header.
 
-### What Anders does
+The built-in browser does not save downloads, so the work was split like this:
 
-- Register an application in SoundCloud's developer portal.
-- Log in once through the OAuth flow (the script opens the login page; Anders signs in himself).
-- Keep the client secret and tokens in a local, git-ignored file (`config/*.local.json`, like the deploy config). Never commit them.
+1. Anders signed in to SoundCloud in the browser pane.
+2. A script in the page did this for one track at a time:
+   - find the row by its link in the track list
+   - open "Öppna åtgärder för spår" → "Redigera"
+   - press "Ladda ner fil"
+   - read `trackDownloadLink` from the response
+3. The links were downloaded with `curl` in batches of six, within their two-minute validity.
+
+The script only pressed the actions menu, "Redigera", "Ladda ner fil" and the panel's close button. It never saved or changed anything.
+
+If tracks are added or replaced later, repeat the steps for those tracks. A single track can also be downloaded by hand with the same button.
+
+### Mismatch found
+
+`playlist.json` has the SoundCloud links of "You make my heart" (`2186965518`) and "U make my heart" (`2308189358`) swapped. SoundCloud's oEmbed confirms that `you-make-my-heart` is track `2186965518`. `manifest.tsv` follows the ids:
+
+- `2186965518` → `you-make-my-heart.aif` (5:05)
+- `2308189358` → `u-make-my-heart.m4a` (3:57)
+
+The links in `playlist.json` are still swapped and should be corrected.
+
+### Note: iCloud
+
+The Desktop folder appears to be synced with iCloud. Reading the files was slow, and only part of the 2.4 GB was stored locally. Before encoding, make sure all files are downloaded locally, or move the folder outside the iCloud-synced area.
+
+### Not used: the SoundCloud API
+
+The official API has `download_url` on the track object (OAuth 2.1 app required). It was not needed. Do not use tools that scrape SoundCloud with the website's own client id (`scdl`, `yt-dlp`).
 
 ## 2. Encoding
 
@@ -82,8 +112,9 @@ The track `id` in `public/playlist.json` is the SoundCloud track id, so mapping 
 
 | Original | Handling |
 | --- | --- |
-| WAV / AIFF / FLAC (lossless) | Encode to AAC-LC 192 kbps `.m4a` |
-| MP3 / AAC (already lossy) | Keep the codec; remux to `.m4a` if AAC, otherwise serve the MP3 as is |
+| WAV / AIFF (lossless, 46 tracks) | Encode to AAC-LC 192 kbps `.m4a` |
+| AAC `.m4a` (9 tracks) | Serve as is (remux only if needed) |
+| MP3 (9 tracks) | Serve as is |
 
 For every file:
 
@@ -106,7 +137,7 @@ The live site returns `206 Partial Content` for `Range` requests through this ch
 
 - **Separate bucket**, for example `the-energy-hour-media` in `fr-par`.
   - The site deploy (`deploy.yml`) runs `aws s3 sync dist/ … --delete`. It would delete audio files placed in the site bucket.
-  - A separate bucket keeps about 300 MB out of git and out of every deploy.
+  - A separate bucket keeps the audio (about 400 MB after encoding) out of git and out of every deploy.
 - **Subdomain** `media.the-energy-hour.com`:
   - a CNAME in Route 53 straight to Scaleway (Edge Services or the bucket website endpoint)
   - subdomains do not need the CloudFront apex workaround, so audio does not pass through two CDNs
@@ -140,9 +171,7 @@ The live site returns `206 Partial Content` for `Range` requests through this ch
 
 | Script | Job |
 | --- | --- |
-| `soundcloud-auth` | OAuth PKCE login. Stores the token locally (git-ignored). |
-| `fetch-originals` | For each track id: fetch `download_url` (fallback 2 or 3 above), download into a local folder outside the repo, and log the result per track. |
-| `encode-audio` | Encode or remux, write metadata, hash the filename, and read the duration. |
+| `encode-audio` | Read `manifest.tsv`; encode or remux; write metadata; hash the filename; read the duration. |
 | `upload-audio` | Upload to the media bucket with the right metadata, then write `audio` and `duration` into `playlist.json`. |
 
 **Player (`app.js`):**
@@ -167,12 +196,12 @@ The live site returns `206 Partial Content` for `Range` requests through this ch
 
 | Step | Who | Done when |
 | --- | --- | --- |
-| 1. Register a SoundCloud app; test `download_url` as owner on one track | Anders + Claude | It is known which fetch path (1, 2 or 3) works |
+| 1. ~~Download the originals~~ (done 2026-11-24) | Anders + Claude | All 64 originals are local, listed in `manifest.tsv` |
 | 2. Create the media bucket and `media.the-energy-hour.com`; check `Range` and cache headers | Anders (cloud account) + Claude | One test file plays from the subdomain with `206` |
-| 3. Fetch, encode and upload 2–3 tracks | Claude | Files are in the bucket; `playlist.json` has `audio` for them |
+| 3. Encode and upload 2–3 tracks | Claude | Files are in the bucket; `playlist.json` has `audio` for them |
 | 4. Build the own player; tracks without `audio` temporarily fall back to the widget | Claude | Works on desktop |
 | 5. Test on a real iPhone: first tap, auto-advance, locked screen, lock-screen controls | Anders | All cases work |
-| 6. Fetch, encode and upload the remaining tracks | Claude | All 64 tracks have `audio` |
+| 6. Encode and upload the remaining tracks | Claude | All 64 tracks have `audio` |
 | 7. Remove the SoundCloud widget, `api.js` and the fallback | Claude | No SoundCloud iframe on the site |
 
 The temporary fallback in step 4 exists only so the site keeps working during the migration. It is removed in step 7.
