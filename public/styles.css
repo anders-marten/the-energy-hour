@@ -103,6 +103,7 @@ body { min-height: 100vh; min-height: 100dvh; }
   #teh-design:has(#teh-tracks) header { display:none; }
   #teh-design:has(#teh-tracks) main { padding:12px 8px 20px; background:#050505; }
   #teh-design #teh-tracks > .intro, #teh-design #teh-tracks > .desktop-track-heading, #teh-design .desktop-wording { display:none; }
+  #teh-design .desktop-right > .intro, #teh-design .desktop-right > .desktop-track-heading { display:none; }
   #teh-design .mobile-feature, #teh-design .mobile-wording { display:block; }
   #teh-design .feature-art { padding:8px 11px; background:#141217; }
   #teh-design .feature-actions { inset:auto 23px 26px; display:grid; grid-template-columns:1fr 1.6fr; gap:12px; }
