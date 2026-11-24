@@ -5,7 +5,7 @@
     "cover": "/images/covers/morning-can-wait.jpg",
     "thumbnail": "/images/covers/thumb/morning-can-wait.jpg",
     "teaser": "One night. One encounter. A feeling that remains.",
-    "story": "It started at an art school rave in Umeå in 1990. Years later, the memory of an encounter that night became a song.",
+    "story": "The lights come up at an art school rave in Umeå in 1990, but for two people the night is just beginning. Years later, the memory became a song that lingers in the quiet after the music, through daylight and coffee gone cold.",
     "lyrics": "/lyrics/morning-can-wait.txt",
     "featured": true,
     "links": {
@@ -21,7 +21,7 @@
     "cover": "/images/covers/tokyo.jpg",
     "thumbnail": "/images/covers/thumb/tokyo.jpg",
     "teaser": "Alone among millions. A chance encounter with a city.",
-    "story": "On a Tokyo train, a woman says she’s almost home. She meets the narrator’s eyes for a moment, then looks away. The scene holds the feeling that gave rise to the song: being surrounded by people and still feeling far from them.\n\nThe woman can also be heard as Tokyo itself. After the train come rain, neon and a bar. By the time the narrator asks “Mind if I stay?”, the city begins to feel like someone they’ve just met.",
+    "story": "On a crowded Tokyo train, a woman catches the narrator’s eye for a moment. She might be a stranger or Tokyo itself. As the night goes on, the city begins to feel like someone you’ve just met and want to spend a little longer with.",
     "lyrics": "/lyrics/tokyo.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/tokyo",
@@ -36,7 +36,7 @@
     "cover": "/images/covers/you-or-the-funk.jpg",
     "thumbnail": "/images/covers/thumb/you-or-the-funk.jpg",
     "teaser": "Soul and funk built around a simple choice: I choose you.",
-    "story": "",
+    "story": "Someone asks the narrator to put down the bassline and come dancing. The question catches them off guard: how are you supposed to choose between the person you love and the groove that won’t let you go?",
     "lyrics": "/lyrics/you-or-the-funk.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/you-or-the-funk",
@@ -96,7 +96,7 @@
     "cover": "/images/covers/i-love-tomatoes.jpg",
     "thumbnail": "/images/covers/thumb/i-love-tomatoes.jpg",
     "teaser": "A summer song about tomatoes and the child we all carry inside.",
-    "story": "",
+    "story": "A daughter asks whether an entire tomato plant really grew from one little seed. Her question makes the narrator look again at something familiar and see what had been there all along.",
     "lyrics": "/lyrics/i-love-tomatoes.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/i-love-tomatoes",
@@ -111,7 +111,7 @@
     "cover": "/images/covers/vad-vet-jag.jpg",
     "thumbnail": "/images/covers/thumb/vad-vet-jag.jpg",
     "teaser": "Techno om att lyssna mer på sin kropp.",
-    "story": "",
+    "story": "En maskin ritar upp hjärtats rytm och hittar en störning. Låten stannar vid ögonblicket då något som känns inifrån blir ett mönster på en skärm.",
     "lyrics": "/lyrics/vad-vet-jag.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/vad-vet-jag-wav",
@@ -126,7 +126,7 @@
     "cover": "/images/covers/mama-english-version.jpg",
     "thumbnail": "/images/covers/thumb/mama-english-version.jpg",
     "teaser": "The English version of Mamma – a reggae song that carries a promise.",
-    "story": "",
+    "story": "An old photograph becomes an imagined doorway. For a moment, the narrator can meet their mother across time and wonder what she would have seen if she could look ahead.",
     "lyrics": "/lyrics/mama-english-version.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/mama",
@@ -141,7 +141,7 @@
     "cover": "/images/covers/mamma.jpg",
     "thumbnail": "/images/covers/thumb/mamma.jpg",
     "teaser": "Reggae från The Energy Hour. Låten finns också i en engelsk version, Mama.",
-    "story": "",
+    "story": "Ett gammalt fotografi blir en tänkt dörr genom tiden. Berättaren får för en stund möta sin mamma i bilden och undrar vad hon hade sett om hon kunnat blicka framåt.",
     "lyrics": "/lyrics/mamma.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/mamma",
@@ -156,7 +156,7 @@
     "cover": "/images/covers/luxury.jpg",
     "thumbnail": "/images/covers/thumb/luxury.jpg",
     "teaser": "An electronic track built around one line: we live in luxury.",
-    "story": "",
+    "story": "The people in Luxury sing about champagne friends and a life they see as their destiny. They’re delighted with the world they’ve made for themselves. The song leaves the listener to hear what’s missing from that picture.",
     "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/luxury",
@@ -186,7 +186,7 @@
     "cover": "/images/covers/godhetssignal.jpg",
     "thumbnail": "/images/covers/thumb/godhetssignal.jpg",
     "teaser": "Reggae och dub som sänder en godhetssignal.",
-    "story": "",
+    "story": "Låten börjar som en radiosändning. När den första förälskelsen brunnit ut och vardagen hunnit ikapp, letar texten efter något som kan fortsätta färdas mellan människor.",
     "lyrics": "/lyrics/godhetssignal.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/godhetssignal",
@@ -201,7 +201,7 @@
     "cover": "/images/covers/man-cave.jpg",
     "thumbnail": "/images/covers/thumb/man-cave.jpg",
     "teaser": "Funk om att slå sig ner i soffan och knäppa en bira.",
-    "story": "",
+    "story": "Berättaren bjuder in sin älskling bland kablar, blinkande maskiner och plastblommor. När hon börjar nicka i takt anar han att hans privata jakt på funken kanske kan bli något de delar.",
     "lyrics": "/lyrics/man-cave.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/man-cave",
@@ -261,7 +261,7 @@
     "cover": "/images/covers/i-collect.jpg",
     "thumbnail": "/images/covers/thumb/i-collect.jpg",
     "teaser": "Deep house about collecting everything that made you who you are.",
-    "story": "",
+    "story": "It starts with the things that stay and the things that slip through your hands. Then come the people, the habits and the mistakes you carry. They all find their way into the collection of everything that made you who you are.",
     "lyrics": "/lyrics/i-collect.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/i-collect",
@@ -321,7 +321,7 @@
     "cover": "/images/covers/rocket-funk.jpg",
     "thumbnail": "/images/covers/thumb/rocket-funk.jpg",
     "teaser": "Funk från FUNKMA, med ambienta och elektroniska inslag.",
-    "story": "",
+    "story": "En funkbesättning landar på en planet som sänt ut ett nödrop. De kommer i fred, med syntar och bas, och hoppas att invånarna fortfarande kan öppna sina hjärtan och dansa tillsammans.",
     "lyrics": "/lyrics/rocket-funk.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/raketfunk-bounce",
@@ -366,7 +366,7 @@
     "cover": "/images/covers/act-of-balance-spectrum-mix.jpg",
     "thumbnail": "/images/covers/thumb/act-of-balance-spectrum-mix.jpg",
     "teaser": "A melancholic deep house and trance mix of Act of balance.",
-    "story": "",
+    "story": "One voice counts gold and draws borders. Another holds a child and works the soil. The song sets those voices against each other and asks how long a balance can hold when each side has so much at stake.",
     "lyrics": "/lyrics/act-of-balance.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/act-of-balance-second-gender-extended",
@@ -381,7 +381,7 @@
     "cover": "/images/covers/act-of-balance.jpg",
     "thumbnail": "/images/covers/thumb/act-of-balance.jpg",
     "teaser": "Synth-driven industrial techno about an act of balance.",
-    "story": "",
+    "story": "One voice counts gold and draws borders. Another holds a child and works the soil. The song sets those voices against each other and asks how long a balance can hold when each side has so much at stake.",
     "lyrics": "/lyrics/act-of-balance.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/act-of-balance",
@@ -411,7 +411,7 @@
     "cover": "/images/covers/feeling-low-trance.jpg",
     "thumbnail": "/images/covers/thumb/feeling-low-trance.jpg",
     "teaser": "A trance version of Feeling low, about life's ups and downs.",
-    "story": "",
+    "story": "The narrator feels low and can’t quite say why. The beat keeps moving while they try to let the feeling show.",
     "lyrics": "/lyrics/feeling-low.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/feeling-low-trance",
@@ -426,7 +426,7 @@
     "cover": "/images/covers/feeling-low-deep-house.jpg",
     "thumbnail": "/images/covers/thumb/feeling-low-deep-house.jpg",
     "teaser": "Deep house for the lows and the highs – we dance through it.",
-    "story": "",
+    "story": "The narrator feels low and can’t quite say why. The beat keeps moving while they try to let the feeling show.",
     "lyrics": "/lyrics/feeling-low.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/feeling-low-deep-house",
@@ -441,7 +441,7 @@
     "cover": "/images/covers/sag-funk-funk.jpg",
     "thumbnail": "/images/covers/thumb/sag-funk-funk.jpg",
     "teaser": "Funk från FUNKMA.",
-    "story": "",
+    "story": "Låten skrevs till en väns bröllop, där bandet skulle spela funk. Texten är en inbjudan till gästerna att lämna sina platser och göra dansgolvet till sitt.",
     "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/say-funk-funk-rocky-3",
@@ -456,7 +456,7 @@
     "cover": "/images/covers/boot-out-that-punk-space-mission.jpg",
     "thumbnail": "/images/covers/thumb/boot-out-that-punk-space-mission.jpg",
     "teaser": "A groove-driven call to action, laced with soul and sass.",
-    "story": "",
+    "story": "A political statement takes the form of a funk mission in space. James Brown captains the crew and a love bomb is on board. The call and response turns the audience into part of the mission.",
     "lyrics": "/lyrics/boot-out-that-punk.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/boot-out-that-punk-1-1",
@@ -486,7 +486,7 @@
     "cover": "/images/covers/feels-like-new.jpg",
     "thumbnail": "/images/covers/thumb/feels-like-new.jpg",
     "teaser": "A Goa trance version of a wedding song about a heart that is always ready for love.",
-    "story": "When a friend got married in Greece, The Energy Hour wrote a song in Swedish about how the heart is always ready for love. Feels like new is a Goa trance version of that song.",
+    "story": "A Swedish song written for a friend’s wedding in Greece became the starting point for this Goa trance version. The original idea carries through: falling in love can still take you by surprise at an age when you thought that part of life had passed.",
     "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/feels-like-new",
@@ -501,7 +501,7 @@
     "cover": "/images/covers/varje-morgon-ar-du-ny.jpg",
     "thumbnail": "/images/covers/thumb/varje-morgon-ar-du-ny.jpg",
     "teaser": "En bröllopslåt om att hjärtat alltid har tid för kärlek.",
-    "story": "Låten är tillägnad ett brudpar på deras bröllopsdag, Rhodos den 6 juni 2025.",
+    "story": "Låten skrevs till ett bröllop på Rhodos den 6 juni 2025. Den börjar med någon som tror sig ha blivit för gammal för att bli kär, och följer vad som händer när någon plötsligt lyfter på locket.",
     "lyrics": "/lyrics/varje-morgon-ar-du-ny.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/varje-dag-ar-du-ny-rhodos-juni-2025",
@@ -546,7 +546,7 @@
     "cover": "/images/covers/wild-one-stockholm-archipelago-raid-2025.jpg",
     "thumbnail": "/images/covers/thumb/wild-one-stockholm-archipelago-raid-2025.jpg",
     "teaser": "A funk song about a catamaran that will not be tamed.",
-    "story": "",
+    "story": "A racing catamaran introduces itself as a wild ride. The song puts you on board for the Stockholm Archipelago Raid, where speed, spray and the feeling of taking flight are part of the invitation.",
     "lyrics": "/lyrics/wild-one.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/wild-one-3-3",
@@ -621,7 +621,7 @@
     "cover": "/images/covers/en-strimma-av-hopp-julen-2024.jpg",
     "thumbnail": "/images/covers/thumb/en-strimma-av-hopp-julen-2024.jpg",
     "teaser": "En samtida jullåt. Inte för den julstämningskänslige.",
-    "story": "",
+    "story": "Stearinljuset lyser bakom gardinerna medan en missil ritar ett streck över vinterhimlen. Låten om jul i en tid av oro håller fast vid den lilla strimma hopp som finns kvar.",
     "lyrics": "/lyrics/en-strimma-av-hopp.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/en-strimma-av-hopp",
@@ -636,7 +636,7 @@
     "cover": "/images/covers/it-was-you.jpg",
     "thumbnail": "/images/covers/thumb/it-was-you.jpg",
     "teaser": "A love song dedicated to a meeting at a party in 1996.",
-    "story": "It was you is dedicated to The Energy Hour's wife. They met in 1996 at a party at Café Bojan, during a DJ set.\n\nThe lyrics were written entirely by The Energy Hour. The music was composed with Suno AI.",
+    "story": "During a DJ set at Café Bojan in 1996, someone caught Anders Mårtén’s eye. The song is dedicated to the woman he met that night, now his wife. It returns to that instant, when the room was still dancing and his attention had gone somewhere else.",
     "lyrics": "",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/it-was-you-1",
@@ -651,7 +651,7 @@
     "cover": "/images/covers/morkrum-hip-hop-remix.jpg",
     "thumbnail": "/images/covers/thumb/morkrum-hip-hop-remix.jpg",
     "teaser": "En hiphopremix av Mörkrum.",
-    "story": "Mörkrum handlar om att se sitt liv genom en kameralins – och att man kanske missar något då.",
+    "story": "Som femtonåring får berättaren en kamera och skapar en egen värld i mörkrummets röda ljus. När han ser tillbaka undrar han vad han lyckades fånga och vad som pågick alldeles utanför bilden.",
     "lyrics": "/lyrics/morkrum.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/mo-rkrum-hip-hop-remix",
@@ -666,7 +666,7 @@
     "cover": "/images/covers/morkrum-dansband-ish.jpg",
     "thumbnail": "/images/covers/thumb/morkrum-dansband-ish.jpg",
     "teaser": "Mörkrum i dansbandsinspirerad tappning.",
-    "story": "Mörkrum handlar om att se sitt liv genom en kameralins – och att man kanske missar något då.\n\nSångtext och AI-prompt är skrivna av The Energy Hour. Musiken är genererad med Suno AI.",
+    "story": "Som femtonåring får berättaren en kamera och skapar en egen värld i mörkrummets röda ljus. När han ser tillbaka undrar han vad han lyckades fånga och vad som pågick alldeles utanför bilden.",
     "lyrics": "/lyrics/morkrum.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/morkrum-dansband-ii",
@@ -696,7 +696,7 @@
     "cover": "/images/covers/minnen-by-the-synth.jpg",
     "thumbnail": "/images/covers/thumb/minnen-by-the-synth.jpg",
     "teaser": "Synthpop om tiden som tickar på och minnen vid vattnet.",
-    "story": "",
+    "story": "På en brygga i solnedgången försöker berättaren stanna i nuet. Det är svårt när den stilla vattenytan får tankarna att vandra till dagar som redan gått.",
     "lyrics": "/lyrics/minnen-vid-vattnet.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/minnen-by-the-synth-wav",
@@ -726,7 +726,7 @@
     "cover": "/images/covers/som-allt-du-gor.jpg",
     "thumbnail": "/images/covers/thumb/som-allt-du-gor.jpg",
     "teaser": "En studentlåt om att följa sina drömmar och göra sin egen grej.",
-    "story": "",
+    "story": "Efter tretton år i skolbänken kommer frågan om vad som händer nu. Sången ger studenten tid att njuta av dagen och föräldrarnas tillåtelse att hitta sin egen väg.",
     "lyrics": "/lyrics/som-allt-du-gor.txt",
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/majken-som-allt-du-gor-take-1",
