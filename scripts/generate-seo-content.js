@@ -60,41 +60,68 @@ function normalizeTracks(items) {
     .map((item) => ({
       title: typeof item.title === "string" ? item.title.trim() : "",
       id: String(item.id || "").trim(),
+      cover: typeof item.cover === "string" ? item.cover : "",
+      thumbnail: typeof item.thumbnail === "string" ? item.thumbnail : "",
+      teaser: typeof item.teaser === "string" ? item.teaser : "",
+      story: typeof item.story === "string" ? item.story : "",
+      lyrics: typeof item.lyrics === "string" ? item.lyrics : "",
+      featured: item.featured === true,
       links: getLinks(item)
     }))
     .filter((item) => item.title && item.id);
 }
 
 function renderTrackList(tracks) {
-  const items = tracks
-    .map((track) => {
-      const title = escapeHtml(track.title);
-      const soundcloud = track.links.soundcloud;
-      const spotify = track.links.spotify;
-      const titleHref = soundcloud || "#";
-      const titleHtml = `<a class="track-title track-play-link" href="${escapeHtml(titleHref)}" data-track-id="${escapeHtml(track.id)}">${title}</a>`;
-      const serviceLinks = [
-        soundcloud
-          ? `<a class="track-service" href="${escapeHtml(soundcloud)}" target="_blank" rel="noopener noreferrer">SoundCloud</a>`
-          : "",
-        spotify
-          ? `<a class="track-service" href="${escapeHtml(spotify)}" target="_blank" rel="noopener noreferrer">Spotify</a>`
-          : ""
-      ].filter(Boolean);
-      const servicesHtml = serviceLinks.length
-        ? `\n            <span class="track-services" aria-label="Listen links">${serviceLinks.join("\n              ")}</span>`
-        : "";
+  const featured = tracks.find((track) => track.featured) || tracks.find((track) => track.cover) || tracks[0];
+  if (!featured) {
+    return "";
+  }
 
-      return `        <li>\n          <span class="track-row">\n            ${titleHtml}${servicesHtml}\n          </span>\n        </li>`;
-    })
-    .join("\n");
+  const featuredArt = escapeHtml(featured.cover || "");
+  const featuredTitle = escapeHtml(featured.title);
+  const featuredTeaser = escapeHtml(featured.teaser);
 
-  return `<section class="track-list" aria-labelledby="track-list-title">
-      <h2 id="track-list-title">Tracks by The Energy Hour</h2>
-      <ol>
-${items}
-      </ol>
-    </section>`;
+  const feature = `<div class="mobile-feature">
+      <div class="feature-art">
+        ${featuredArt
+          ? `<img src="${featuredArt}" alt="${featuredTitle} cover">`
+          : `<div class="neutral-cover" role="img" aria-label="${featuredTitle} cover"></div>`}
+        <div class="feature-actions">
+          <button class="cursor-interaction" id="teh-feature-play" data-play="${escapeHtml(featured.id)}" type="button" aria-label="Play ${featuredTitle}"><span aria-hidden="true">▶</span></button>
+          ${(featured.story || featured.lyrics)
+            ? `<button class="cursor-interaction" data-discover="${escapeHtml(featured.id)}" type="button">Discover</button>`
+            : ""}
+        </div>
+      </div>
+      <div class="feature-copy"><h1>${featuredTitle}</h1>${featuredTeaser ? `<p>${featuredTeaser}</p>` : ""}</div>
+    </div>`;
+
+  const intro = `<div class="intro"><p>THE ENERGY HOUR</p><h1>From outer space<br>to my heart</h1></div>
+    <h2 class="desktop-track-heading">Tracks</h2>`;
+
+  const rows = tracks.map((track) => {
+    const title = escapeHtml(track.title);
+    const teaser = escapeHtml(track.teaser);
+    const art = track.thumbnail || track.cover;
+    const hasDiscover = Boolean(track.story || track.lyrics);
+
+    return `<div class="row">
+        <div class="thumb">
+          ${art
+            ? `<img src="${escapeHtml(art)}" alt="" loading="lazy">`
+            : `<div class="neutral-thumb" role="img" aria-label=""></div>`}
+          <button class="track cursor-interaction" data-play="${escapeHtml(track.id)}" type="button" aria-label="Play ${title}"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">${title}</strong>${teaser ? `<p>${teaser}</p>` : ""}</div>
+        ${hasDiscover
+          ? `<button class="quiet cursor-interaction" data-discover="${escapeHtml(track.id)}" type="button"><span class="desktop-wording">Discover the story ↗</span><span class="mobile-wording">Discover <span aria-hidden="true">↗</span></span></button>`
+          : ""}
+      </div>`;
+  }).join("\n");
+
+  return `${feature}
+    ${intro}
+${rows}`;
 }
 
 function renderMusicSchema(tracks) {
