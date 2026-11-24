@@ -120,8 +120,10 @@ function renderTrackList(tracks) {
   }).join("\n");
 
   return `${feature}
-    ${intro}
-${rows}`;
+    <div class="desktop-right">
+      ${intro}
+      ${rows}
+    </div>`;
 }
 
 function renderMusicSchema(tracks) {
