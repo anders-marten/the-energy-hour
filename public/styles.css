@@ -83,7 +83,7 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
 #teh-design .sheet-handle { position:relative; min-height:44px; display:flex; justify-content:flex-end; touch-action:none; background:#17151b; }
 #teh-design .sheet-handle::before { display:none; }
 #teh-design .sheet-handle button { display:grid; place-items:center; width:44px; height:44px; padding:0; border-radius:50%; background:rgb(0 0 0 / 60%); color:#fff; font-size:20px; font-weight:700; }
-#teh-design .sheet-handle .sheet-collapse { position:absolute; left:50%; top:4px; width:64px; height:44px; transform:translateX(-50%); border-radius:0; background:transparent; }
+#teh-design .sheet-handle .sheet-collapse { position:absolute; left:50%; top:4px; width:160px; height:44px; transform:translateX(-50%); border-radius:0; background:transparent; }
 
 #teh-design .drag-grip { flex:1; touch-action:none; user-select:none; }
 #teh-design .sheet-title { display:flex; gap:12px; align-items:center; margin:5px 0 12px; }
