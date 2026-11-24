@@ -1,5 +1,21 @@
 [
   {
+    "title": "Tokyo",
+    "id": "2441734662",
+    "cover": "/images/covers/tokyo.jpg",
+    "thumbnail": "/images/covers/thumb/tokyo.jpg",
+    "teaser": "Alone among millions. A chance encounter with a city.",
+    "story": "On a crowded Tokyo train, a woman catches the narrator’s eye for a moment. She might be a stranger or Tokyo itself. As the night goes on, the city begins to feel like someone you’ve just met and want to spend a little longer with.",
+    "lyrics": "/lyrics/tokyo.txt",
+    "credits": "Written by Anders Mårtén",
+    "links": {
+      "soundcloud": "https://soundcloud.com/the_energy_hour/tokyo",
+      "spotify": "https://open.spotify.com/album/0eC5WDG2xKN7N9qescZA2w",
+      "appleMusic": "",
+      "tidal": ""
+    }
+  },
+  {
     "title": "Morning Can Wait",
     "id": "2441732988",
     "cover": "/images/covers/morning-can-wait.jpg",
@@ -12,22 +28,6 @@
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/morning-can-wait",
       "spotify": "https://open.spotify.com/album/1BDfaraMfYzTPdgXQ0PXR6",
-      "appleMusic": "",
-      "tidal": ""
-    }
-  },
-  {
-    "title": "Tokyo",
-    "id": "2441734662",
-    "cover": "/images/covers/tokyo.jpg",
-    "thumbnail": "/images/covers/thumb/tokyo.jpg",
-    "teaser": "Alone among millions. A chance encounter with a city.",
-    "story": "On a crowded Tokyo train, a woman catches the narrator’s eye for a moment. She might be a stranger or Tokyo itself. As the night goes on, the city begins to feel like someone you’ve just met and want to spend a little longer with.",
-    "lyrics": "/lyrics/tokyo.txt",
-    "credits": "Written by Anders Mårtén",
-    "links": {
-      "soundcloud": "https://soundcloud.com/the_energy_hour/tokyo",
-      "spotify": "https://open.spotify.com/album/0eC5WDG2xKN7N9qescZA2w",
       "appleMusic": "",
       "tidal": ""
     }
