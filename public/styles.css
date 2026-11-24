@@ -94,8 +94,8 @@ body { min-height: 100vh; min-height: 100dvh; }
 #teh-design .full-lyrics { margin-top:24px; padding-top:20px; border-top:1px solid var(--rule); }
 #teh-design #teh-full-lyrics p { white-space:pre-wrap; overflow-wrap:anywhere; font-size:18px; line-height:1.55; }
 #teh-design #teh-full-lyrics p+p { margin-top:1em; }
-#teh-design .soundcloud-widget-slot { width:100%; height:166px; overflow:hidden; border-radius:6px; background:#17151b; }
-#teh-design .soundcloud-widget-slot iframe { width:100%; height:166px; border:0; display:block; }
+#teh-design .soundcloud-widget-slot { width:100%; aspect-ratio:1; overflow:hidden; border-radius:10px; background:#17151b; }
+#teh-design .soundcloud-widget-slot iframe { width:100%; height:100%; border:0; display:block; }
 #teh-design .full-bar { position:relative; z-index:1; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px calc(10px + env(safe-area-inset-bottom)); background:#17151b; border-top:1px solid var(--rule); }
 
 @container (max-width:899px) {
