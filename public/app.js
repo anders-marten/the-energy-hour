@@ -55,10 +55,10 @@ let isPlaying = false;
 let isAdvancingAfterFinish = false;
 let shouldPlayWhenReady = false;
 let widgetReady = false;
-let widgetLoadingTrackId = null;
 let widget = null;
 let playerStateTimer = 0;
 let hasPlayed = false;
+let playPending = false;
 let sheetSlide = null;
 let sheetClosing = false;
 let sheetTrackId = null;
@@ -113,15 +113,17 @@ function trackApiUrl(trackId) {
   return `https://api.soundcloud.com/tracks/${encodeURIComponent(trackId)}`;
 }
 
-function buildSoundCloudSrc(trackId) {
+function buildSoundCloudSrc(trackId, autoPlay = false) {
   const params = new URLSearchParams({ url: trackApiUrl(trackId) });
   for (const [key, value] of Object.entries(widgetOptions)) params.set(key, String(value));
+  params.set("auto_play", autoPlay ? "true" : "false");
   return "https://w.soundcloud.com/player/?" + params.toString();
 }
 
 function playIfRequested() {
   if (!shouldPlayWhenReady) return;
   shouldPlayWhenReady = false;
+  playPending = true;
   widget.play();
 }
 
@@ -162,9 +164,15 @@ function paragraphs(target, text) {
 }
 
 function syncPlayerState() {
-  if (!widget || widgetLoadingTrackId) return;
+  if (!widget) return;
   widget.isPaused((paused) => {
-    isPlaying = !paused;
+    if (paused) {
+      isPlaying = false;
+      playPending = false;
+    } else {
+      isPlaying = true;
+      playPending = false;
+    }
     updatePlayerUi();
   });
 }
@@ -203,6 +211,7 @@ function bindWidgetEvents() {
   widget.bind(SC.Widget.Events.PLAY, () => {
     hasPlayed = true;
     isPlaying = true;
+    playPending = false;
     updatePlayerUi();
   });
   widget.bind(SC.Widget.Events.PAUSE, syncPlayerState);
@@ -214,34 +223,17 @@ function showTrack(index, shouldPlay = false) {
   currentTrackIndex = index;
   isAdvancingAfterFinish = false;
   const track = getCurrentTrack();
-  // Embed autoplay is blocked in some browsers, so playback always starts
-  // through the widget API once the track has loaded. Later tracks are loaded
-  // into the same iframe; replacing its src would drop the widget events.
-  widgetLoadingTrackId = track.id;
-  widgetReady = false;
-  shouldPlayWhenReady = shouldPlay;
+  const shouldUseEmbedAutoplay = shouldPlay && !isAppleMobileSafari();
+  shouldPlayWhenReady = shouldPlay && !shouldUseEmbedAutoplay;
+  playPending = shouldPlay;
   isPlaying = false;
   player.title = `SoundCloud player: ${track.title}`;
-  if (!widget) {
-    player.src = buildSoundCloudSrc(track.id);
-    mountWidget();
-    widget = SC.Widget(player);
-    bindWidgetEvents();
-  } else {
-    widgetReady = false;
-    widget.load(trackApiUrl(track.id), { ...widgetOptions, callback: () => {
-      widgetReady = true;
-      widgetLoadingTrackId = null;
-      if (shouldPlayWhenReady) {
-        shouldPlayWhenReady = false;
-        widget.play();
-      }
-      syncPlayerState();
-    } });
-  }
+  player.src = buildSoundCloudSrc(track.id, shouldUseEmbedAutoplay);
+  mountWidget();
+  widget = SC.Widget(player);
+  bindWidgetEvents();
   startPlayerStatePolling();
   if (shouldPlay) hasPlayed = true;
-  isPlaying = shouldPlay;
   updatePlayerUi();
 }
 
@@ -267,7 +259,14 @@ function showTrackById(trackId, shouldPlay = true) {
       widget.pause();
     } else {
       shouldPlayWhenReady = true;
-      if (widgetReady) playIfRequested();
+      playPending = true;
+      if (widgetReady) {
+        playIfRequested();
+      }
+      window.setTimeout(() => {
+        if (!isPlaying) playPending = false;
+        updatePlayerUi();
+      }, 1500);
     }
   } else {
     showTrack(index, shouldPlay);
@@ -281,7 +280,12 @@ function toggleCurrentTrack() {
     widget.pause();
   } else {
     shouldPlayWhenReady = true;
+    playPending = true;
     if (widgetReady) playIfRequested();
+    window.setTimeout(() => {
+      if (!isPlaying) playPending = false;
+      updatePlayerUi();
+    }, 1500);
   }
 }
 
@@ -307,10 +311,10 @@ function updatePlayerUi() {
   const art = track.thumbnail || track.cover || "";
   document.querySelector("#teh-now").textContent = track.title;
   document.querySelector("#teh-now-art").src = art;
-  document.querySelector("#teh-now-status").textContent = isPlaying ? "Now playing" : "Paused";
+  document.querySelector("#teh-now-status").textContent = isPlaying ? "Now playing" : (playPending ? "Loading…" : "Paused");
   document.querySelector("#teh-full-now").textContent = track.title;
   document.querySelector("#teh-full-now-art").src = art;
-  document.querySelector("#teh-full-status").textContent = isPlaying ? "Now playing" : "Paused";
+  document.querySelector("#teh-full-status").textContent = isPlaying ? "Now playing" : (playPending ? "Loading…" : "Paused");
 
   for (const id of ["teh-toggle", "teh-full-toggle", "teh-sheet-toggle"]) {
     const button = document.querySelector("#" + id);
