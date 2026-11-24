@@ -298,22 +298,22 @@ function toggleCurrentTrack() {
 function updatePlayerUi() {
   const track = getCurrentTrack();
   const playerBar = document.querySelector("#teh-player");
+  const featureTitle = document.querySelector("#teh-feature-title");
+  const featureTeaser = document.querySelector("#teh-feature-teaser");
+  if (track && featureTitle) featureTitle.textContent = track.title;
+  if (track && featureTeaser) featureTeaser.textContent = track.teaser || "";
+  const featureDiscover = document.querySelector("#teh-feature-discover");
+  if (track && featureDiscover) {
+    featureDiscover.dataset.discover = track.id;
+    featureDiscover.setAttribute("aria-label", "Discover the story of " + track.title);
+    featureDiscover.hidden = !(track.story || track.lyrics);
+  }
   if (!track || !hasPlayed) {
     playerBar.hidden = true;
     return;
   }
 
   playerBar.hidden = false;
-  const featureTitle = document.querySelector("#teh-feature-title");
-  const featureTeaser = document.querySelector("#teh-feature-teaser");
-  if (featureTitle) featureTitle.textContent = track.title;
-  if (featureTeaser) featureTeaser.textContent = track.teaser || "";
-  const featureDiscover = document.querySelector("#teh-feature-discover");
-  if (featureDiscover) {
-    featureDiscover.dataset.discover = track.id;
-    featureDiscover.setAttribute("aria-label", "Discover the story of " + track.title);
-    featureDiscover.hidden = !(track.story || track.lyrics);
-  }
   const art = track.thumbnail || track.cover || "";
   document.querySelector("#teh-now").textContent = track.title;
   document.querySelector("#teh-now-art").src = art;
