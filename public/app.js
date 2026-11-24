@@ -65,6 +65,16 @@ const lyricsCache = new Map();
 const sheet = document.querySelector("#teh-song");
 const full = document.querySelector("#teh-full");
 
+function isAppleMobileSafari() {
+  const userAgent = window.navigator.userAgent;
+  const isIOS = /iP(ad|hone|od)/.test(userAgent) ||
+    (window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
+  const isSafari = /Safari/.test(userAgent) &&
+    !/CriOS|FxiOS|EdgiOS/.test(userAgent);
+
+  return isIOS && isSafari;
+}
+
 function normalizePlaylist(items) {
   if (!Array.isArray(items)) return [];
   return items.map((item) => ({
@@ -244,7 +254,7 @@ function showTrackById(trackId, shouldPlay = true) {
     if (isPlaying) {
       widget.pause();
     } else {
-      if (isAppleMobileSafari()) shouldPlayWhenReady = true;
+      shouldPlayWhenReady = isAppleMobileSafari();
       widget.play();
       if (isAppleMobileSafari()) {
         window.setTimeout(() => {
@@ -265,8 +275,12 @@ function showTrackById(trackId, shouldPlay = true) {
 
 function toggleCurrentTrack() {
   if (!getCurrentTrack()) return;
-  if (isPlaying) widget.pause();
-  else widget.play();
+  if (isPlaying) {
+    widget.pause();
+  } else {
+    shouldPlayWhenReady = isAppleMobileSafari();
+    widget.play();
+  }
 }
 
 function updatePlayerUi() {
