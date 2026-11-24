@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Behind the Music – Mobile prototype</title>
+<title>Behind the Music – Prototype</title>
 <style>body{margin:0;background:#050505}.cursor-interaction{cursor:pointer}</style>
 </head>
 <body>
@@ -73,10 +73,10 @@
 #teh-design .related{display:flex;align-items:center;gap:16px;border-top:1px solid var(--rule)}
 #teh-design footer{border-top:1px solid var(--rule);border-bottom:0}
 #teh-design small{display:block}
-@container(max-width:560px){#teh-design .hero{grid-template-columns:1fr}#teh-design .hero img{max-width:260px}#teh-design .row{grid-template-columns:54px minmax(0,1fr);gap:8px 12px}#teh-design .row>.quiet{grid-column:2}}
+@container(max-width:899px){#teh-design .hero{grid-template-columns:1fr}#teh-design .hero img{max-width:260px}#teh-design .row{grid-template-columns:54px minmax(0,1fr);gap:8px 12px}#teh-design .row>.quiet{grid-column:2}}
 
 #teh-design .mobile-feature,#teh-design .mobile-wording{display:none}
-@container(max-width:560px){
+@container(max-width:899px){
   #teh-design:has(#teh-tracks:not([hidden])) header{display:none}
   #teh-design:has(#teh-tracks:not([hidden])) main{padding:12px 8px 20px;background:#050505}
   #teh-design #teh-tracks>.intro,#teh-design #teh-tracks>h2,#teh-design .desktop-wording{display:none}
@@ -118,7 +118,7 @@
 #teh-design #teh-song[open]{display:grid;grid-template-rows:auto auto auto minmax(0,1fr) auto auto;overflow:hidden}
 #teh-design #teh-song .reading{overflow:auto;overscroll-behavior:contain}
 #teh-design .drag-grip{flex:1;touch-action:none;user-select:none}
-@container(max-width:560px){
+@container(max-width:899px){
   #teh-design #teh-tracks .row>.thumb{display:block;grid-row:1/3;margin-top:7px}
   #teh-design #teh-tracks .thumb img{margin:0}
   #teh-design #teh-tracks .row .track-name{grid-column:2;grid-row:1;align-self:center;font-size:14px}
@@ -131,7 +131,7 @@
 #teh-design .song-footer button:disabled{color:var(--muted);opacity:.55;cursor:default}
 /* Review round 1 */
 #teh-design{min-height:100vh;min-height:100dvh}
-@container(max-width:560px){#teh-design{background:#050505}}
+@container(max-width:899px){#teh-design{background:#050505}}
 #teh-design #teh-song .reading{grid-row:4;grid-column:1}
 #teh-design #teh-song .reading[hidden]{display:block!important;visibility:hidden}
 #teh-design #teh-player{position:fixed;inset:auto 0 0;z-index:10;padding:10px 16px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -8px 24px rgb(0 0 0 / 45%)}
@@ -161,6 +161,34 @@
 #teh-design .full-lyrics{margin-top:24px;padding-top:20px;border-top:1px solid var(--rule)}
 #teh-design #teh-full-lyrics p{white-space:pre-wrap;overflow-wrap:anywhere;font-size:18px;line-height:1.55}
 #teh-design #teh-full-lyrics p+p{margin-top:1em}
+/* Desktop: two columns from 900px */
+@container(min-width:900px){
+  #teh-design{--edge:max(58px,calc((100cqw - 1200px) / 2))}
+  #teh-design header,#teh-design #teh-player,#teh-design .full-bar{padding-inline:var(--edge)}
+  #teh-design main{padding:48px var(--edge) 64px}
+  #teh-design #teh-tracks{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);grid-auto-rows:min-content;column-gap:64px;align-items:start}
+  #teh-design .mobile-feature{display:block;grid-column:1;grid-row:1 / span 20}
+  #teh-design #teh-tracks>:not(.mobile-feature){grid-column:2}
+  #teh-design .feature-art{position:relative}
+  #teh-design .feature-actions{position:absolute;inset:auto 20px 20px}
+  #teh-design .feature-actions button{text-align:center}
+  #teh-design .feature-actions button[data-view]{background:#fff;color:#080808;font-weight:750;padding:0 20px}
+  #teh-design .feature-copy{margin-top:20px}
+  #teh-design .feature-copy h1{font-size:clamp(32px,3.2vw,46px);letter-spacing:-.045em;margin:0 0 6px}
+  #teh-design .feature-copy p{color:var(--muted)}
+  #teh-design .intro{padding:0 0 40px}
+  #teh-design .intro h1{font-size:clamp(44px,4.6vw,68px)}
+  #teh-design #teh-player,#teh-design .full-bar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
+  #teh-design #teh-song{inset:0 0 0 auto;width:min(520px,100%);height:100%;max-height:none;padding:0 32px 16px;border:0;border-left:1px solid var(--rule);border-radius:0}
+  #teh-design .sheet-handle{padding-top:20px}
+  #teh-design .sheet-handle::before{display:none}
+  #teh-design #teh-full{--col:calc((100cqw - 2 * var(--edge) - 64px) / 2);--art:min(var(--col),calc(100dvh - 200px))}
+  #teh-design .full-scroll{display:grid;grid-template-columns:var(--art) minmax(0,1fr);grid-template-rows:auto 1fr;column-gap:64px;align-items:start;padding:48px var(--edge)}
+  #teh-design #teh-full-art{grid-column:1;grid-row:1 / 3;position:sticky;top:0;margin:0}
+  #teh-design #teh-full h1{grid-column:2;grid-row:1;font-size:clamp(36px,3.6vw,52px)}
+  #teh-design .full-lyrics{grid-column:2;grid-row:2}
+  #teh-design .full-top{top:60px;right:auto;left:calc(var(--edge) + var(--art) - 56px)}
+}
 </style>
 <script>
 (() => {
@@ -171,6 +199,8 @@
   const trackOrder = Array.from(el('tracks').querySelectorAll('.thumb [data-play]'), button => button.dataset.play);
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const easing = 'cubic-bezier(.22,.61,.36,1)';
+  const wide = matchMedia('(min-width: 900px)');
+  const offscreen = () => wide.matches ? 'translateX(100%)' : 'translateY(100%)';
   let slideAnimation;
   let closing = false;
   let view = 'tracks';
@@ -238,7 +268,7 @@
       return;
     }
     slideAnimation = sheet.animate(
-      [{ transform }, { transform: 'translateY(100%)' }],
+      [{ transform }, { transform: offscreen() }],
       { duration: 250, easing, fill: 'forwards' }
     );
     slideAnimation.onfinish = () => {
@@ -276,7 +306,7 @@
         sheet.classList.add('is-visible');
         if (!reducedMotion.matches) {
           slideAnimation = sheet.animate(
-            [{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }],
+            [{ transform: offscreen() }, { transform: 'none' }],
             { duration: 250, easing }
           );
         }
@@ -343,7 +373,7 @@
   const grip = sheet.querySelector('.drag-grip');
   let drag = null;
   grip.addEventListener('pointerdown', event => {
-    if (closing || !event.isPrimary || event.button !== 0) return;
+    if (closing || wide.matches || !event.isPrimary || event.button !== 0) return;
     slideAnimation?.cancel();
     drag = { id: event.pointerId, y: event.clientY };
     grip.setPointerCapture(event.pointerId);
