@@ -55,6 +55,8 @@ let isPlaying = false;
 let isAdvancingAfterFinish = false;
 let shouldPlayWhenReady = false;
 let widgetReady = false;
+let widgetLoading = false;
+let pendingTrackId = null;
 let widget = null;
 let playerStateTimer = 0;
 let hasPlayed = false;
@@ -161,7 +163,7 @@ function paragraphs(target, text) {
 }
 
 function syncPlayerState() {
-  if (!widget) return;
+  if (!widget || widgetLoading) return;
   widget.isPaused((paused) => {
     isPlaying = !paused;
     updatePlayerUi();
@@ -195,7 +197,15 @@ function handleTrackFinished() {
 function bindWidgetEvents() {
   widget.bind(SC.Widget.Events.READY, () => {
     widgetReady = true;
-    playIfRequested();
+    widgetLoading = false;
+    if (widgetLoading) {
+      if (shouldPlayWhenReady) {
+        shouldPlayWhenReady = false;
+        widget.play();
+      }
+    } else {
+      playIfRequested();
+    }
     syncPlayerState();
     startPlayerStatePolling();
   });
@@ -216,7 +226,11 @@ function showTrack(index, shouldPlay = false) {
   // Embed autoplay is blocked in some browsers, so playback always starts
   // through the widget API once the track has loaded. Later tracks are loaded
   // into the same iframe; replacing its src would drop the widget events.
+  pendingTrackId = track.id;
+  widgetLoading = true;
+  widgetReady = false;
   shouldPlayWhenReady = shouldPlay;
+  isPlaying = false;
   player.title = `SoundCloud player: ${track.title}`;
   if (!widget) {
     player.src = buildSoundCloudSrc(track.id);
@@ -227,7 +241,11 @@ function showTrack(index, shouldPlay = false) {
     widgetReady = false;
     widget.load(trackApiUrl(track.id), { ...widgetOptions, callback: () => {
       widgetReady = true;
-      playIfRequested();
+      widgetLoading = false;
+      if (shouldPlayWhenReady) {
+        shouldPlayWhenReady = false;
+        widget.play();
+      }
       syncPlayerState();
     } });
   }
