@@ -318,6 +318,7 @@ function setSection(name) {
 async function openDiscover(trackId) {
   const track = playlist.find((item) => item.id === trackId);
   if (!track) return;
+  sheetClosing = false;
   sheetTrackId = trackId;
   document.querySelector("#teh-title").textContent = track.title;
   document.querySelector("#teh-teaser").textContent = track.teaser;
@@ -345,12 +346,18 @@ async function openDiscover(trackId) {
   document.querySelector("#teh-previous").disabled = position <= 0;
   document.querySelector("#teh-next").disabled = position >= playlist.length - 1;
 
-  sheet.showModal();
-  sheet.getBoundingClientRect();
-  sheet.classList.add("is-visible");
-  if (!reducedMotion.matches) {
-    const offscreen = wide.matches ? "translateX(100%)" : "translateY(100%)";
-    sheetSlide = sheet.animate([{ transform: offscreen }, { transform: "none" }], { duration: 250, easing, fill: "forwards" });
+  if (!sheet.open) {
+    sheet.showModal();
+    sheet.getBoundingClientRect();
+    sheet.classList.add("is-visible");
+    if (!reducedMotion.matches) {
+      const offscreen = wide.matches ? "translateX(100%)" : "translateY(100%)";
+      sheetSlide = sheet.animate([{ transform: offscreen }, { transform: "none" }], { duration: 250, easing, fill: "forwards" });
+    }
+  } else {
+    sheet.classList.add("is-visible");
+    sheetSlide?.cancel();
+    sheet.style.transform = "none";
   }
   updatePlayerUi();
 }
@@ -454,7 +461,8 @@ document.querySelector("#teh-previous").addEventListener("click", () => {
   const position = playlist.findIndex((item) => item.id === sheetTrackId);
   if (position > 0) openDiscover(playlist[position - 1].id);
 });
-document.querySelector("#teh-next").addEventListener("click", () => {
+document.querySelector("#teh-next").addEventListener("click", (event) => {
+  event.preventDefault();
   const position = playlist.findIndex((item) => item.id === sheetTrackId);
   if (position >= 0 && position < playlist.length - 1) openDiscover(playlist[position + 1].id);
 });
