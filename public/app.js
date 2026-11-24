@@ -54,6 +54,7 @@ let currentTrackIndex = -1;
 let isPlaying = false;
 let isAdvancingAfterFinish = false;
 let shouldPlayWhenReady = false;
+let widgetReady = false;
 let widget = null;
 let playerStateTimer = 0;
 let hasPlayed = false;
@@ -193,6 +194,7 @@ function handleTrackFinished() {
 
 function bindWidgetEvents() {
   widget.bind(SC.Widget.Events.READY, () => {
+    widgetReady = true;
     playIfRequested();
     syncPlayerState();
     startPlayerStatePolling();
@@ -222,7 +224,9 @@ function showTrack(index, shouldPlay = false) {
     widget = SC.Widget(player);
     bindWidgetEvents();
   } else {
+    widgetReady = false;
     widget.load(trackApiUrl(track.id), { ...widgetOptions, callback: () => {
+      widgetReady = true;
       playIfRequested();
       syncPlayerState();
     } });
@@ -254,18 +258,8 @@ function showTrackById(trackId, shouldPlay = true) {
     if (isPlaying) {
       widget.pause();
     } else {
-      shouldPlayWhenReady = isAppleMobileSafari();
-      widget.play();
-      if (isAppleMobileSafari()) {
-        window.setTimeout(() => {
-          widget.isPaused((paused) => {
-            if (paused) {
-              shouldPlayWhenReady = true;
-              widget.play();
-            }
-          });
-        }, 150);
-      }
+      shouldPlayWhenReady = true;
+      if (widgetReady) playIfRequested();
     }
   } else {
     showTrack(index, shouldPlay);
@@ -278,8 +272,8 @@ function toggleCurrentTrack() {
   if (isPlaying) {
     widget.pause();
   } else {
-    shouldPlayWhenReady = isAppleMobileSafari();
-    widget.play();
+    shouldPlayWhenReady = true;
+    if (widgetReady) playIfRequested();
   }
 }
 
