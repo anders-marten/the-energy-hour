@@ -83,9 +83,7 @@ function renderTrackList(tracks) {
 
   const feature = `<div class="mobile-feature">
       <div class="feature-art">
-        ${featuredArt
-          ? `<img src="${featuredArt}" alt="${featuredTitle} cover">`
-          : `<div class="neutral-cover" role="img" aria-label="${featuredTitle} cover"></div>`}
+        <div class="soundcloud-widget-slot feature-widget-slot" id="teh-feature-widget-slot" aria-label="SoundCloud player"></div>
         <div class="feature-actions">
           <button class="cursor-interaction" id="teh-feature-play" data-play="${escapeHtml(featured.id)}" type="button" aria-label="Play ${featuredTitle}"><span aria-hidden="true">▶</span></button>
           ${(featured.story || featured.lyrics)
@@ -107,9 +105,11 @@ function renderTrackList(tracks) {
 
     return `<div class="row">
         <div class="thumb">
-          ${art
-            ? `<img src="${escapeHtml(art)}" alt="" loading="lazy">`
-            : `<div class="neutral-thumb" role="img" aria-label=""></div>`}
+          <div class="track-widget-slot" data-widget-track="${escapeHtml(track.id)}">
+            ${art
+              ? `<img src="${escapeHtml(art)}" alt="" loading="lazy">`
+              : `<div class="neutral-thumb" role="img" aria-label=""></div>`}
+          </div>
           <button class="track cursor-interaction" data-play="${escapeHtml(track.id)}" type="button" aria-label="Play ${title}"><span aria-hidden="true">▶</span></button>
         </div>
         <div><strong class="track-name">${title}</strong>${teaser ? `<p>${teaser}</p>` : ""}</div>

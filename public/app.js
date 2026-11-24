@@ -2,7 +2,12 @@ const fallbackPlaylist = [
   { title: "Track 1", id: "2304212519" }
 ];
 
-const player = document.querySelector("#soundcloud-player");
+const player = document.createElement("iframe");
+player.id = "soundcloud-player";
+player.title = "SoundCloud player";
+player.scrolling = "no";
+player.frameBorder = "no";
+player.allow = "autoplay";
 const root = document.querySelector("#teh-design");
 const trackList = document.querySelector("#teh-tracks");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -52,11 +57,25 @@ function buildSoundCloudSrc(trackId, autoPlay = false) {
     `url=https%3A//api.soundcloud.com/tracks/${encodeURIComponent(trackId)}` +
     "&color=%23ff987e" +
     `&auto_play=${autoPlay ? "true" : "false"}` +
-    "&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false";
+    "&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true";
 }
 
 function getCurrentTrack() {
   return playlist[currentTrackIndex] || null;
+}
+
+function placeWidget(slot) {
+  if (!slot || slot.contains(player)) return;
+  slot.replaceChildren(player);
+}
+
+function updateWidgetPlacement() {
+  if (!getCurrentTrack()) return;
+  if (full.open) {
+    placeWidget(document.querySelector("#teh-full-widget-slot"));
+    return;
+  }
+  placeWidget(document.querySelector("#teh-feature-widget-slot"));
 }
 
 function paragraphs(target, text) {
@@ -127,11 +146,13 @@ function showTrack(index, shouldPlay = false) {
   shouldPlayWhenReady = shouldPlay && !shouldUseEmbedAutoplay;
   player.src = buildSoundCloudSrc(track.id, shouldUseEmbedAutoplay);
   player.title = `SoundCloud player: ${track.title}`;
+  updateWidgetPlacement();
   widget = SC.Widget(player);
   bindWidgetEvents();
   startPlayerStatePolling();
   if (shouldPlay) hasPlayed = true;
   isPlaying = shouldPlay;
+  updateWidgetPlacement();
   updatePlayerUi();
 }
 
@@ -183,7 +204,6 @@ function updatePlayerUi() {
   document.querySelector("#teh-full-now").textContent = track.title;
   document.querySelector("#teh-full-now-art").src = art;
   document.querySelector("#teh-full-status").textContent = isPlaying ? "Now playing" : "Paused";
-  document.querySelector("#teh-full-art").src = track.cover || art;
 
   for (const id of ["teh-toggle", "teh-full-toggle", "teh-sheet-toggle"]) {
     const button = document.querySelector("#" + id);
@@ -284,12 +304,11 @@ function closeDiscover() {
 function openFull() {
   if (!getCurrentTrack() || full.open) return;
   const track = getCurrentTrack();
-  document.querySelector("#teh-full-art").src = track.cover || track.thumbnail || "";
-  document.querySelector("#teh-full-art").alt = `${track.title} cover`;
   document.querySelector("#teh-full-title").textContent = track.title;
   document.querySelector("#teh-full-now").textContent = track.title;
   paragraphs(document.querySelector("#teh-full-lyrics"), track.lyrics);
   full.showModal();
+  updateWidgetPlacement();
   document.querySelector("#teh-full-scroll").scrollTop = 0;
   if (!reducedMotion.matches) {
     document.querySelector("#teh-full-sheet").animate(
@@ -304,6 +323,7 @@ function closeFull() {
   if (reducedMotion.matches) {
     full.close();
     document.querySelector("#teh-now-open").focus();
+    updateWidgetPlacement();
     return;
   }
   const slide = document.querySelector("#teh-full-sheet").animate(
@@ -314,6 +334,7 @@ function closeFull() {
     full.close();
     slide.cancel();
     document.querySelector("#teh-now-open").focus();
+    updateWidgetPlacement();
   };
 }
 
