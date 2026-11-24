@@ -16,6 +16,7 @@
  * @property {string} teaser
  * @property {string} story
  * @property {string} lyrics Pointer to a plain-text lyrics file
+ * @property {string} credits Verified writing credit shown under Info
  * @property {boolean} featured
  * @property {TrackLinks} links
  */
@@ -30,6 +31,7 @@ const fallbackPlaylist = [
     teaser: "",
     story: "",
     lyrics: "",
+    credits: "",
     featured: false,
     links: { soundcloud: "", spotify: "", appleMusic: "", tidal: "" }
   }
@@ -63,14 +65,6 @@ const lyricsCache = new Map();
 const sheet = document.querySelector("#teh-song");
 const full = document.querySelector("#teh-full");
 
-function isAppleMobileSafari() {
-  const userAgent = window.navigator.userAgent;
-  const isIOS = /iP(ad|hone|od)/.test(userAgent) ||
-    (window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
-  const isSafari = /Safari/.test(userAgent) && !/CriOS|FxiOS|EdgiOS/.test(userAgent);
-  return isIOS && isSafari;
-}
-
 function normalizePlaylist(items) {
   if (!Array.isArray(items)) return [];
   return items.map((item) => ({
@@ -81,6 +75,7 @@ function normalizePlaylist(items) {
     teaser: typeof item.teaser === "string" ? item.teaser : "",
     story: typeof item.story === "string" ? item.story : "",
     lyrics: typeof item.lyrics === "string" ? item.lyrics : "",
+    credits: typeof item.credits === "string" ? item.credits : "",
     featured: item.featured === true,
     links: {
       soundcloud: typeof item.links?.soundcloud === "string" ? item.links.soundcloud : "",
@@ -91,12 +86,31 @@ function normalizePlaylist(items) {
   })).filter((item) => item.title && item.id);
 }
 
-function buildSoundCloudSrc(trackId, autoPlay = false) {
-  return "https://w.soundcloud.com/player/?" +
-    `url=https%3A//api.soundcloud.com/tracks/${encodeURIComponent(trackId)}` +
-    "&color=%23ff987e" +
-    `&auto_play=${autoPlay ? "true" : "false"}` +
-    "&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true";
+const widgetOptions = {
+  color: "#ff987e",
+  auto_play: false,
+  hide_related: true,
+  show_comments: false,
+  show_user: true,
+  show_reposts: false,
+  show_teaser: false,
+  visual: true
+};
+
+function trackApiUrl(trackId) {
+  return `https://api.soundcloud.com/tracks/${encodeURIComponent(trackId)}`;
+}
+
+function buildSoundCloudSrc(trackId) {
+  const params = new URLSearchParams({ url: trackApiUrl(trackId) });
+  for (const [key, value] of Object.entries(widgetOptions)) params.set(key, String(value));
+  return "https://w.soundcloud.com/player/?" + params.toString();
+}
+
+function playIfRequested() {
+  if (!shouldPlayWhenReady) return;
+  shouldPlayWhenReady = false;
+  widget.play();
 }
 
 function getCurrentTrack() {
@@ -119,18 +133,11 @@ async function loadLyrics(track) {
   }
 }
 
-function placeWidget(slot) {
-  if (!slot || slot.contains(player)) return;
-  slot.replaceChildren(player);
-}
-
-function updateWidgetPlacement() {
-  if (!getCurrentTrack()) return;
-  if (full.open) {
-    placeWidget(document.querySelector("#teh-full-widget-slot"));
-    return;
-  }
-  placeWidget(document.querySelector("#teh-feature-widget-slot"));
+// The widget stays in the feature slot. Moving an iframe in the DOM reloads it
+// and stops playback, so other views show the cover image instead.
+function mountWidget() {
+  const slot = document.querySelector("#teh-feature-widget-slot");
+  if (slot && !slot.contains(player)) slot.replaceChildren(player);
 }
 
 function paragraphs(target, text) {
@@ -176,10 +183,7 @@ function handleTrackFinished() {
 
 function bindWidgetEvents() {
   widget.bind(SC.Widget.Events.READY, () => {
-    if (shouldPlayWhenReady) {
-      shouldPlayWhenReady = false;
-      widget.play();
-    }
+    playIfRequested();
     syncPlayerState();
     startPlayerStatePolling();
   });
@@ -197,17 +201,25 @@ function showTrack(index, shouldPlay = false) {
   currentTrackIndex = index;
   isAdvancingAfterFinish = false;
   const track = getCurrentTrack();
-  const shouldUseEmbedAutoplay = shouldPlay && !isAppleMobileSafari();
-  shouldPlayWhenReady = shouldPlay && !shouldUseEmbedAutoplay;
-  player.src = buildSoundCloudSrc(track.id, shouldUseEmbedAutoplay);
+  // Embed autoplay is blocked in some browsers, so playback always starts
+  // through the widget API once the track has loaded. Later tracks are loaded
+  // into the same iframe; replacing its src would drop the widget events.
+  shouldPlayWhenReady = shouldPlay;
   player.title = `SoundCloud player: ${track.title}`;
-  updateWidgetPlacement();
-  widget = SC.Widget(player);
-  bindWidgetEvents();
+  if (!widget) {
+    player.src = buildSoundCloudSrc(track.id);
+    mountWidget();
+    widget = SC.Widget(player);
+    bindWidgetEvents();
+  } else {
+    widget.load(trackApiUrl(track.id), { ...widgetOptions, callback: () => {
+      playIfRequested();
+      syncPlayerState();
+    } });
+  }
   startPlayerStatePolling();
   if (shouldPlay) hasPlayed = true;
   isPlaying = shouldPlay;
-  updateWidgetPlacement();
   updatePlayerUi();
 }
 
@@ -256,14 +268,10 @@ function updatePlayerUi() {
   const featureTeaser = document.querySelector("#teh-feature-teaser");
   if (featureTitle) featureTitle.textContent = track.title;
   if (featureTeaser) featureTeaser.textContent = track.teaser || "";
-  const featurePlay = document.querySelector("#teh-feature-play");
-  if (featurePlay) {
-    featurePlay.dataset.play = track.id;
-    featurePlay.setAttribute("aria-label", (isPlaying ? "Pause " : "Play ") + track.title);
-  }
   const featureDiscover = document.querySelector("#teh-feature-discover");
   if (featureDiscover) {
     featureDiscover.dataset.discover = track.id;
+    featureDiscover.setAttribute("aria-label", "Discover the story of " + track.title);
     featureDiscover.hidden = !(track.story || track.lyrics);
   }
   const art = track.thumbnail || track.cover || "";
@@ -282,7 +290,6 @@ function updatePlayerUi() {
 
   document.querySelectorAll("[data-play]").forEach((button) => {
     const active = button.dataset.play === track.id && isPlaying;
-    const label = document.querySelector("[data-play='" + CSS.escape(button.dataset.play) + "']") === button;
     button.querySelector("span")?.replaceChildren(document.createTextNode(active ? "Ⅱ" : "▶"));
     button.setAttribute("aria-label", (active ? "Pause " : "Play ") + (playlist.find((item) => item.id === button.dataset.play)?.title || "track"));
   });
@@ -324,6 +331,11 @@ async function openDiscover(trackId) {
   document.querySelector("#teh-teaser").textContent = track.teaser;
   document.querySelector("#teh-soundcloud").href = track.links.soundcloud || "";
   document.querySelector("#teh-spotify").href = track.links.spotify || "";
+  document.querySelector("#teh-spotify").hidden = !track.links.spotify;
+  document.querySelector("#teh-soundcloud").hidden = !track.links.soundcloud;
+  const credits = document.querySelector("#teh-credits");
+  credits.textContent = track.credits;
+  credits.hidden = !track.credits;
   paragraphs(document.querySelector("#teh-story-text"), track.story);
   paragraphs(document.querySelector("#teh-lyrics-text"), "");
   document.querySelector("#teh-full-title").textContent = track.title;
@@ -386,11 +398,14 @@ async function openFull() {
   const track = getCurrentTrack();
   document.querySelector("#teh-full-title").textContent = track.title;
   document.querySelector("#teh-full-now").textContent = track.title;
+  const fullArt = document.querySelector("#teh-full-art");
+  fullArt.src = track.cover || track.thumbnail || "";
+  fullArt.alt = track.title + " cover";
+  fullArt.hidden = !fullArt.getAttribute("src");
   paragraphs(document.querySelector("#teh-full-lyrics"), "");
   const lyrics = await loadLyrics(track);
   paragraphs(document.querySelector("#teh-full-lyrics"), lyrics);
   full.showModal();
-  updateWidgetPlacement();
   document.querySelector("#teh-full-scroll").scrollTop = 0;
   if (!reducedMotion.matches) {
     document.querySelector("#teh-full-sheet").animate(
@@ -405,7 +420,6 @@ function closeFull() {
   if (reducedMotion.matches) {
     full.close();
     document.querySelector("#teh-now-open").focus();
-    updateWidgetPlacement();
     return;
   }
   const slide = document.querySelector("#teh-full-sheet").animate(
@@ -416,7 +430,6 @@ function closeFull() {
     full.close();
     slide.cancel();
     document.querySelector("#teh-now-open").focus();
-    updateWidgetPlacement();
   };
 }
 

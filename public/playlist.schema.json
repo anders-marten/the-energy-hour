@@ -15,6 +15,7 @@
       "teaser": { "type": "string", "description": "Short text shown below the title" },
       "story": { "type": "string", "description": "Discover Story tab text" },
       "lyrics": { "type": "string", "pattern": "^$|^/lyrics/.+\\.txt$", "description": "Pointer to the plain-text lyrics file, or an empty string when lyrics are unavailable" },
+      "credits": { "type": "string", "description": "Verified writing credit shown under Info; empty when unknown" },
       "featured": { "type": "boolean", "description": "Mark the track shown in the feature position" },
       "links": {
         "type": "object",
