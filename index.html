@@ -734,460 +734,600 @@
 </head>
 
 <body>
-  <main>
-    <div class="embed-container">
-      <iframe id="soundcloud-player" title="SoundCloud player" scrolling="no" frameborder="no" allow="autoplay"
-        sandbox="allow-scripts allow-same-origin allow-popups"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2304212519&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
-      <button class="playlist-button previous" type="button" aria-label="Previous track">
-        <img src="/images/arrow_back.svg" alt="" aria-hidden="true" />
-      </button>
-      <button class="playlist-button next" type="button" aria-label="Next track">
-        <img src="/images/arrow_forward.svg" alt="" aria-hidden="true" />
-      </button>
-      <button class="play-button" type="button" aria-label="Play track">
-        <img class="play-button-icon" src="/images/play_arrow.svg" alt="" aria-hidden="true" />
-      </button>
-    </div>
-    <section class="artist-intro" aria-labelledby="artist-title">
-      <h1 id="artist-title">The Energy Hour</h1>
-      <p>From outer space to my heart 🧡<br>
-        Music shaped by 90s rave culture, synths, funk, pop, and my curiosity about AI
-      </p>
-    </section>
+  <div id="teh-mobile-preview">
+    <div id="teh-design" lang="en">
+      <header>
+        <button class="brand cursor-interaction" id="teh-brand" type="button">THE ENERGY HOUR</button>
+        <button class="quiet cursor-interaction" id="teh-tracks-link" type="button">Tracks</button>
+      </header>
+      <footer hidden id="teh-player">
+        <button class="now-open cursor-interaction" id="teh-now-open" type="button">
+          <img class="bar-thumb" id="teh-now-art" alt="">
+          <strong id="teh-now"></strong><small id="teh-now-status">Paused</small>
+        </button>
+        <button class="mini-play cursor-interaction" id="teh-toggle" type="button" aria-label="Play"></button>
+      </footer>
+      <main>
+        <section id="teh-tracks">
     <!-- TRACK_LIST_START -->
-  <section class="track-list" aria-labelledby="track-list-title">
-      <h2 id="track-list-title">Tracks by The Energy Hour</h2>
-      <ol>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/morning-can-wait" data-track-id="2441732988">Morning Can Wait</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/morning-can-wait" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/album/1BDfaraMfYzTPdgXQ0PXR6" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/tokyo" data-track-id="2441734662">Tokyo</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/tokyo" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/album/0eC5WDG2xKN7N9qescZA2w" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/you-or-the-funk" data-track-id="2393656881">You or the Funk</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/you-or-the-funk" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/5hdPTbCKu50BOHVYU7bcvp" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/hold-the-balance" data-track-id="2381647056">Hold the balance</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/hold-the-balance" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/album/1p4exuYGzDDkf8oSa60QfE" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/nar-kommer-du-hem" data-track-id="2376580448">När kommer du hem</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/nar-kommer-du-hem" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/1wCX83tdQCy8tLCtbLVGNh" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/all-in" data-track-id="2365131305">All In</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/all-in" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/69hbOiOPjHC6yALVgfjvqD" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/i-love-tomatoes" data-track-id="2336081048">I love tomatoes</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/i-love-tomatoes" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/album/5QPPtRaWSgMGVweoKPNWZz" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/vad-vet-jag-wav" data-track-id="2322475403">Vad vet jag</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/vad-vet-jag-wav" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/3qfKaguKgKOdlBwTltK7gI" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/mama" data-track-id="2298091322">Mama (english version)</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/mama" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/5NW0G6NRAVNUKrrJ4rMzzL" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/mamma" data-track-id="2297934956">Mamma</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/mamma" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/0iumyO4lRXAm1zkmDi8di8" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/luxury" data-track-id="2287088489">Luxury</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/luxury" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/35KFLhjjRysRHQAfQnRee9" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/synth_lab_one" data-track-id="2285131661">Synth Lab One</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/synth_lab_one" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/2DloDR0nrDuDpcMU15qPys" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/godhetssignal" data-track-id="2279831405">Godhetssignal</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/godhetssignal" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/1AqzqVl0SyONm8O7Z8YPG3" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/man-cave" data-track-id="2258416265">Man cave</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/man-cave" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/5X1prXSUPMsbWrsOk2Zrts" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/crack-in-the-dance-floor" data-track-id="2251892351">Crack in the dance floor</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/crack-in-the-dance-floor" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/0HQjeaQVv2URVlllOTQJNA" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/haze-2026" data-track-id="2247806234">Haze 2026</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/haze-2026" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/7cwscBWCgK302mInfzngya" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/goodness-signal" data-track-id="2239157618">Goodness signal</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/goodness-signal" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/4UFWxEIM3tl861yz87qBko" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/i-collect" data-track-id="2233811534">I collect</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/i-collect" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/4SMe975gComeRTP6t0Wt8q" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/bow-of-love-holiday-edit-3" data-track-id="2216860634">Bow of love (Holiday Edit)</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/bow-of-love-holiday-edit-3" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/en-strimma-av-hopp-holiday-edit-2" data-track-id="2216860631">En strimma av hopp (Holiday Edit)</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/en-strimma-av-hopp-holiday-edit-2" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/16bCIfdg84ATQVGUbZpYQE" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/nar-forsta-ljuset-brinner-holiday-edit-1" data-track-id="2216860637">När första ljuset brinner (Holiday Edit)</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/nar-forsta-ljuset-brinner-holiday-edit-1" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/raketfunk-bounce" data-track-id="2200194103">Rocket Funk</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/raketfunk-bounce" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/79jWpF4ccV1V69pEV5wEOV" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/u-make-my-heart" data-track-id="2186965518">You make my heart</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/u-make-my-heart" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/4QiPqoDkXpbZEdG1JmEnRq" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/you-make-my-heart" data-track-id="2308189358">U make my heart</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/you-make-my-heart" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/4GcwTM6Y0gPm5e557pOJPK" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/act-of-balance-second-gender-extended" data-track-id="2180214895">Act of balance (Spectrum mix)</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/act-of-balance-second-gender-extended" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/6Vi0ecrokYZ0MFYEjXjqWE" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/act-of-balance" data-track-id="2178180507">Act of balance</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/act-of-balance" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/1SnRQbCu5SNLmvhlKLn83h" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/malarfunk" data-track-id="2165333457">Mälarfunk</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/malarfunk" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/6LEeO5a0fkvATAK4xrzvEc" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/feeling-low-trance" data-track-id="2164466322">Feeling low (Trance)</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/feeling-low-trance" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/feeling-low-deep-house" data-track-id="2163943317">Feeling low (Deep house)</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/feeling-low-deep-house" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/5Q1NjhOAv27V1IvEAMssMg" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/say-funk-funk-rocky-3" data-track-id="2159859330">Säg funk funk</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/say-funk-funk-rocky-3" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/0SC8gawDtq8IgloFhoAKex" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/boot-out-that-punk-1-1" data-track-id="2134941870">Boot out that punk (space mission)</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/boot-out-that-punk-1-1" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a class="track-service" href="https://open.spotify.com/track/023uF0MMm9xoWiJTU5mo10" target="_blank" rel="noopener noreferrer">Spotify</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/mid-summer" data-track-id="2114298273">Mid Summer</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/mid-summer" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/feels-like-new" data-track-id="2111051817">Feels like new</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/feels-like-new" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/varje-dag-ar-du-ny-rhodos-juni-2025" data-track-id="2106087543">Varje morgon är du ny</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/varje-dag-ar-du-ny-rhodos-juni-2025" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/poly-2025-goa-mix" data-track-id="2100196611">Poly - Goa mix 2025</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/poly-2025-goa-mix" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/let-yourself-go-body-music-mix-2025" data-track-id="2097959391">Let yourself go - Body mix 2025</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/let-yourself-go-body-music-mix-2025" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/wild-one-3-3" data-track-id="2092408632">Wild One - Stockholm Archipelago Raid 2025</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/wild-one-3-3" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/we-got-the-funk" data-track-id="2015140323">We got the funk (teaser)</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/we-got-the-funk" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/granso-funk" data-track-id="2081787027">Gränsö funk</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/granso-funk" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/algo-funk-improvisation" data-track-id="2078448168">Älgö funk</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/algo-funk-improvisation" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/bow-of-love" data-track-id="2004157815">Bow of love</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/bow-of-love" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/en-strimma-av-hopp" data-track-id="1971962695">En strimma av hopp (Julen 2024)</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/en-strimma-av-hopp" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/it-was-you-1" data-track-id="1968310423">It was you</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/it-was-you-1" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/mo-rkrum-hip-hop-remix" data-track-id="1966208795">Mörkrum - Hip hop remix</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/mo-rkrum-hip-hop-remix" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/morkrum-dansband-ii" data-track-id="1950178355">Mörkrum - Dansband-ish</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/morkrum-dansband-ii" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/uno-50" data-track-id="1006082302">Uno 50</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/uno-50" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/minnen-by-the-synth-wav" data-track-id="1908048179">Minnen by the synth</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/minnen-by-the-synth-wav" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/sending-it-high-stockholm-archipelago-raid-2024" data-track-id="1908008435">Sending it high - Stockholm Archipelago Raid 2024</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/sending-it-high-stockholm-archipelago-raid-2024" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/majken-som-allt-du-gor-take-1" data-track-id="1850442969">Som allt du gör</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/majken-som-allt-du-gor-take-1" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/hjalmar-skog-med-siri" data-track-id="1543733125">Hjalmar - Skog Med Siri</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/hjalmar-skog-med-siri" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/julen-pa-radion-mp3" data-track-id="1184957014">Julen på radion</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/julen-pa-radion-mp3" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/vox-on-vox" data-track-id="1120683526">Vox On Vox</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/vox-on-vox" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/the-one-remix" data-track-id="959745685">THE ONE - The Energy Hour Remix</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/the-one-remix" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/cowboys-by-the-waterhole-the-energy-hour-remix-ii" data-track-id="500086116">Cowboys By The Waterhole - The Energy Hour Remix II</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/cowboys-by-the-waterhole-the-energy-hour-remix-ii" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/black-friday" data-track-id="541810173">Black Friday</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/black-friday" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/farr-take-1" data-track-id="341387088">Farr 30</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/farr-take-1" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/cowboys-by-the-waterhole-the-energy-hour-remix" data-track-id="303577489">T-Bone Band - Cowboys By The Waterhole (The Energy Hour Remix)</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/cowboys-by-the-waterhole-the-energy-hour-remix" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/sleepy" data-track-id="286640127">Sleepy</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/sleepy" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/alva-nar-varlden-haller-andan-the-energy-hour-reggae-remix-preview" data-track-id="264027908">Alva - När Världen Håller Andan - The Energy Hour Remix</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/alva-nar-varlden-haller-andan-the-energy-hour-reggae-remix-preview" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/soundave-symetric-circles-the-energy-hour-remix" data-track-id="207790827">Soundave - Symmetric Circles (The Energy Hour Remix)</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/soundave-symetric-circles-the-energy-hour-remix" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/techno-bitch" data-track-id="186345237">Techno Bitch- 1991</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/techno-bitch" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/analog-bass-sweep" data-track-id="32767315">Analog Bass Sweep - 1994</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/analog-bass-sweep" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/house-break" data-track-id="32522641">House Break - 1994</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/house-break" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-        <li>
-          <span class="track-row">
-            <a class="track-title track-play-link" href="https://soundcloud.com/the_energy_hour/the-energy-hour" data-track-id="32397380">The Energy Hour - 1994</a>
-            <span class="track-services" aria-label="Listen links"><a class="track-service" href="https://soundcloud.com/the_energy_hour/the-energy-hour" target="_blank" rel="noopener noreferrer">SoundCloud</a></span>
-          </span>
-        </li>
-      </ol>
-    </section>
+  <div class="mobile-feature">
+      <div class="feature-art">
+        <img src="/images/covers/morning-can-wait.jpg" alt="Morning Can Wait cover">
+        <div class="feature-actions">
+          <button class="cursor-interaction" id="teh-feature-play" data-play="2441732988" type="button" aria-label="Play Morning Can Wait"><span aria-hidden="true">▶</span></button>
+          <button class="cursor-interaction" data-discover="2441732988" type="button">Discover</button>
+        </div>
+      </div>
+      <div class="feature-copy"><h1>Morning Can Wait</h1><p>One night. One encounter. A feeling that remains.</p></div>
+    </div>
+    <div class="intro"><p>THE ENERGY HOUR</p><h1>From outer space<br>to my heart</h1></div>
+    <h2 class="desktop-track-heading">Tracks</h2>
+<div class="row">
+        <div class="thumb">
+          <img src="/images/covers/thumb/morning-can-wait.jpg" alt="" loading="lazy">
+          <button class="track cursor-interaction" data-play="2441732988" type="button" aria-label="Play Morning Can Wait"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Morning Can Wait</strong><p>One night. One encounter. A feeling that remains.</p></div>
+        <button class="quiet cursor-interaction" data-discover="2441732988" type="button"><span class="desktop-wording">Discover the story ↗</span><span class="mobile-wording">Discover <span aria-hidden="true">↗</span></span></button>
+      </div>
+<div class="row">
+        <div class="thumb">
+          <img src="/images/covers/thumb/tokyo.jpg" alt="" loading="lazy">
+          <button class="track cursor-interaction" data-play="2441734662" type="button" aria-label="Play Tokyo"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Tokyo</strong><p>Alone among millions. A chance encounter with a city.</p></div>
+        <button class="quiet cursor-interaction" data-discover="2441734662" type="button"><span class="desktop-wording">Discover the story ↗</span><span class="mobile-wording">Discover <span aria-hidden="true">↗</span></span></button>
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2393656881" type="button" aria-label="Play You or the Funk"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">You or the Funk</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2381647056" type="button" aria-label="Play Hold the balance"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Hold the balance</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2376580448" type="button" aria-label="Play När kommer du hem"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">När kommer du hem</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2365131305" type="button" aria-label="Play All In"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">All In</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2336081048" type="button" aria-label="Play I love tomatoes"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">I love tomatoes</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2322475403" type="button" aria-label="Play Vad vet jag"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Vad vet jag</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2298091322" type="button" aria-label="Play Mama (english version)"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Mama (english version)</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2297934956" type="button" aria-label="Play Mamma"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Mamma</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2287088489" type="button" aria-label="Play Luxury"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Luxury</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2285131661" type="button" aria-label="Play Synth Lab One"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Synth Lab One</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2279831405" type="button" aria-label="Play Godhetssignal"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Godhetssignal</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2258416265" type="button" aria-label="Play Man cave"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Man cave</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2251892351" type="button" aria-label="Play Crack in the dance floor"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Crack in the dance floor</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2247806234" type="button" aria-label="Play Haze 2026"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Haze 2026</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2239157618" type="button" aria-label="Play Goodness signal"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Goodness signal</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2233811534" type="button" aria-label="Play I collect"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">I collect</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2216860634" type="button" aria-label="Play Bow of love (Holiday Edit)"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Bow of love (Holiday Edit)</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2216860631" type="button" aria-label="Play En strimma av hopp (Holiday Edit)"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">En strimma av hopp (Holiday Edit)</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2216860637" type="button" aria-label="Play När första ljuset brinner (Holiday Edit)"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">När första ljuset brinner (Holiday Edit)</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2200194103" type="button" aria-label="Play Rocket Funk"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Rocket Funk</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2186965518" type="button" aria-label="Play You make my heart"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">You make my heart</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2308189358" type="button" aria-label="Play U make my heart"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">U make my heart</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2180214895" type="button" aria-label="Play Act of balance (Spectrum mix)"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Act of balance (Spectrum mix)</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2178180507" type="button" aria-label="Play Act of balance"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Act of balance</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2165333457" type="button" aria-label="Play Mälarfunk"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Mälarfunk</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2164466322" type="button" aria-label="Play Feeling low (Trance)"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Feeling low (Trance)</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2163943317" type="button" aria-label="Play Feeling low (Deep house)"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Feeling low (Deep house)</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2159859330" type="button" aria-label="Play Säg funk funk"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Säg funk funk</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2134941870" type="button" aria-label="Play Boot out that punk (space mission)"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Boot out that punk (space mission)</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2114298273" type="button" aria-label="Play Mid Summer"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Mid Summer</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2111051817" type="button" aria-label="Play Feels like new"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Feels like new</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2106087543" type="button" aria-label="Play Varje morgon är du ny"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Varje morgon är du ny</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2100196611" type="button" aria-label="Play Poly - Goa mix 2025"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Poly - Goa mix 2025</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2097959391" type="button" aria-label="Play Let yourself go - Body mix 2025"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Let yourself go - Body mix 2025</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2092408632" type="button" aria-label="Play Wild One - Stockholm Archipelago Raid 2025"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Wild One - Stockholm Archipelago Raid 2025</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2015140323" type="button" aria-label="Play We got the funk (teaser)"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">We got the funk (teaser)</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2081787027" type="button" aria-label="Play Gränsö funk"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Gränsö funk</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2078448168" type="button" aria-label="Play Älgö funk"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Älgö funk</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="2004157815" type="button" aria-label="Play Bow of love"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Bow of love</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="1971962695" type="button" aria-label="Play En strimma av hopp (Julen 2024)"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">En strimma av hopp (Julen 2024)</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="1968310423" type="button" aria-label="Play It was you"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">It was you</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="1966208795" type="button" aria-label="Play Mörkrum - Hip hop remix"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Mörkrum - Hip hop remix</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="1950178355" type="button" aria-label="Play Mörkrum - Dansband-ish"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Mörkrum - Dansband-ish</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="1006082302" type="button" aria-label="Play Uno 50"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Uno 50</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="1908048179" type="button" aria-label="Play Minnen by the synth"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Minnen by the synth</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="1908008435" type="button" aria-label="Play Sending it high - Stockholm Archipelago Raid 2024"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Sending it high - Stockholm Archipelago Raid 2024</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="1850442969" type="button" aria-label="Play Som allt du gör"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Som allt du gör</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="1543733125" type="button" aria-label="Play Hjalmar - Skog Med Siri"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Hjalmar - Skog Med Siri</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="1184957014" type="button" aria-label="Play Julen på radion"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Julen på radion</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="1120683526" type="button" aria-label="Play Vox On Vox"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Vox On Vox</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="959745685" type="button" aria-label="Play THE ONE - The Energy Hour Remix"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">THE ONE - The Energy Hour Remix</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="500086116" type="button" aria-label="Play Cowboys By The Waterhole - The Energy Hour Remix II"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Cowboys By The Waterhole - The Energy Hour Remix II</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="541810173" type="button" aria-label="Play Black Friday"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Black Friday</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="341387088" type="button" aria-label="Play Farr 30"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Farr 30</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="303577489" type="button" aria-label="Play T-Bone Band - Cowboys By The Waterhole (The Energy Hour Remix)"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">T-Bone Band - Cowboys By The Waterhole (The Energy Hour Remix)</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="286640127" type="button" aria-label="Play Sleepy"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Sleepy</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="264027908" type="button" aria-label="Play Alva - När Världen Håller Andan - The Energy Hour Remix"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Alva - När Världen Håller Andan - The Energy Hour Remix</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="207790827" type="button" aria-label="Play Soundave - Symmetric Circles (The Energy Hour Remix)"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Soundave - Symmetric Circles (The Energy Hour Remix)</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="186345237" type="button" aria-label="Play Techno Bitch- 1991"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Techno Bitch- 1991</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="32767315" type="button" aria-label="Play Analog Bass Sweep - 1994"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">Analog Bass Sweep - 1994</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="32522641" type="button" aria-label="Play House Break - 1994"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">House Break - 1994</strong></div>
+        
+      </div>
+<div class="row">
+        <div class="thumb">
+          <div class="neutral-thumb" role="img" aria-label=""></div>
+          <button class="track cursor-interaction" data-play="32397380" type="button" aria-label="Play The Energy Hour - 1994"><span aria-hidden="true">▶</span></button>
+        </div>
+        <div><strong class="track-name">The Energy Hour - 1994</strong></div>
+        
+      </div>
   <!-- TRACK_LIST_END -->
-  </main>
-  <nav class="social-links" aria-label="Artist social links">
-    <a href="https://open.spotify.com/artist/0QpQBk3Gu2aW99YiDHOBLe?si=dKN4cefASNOYD81G93tKgA" target="_blank"
-      rel="noopener noreferrer" aria-label="Spotify">
-      <img src="/images/spotify-logo-white.png" alt="Spotify" />
-    </a>
-    <a href="https://soundcloud.com/the_energy_hour" target="_blank" rel="noopener noreferrer" aria-label="SoundCloud">
-      <img class="soundcloud-logo" src="/images/soundcloud-logo-white.png" alt="SoundCloud" />
-    </a>
-    <a href="https://github.com/anders-marten/the-energy-hour/blob/main/README.md" target="_blank"
-      rel="noopener noreferrer" aria-label="GitHub README">
-      <img src="/images/github-logo-white.png" alt="GitHub" />
-    </a>
-  </nav>
+        </section>
+        <dialog id="teh-full" aria-labelledby="teh-full-title">
+          <div class="full-sheet" id="teh-full-sheet">
+            <div class="full-top"><button class="quiet cursor-interaction" id="teh-full-close" type="button" aria-label="Close player">✕</button></div>
+            <div class="full-scroll" id="teh-full-scroll">
+              <img id="teh-full-art" alt="">
+              <h1 id="teh-full-title"></h1>
+              <section class="full-lyrics" aria-label="Lyrics"><div id="teh-full-lyrics"></div></section>
+              <div class="soundcloud-widget" aria-label="SoundCloud player">
+                <iframe id="soundcloud-player" title="SoundCloud player" scrolling="no" frameborder="no" allow="autoplay"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="full-bar">
+            <button class="now-open cursor-interaction" id="teh-full-collapse" type="button" aria-label="Close player">
+              <img class="bar-thumb" id="teh-full-now-art" alt="">
+              <strong id="teh-full-now"></strong><small id="teh-full-status">Paused</small>
+            </button>
+            <button class="mini-play cursor-interaction" id="teh-full-toggle" type="button" aria-label="Play"></button>
+          </div>
+        </dialog>
+        <dialog id="teh-song" aria-labelledby="teh-title">
+          <div class="sheet-handle"><div class="drag-grip" aria-hidden="true"></div><button class="quiet cursor-interaction" id="teh-sheet-close" type="button" aria-label="Close Discover">✕</button></div>
+          <div class="sheet-title"><button class="play cursor-interaction" id="teh-play" type="button" aria-label="Play">▶</button><h1 id="teh-title"></h1></div>
+          <nav aria-label="Song content">
+            <button class="quiet cursor-interaction" data-section="story" aria-pressed="true">Story</button>
+            <button class="quiet cursor-interaction" data-section="lyrics" aria-pressed="false">Lyrics</button>
+            <button class="quiet cursor-interaction" data-section="info" aria-pressed="false">Info</button>
+          </nav>
+          <section class="reading" id="teh-story"><p id="teh-teaser"></p><div id="teh-story-text"></div></section>
+          <section class="reading" id="teh-lyrics" hidden><div id="teh-lyrics-text"></div></section>
+          <section class="reading" id="teh-info" hidden>
+            <p>Written by Anders Mårtén</p>
+            <div class="services"><a id="teh-soundcloud" target="_blank" rel="noopener noreferrer">SoundCloud ↗</a><a id="teh-spotify" target="_blank" rel="noopener noreferrer">Spotify ↗</a></div>
+          </section>
+          <div class="sheet-now" id="teh-sheet-now" hidden>
+            <button class="mini-play cursor-interaction" id="teh-sheet-toggle" type="button" aria-label="Toggle playback"></button>
+            <div><strong id="teh-sheet-now-title"></strong><small id="teh-sheet-now-state"></small></div>
+          </div>
+          <div class="song-footer" role="group" aria-label="Navigate tracks">
+            <button class="quiet cursor-interaction" id="teh-previous" type="button">← Previous</button>
+            <button class="quiet cursor-interaction" id="teh-next" type="button">Next →</button>
+          </div>
+        </dialog>
+      </main>
+      <nav class="social-links" aria-label="Artist social links">
+        <a href="https://open.spotify.com/artist/0QpQBk3Gu2aW99YiDHOBLe?si=dKN4cefASNOYD81G93tKgA" target="_blank" rel="noopener noreferrer" aria-label="Spotify"><img src="/images/spotify-logo-white.png" alt="Spotify"></a>
+        <a href="https://soundcloud.com/the_energy_hour" target="_blank" rel="noopener noreferrer" aria-label="SoundCloud"><img class="soundcloud-logo" src="/images/soundcloud-logo-white.png" alt="SoundCloud"></a>
+        <a href="https://github.com/anders-marten/the-energy-hour" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><img src="/images/github-logo-white.png" alt="GitHub"></a>
+      </nav>
+    </div>
+  </div>
   <script src="https://w.soundcloud.com/player/api.js"></script>
   <script src="/app.js"></script>
 </body>
