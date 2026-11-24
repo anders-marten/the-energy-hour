@@ -740,6 +740,9 @@
         <button class="quiet cursor-interaction" id="teh-tracks-link" type="button">Tracks</button>
       </header>
       <footer hidden id="teh-player">
+        <button class="player-expand cursor-interaction" id="teh-player-expand" type="button" aria-label="Open Discover">
+          <span aria-hidden="true">⌃</span>
+        </button>
         <button class="now-open cursor-interaction" id="teh-now-open" type="button">
           <img class="bar-thumb" id="teh-now-art" alt="">
           <strong id="teh-now"></strong><small id="teh-now-status">Paused</small>
@@ -1627,7 +1630,7 @@
           </div>
         </dialog>
         <dialog id="teh-song" aria-labelledby="teh-title">
-          <div class="sheet-handle"><div class="drag-grip" aria-hidden="true"></div><button class="quiet cursor-interaction" id="teh-sheet-close" type="button" aria-label="Close Discover">✕</button></div>
+          <div class="sheet-handle"><div class="drag-grip" aria-hidden="true"></div><button class="sheet-collapse cursor-interaction" id="teh-sheet-close" type="button" aria-label="Close Discover"><span aria-hidden="true">⌄</span></button></div>
           <div class="sheet-title"><button class="play cursor-interaction" id="teh-play" type="button" aria-label="Play">▶</button><h2 id="teh-title"></h2></div>
           <nav aria-label="Song content">
             <button class="quiet cursor-interaction" data-section="story" aria-pressed="true">Story</button>

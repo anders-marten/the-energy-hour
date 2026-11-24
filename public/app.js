@@ -497,10 +497,12 @@ trackList.addEventListener("click", (event) => {
 
 document.querySelector("#teh-toggle").addEventListener("click", toggleCurrentTrack);
 document.querySelector("#teh-full-toggle").addEventListener("click", toggleCurrentTrack);
-document.querySelector("#teh-now-open").addEventListener("click", () => {
+function openCurrentDiscover() {
   const track = getCurrentTrack();
   if (track) openDiscover(track.id);
-});
+}
+document.querySelector("#teh-now-open").addEventListener("click", openCurrentDiscover);
+document.querySelector("#teh-player-expand").addEventListener("click", openCurrentDiscover);
 document.querySelector("#teh-full-collapse").addEventListener("click", closeFull);
 document.querySelector("#teh-full-close").addEventListener("click", closeFull);
 document.querySelector("#teh-sheet-close").addEventListener("click", closeDiscover);
