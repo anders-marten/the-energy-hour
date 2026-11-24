@@ -27,6 +27,8 @@ body { min-height: 100vh; min-height: 100dvh; }
 #teh-design .intro h1 { font-size: clamp(38px,8vw,76px); line-height: 1; letter-spacing: -.055em; margin: 10px 0 18px; }
 #teh-design .desktop-track-heading { font-size: 24px; margin-bottom: 12px; }
 #teh-design .row { display: grid; grid-template-columns:64px minmax(0,1fr) auto; align-items: center; gap:16px; border-top:1px solid var(--rule); padding:14px 0; }
+#teh-design .row { position:relative; }
+#teh-design .track-seo-copy { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; border:0; }
 #teh-design .row p, #teh-design small { color: var(--muted); font-size:14px; }
 #teh-design .track-name { font-weight:700; }
 #teh-design .thumb { position:relative; aspect-ratio:1; }

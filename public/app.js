@@ -15,7 +15,7 @@
  * @property {string} thumbnail
  * @property {string} teaser
  * @property {string} story
- * @property {string} lyrics
+ * @property {string} lyrics Pointer to a plain-text lyrics file
  * @property {boolean} featured
  * @property {TrackLinks} links
  */
@@ -58,6 +58,7 @@ let hasPlayed = false;
 let sheetSlide = null;
 let sheetClosing = false;
 let sheetTrackId = null;
+const lyricsCache = new Map();
 
 const sheet = document.querySelector("#teh-song");
 const full = document.querySelector("#teh-full");
@@ -100,6 +101,22 @@ function buildSoundCloudSrc(trackId, autoPlay = false) {
 
 function getCurrentTrack() {
   return playlist[currentTrackIndex] || null;
+}
+
+async function loadLyrics(track) {
+  if (!track?.lyrics) return "";
+  if (lyricsCache.has(track.lyrics)) return lyricsCache.get(track.lyrics);
+
+  try {
+    const response = await fetch(track.lyrics, { cache: "no-cache" });
+    if (!response.ok) throw new Error(`Lyrics request failed with ${response.status}`);
+    const lyrics = (await response.text()).trim();
+    lyricsCache.set(track.lyrics, lyrics);
+    return lyrics;
+  } catch (error) {
+    console.warn(`Unable to load lyrics for ${track.title}.`, error);
+    return "";
+  }
 }
 
 function placeWidget(slot) {
@@ -298,7 +315,7 @@ function setSection(name) {
   document.querySelector("#teh-" + name)?.scrollTo({ top: 0 });
 }
 
-function openDiscover(trackId) {
+async function openDiscover(trackId) {
   const track = playlist.find((item) => item.id === trackId);
   if (!track) return;
   sheetTrackId = trackId;
@@ -307,17 +324,21 @@ function openDiscover(trackId) {
   document.querySelector("#teh-soundcloud").href = track.links.soundcloud || "";
   document.querySelector("#teh-spotify").href = track.links.spotify || "";
   paragraphs(document.querySelector("#teh-story-text"), track.story);
-  paragraphs(document.querySelector("#teh-lyrics-text"), track.lyrics);
+  paragraphs(document.querySelector("#teh-lyrics-text"), "");
   document.querySelector("#teh-full-title").textContent = track.title;
 
   const storyButton = document.querySelector('[data-section="story"]');
   const lyricsButton = document.querySelector('[data-section="lyrics"]');
   const infoButton = document.querySelector('[data-section="info"]');
+  const lyrics = await loadLyrics(track);
+  if (sheetTrackId === trackId) {
+    paragraphs(document.querySelector("#teh-lyrics-text"), lyrics);
+  }
   storyButton.hidden = !track.story;
-  lyricsButton.hidden = !track.lyrics;
+  lyricsButton.hidden = !lyrics;
   infoButton.hidden = false;
 
-  const firstSection = track.story ? "story" : (track.lyrics ? "lyrics" : "info");
+  const firstSection = track.story ? "story" : (lyrics ? "lyrics" : "info");
   setSection(firstSection);
 
   const position = playlist.findIndex((item) => item.id === trackId);
@@ -353,12 +374,14 @@ function closeDiscover() {
   };
 }
 
-function openFull() {
+async function openFull() {
   if (!getCurrentTrack() || full.open) return;
   const track = getCurrentTrack();
   document.querySelector("#teh-full-title").textContent = track.title;
   document.querySelector("#teh-full-now").textContent = track.title;
-  paragraphs(document.querySelector("#teh-full-lyrics"), track.lyrics);
+  paragraphs(document.querySelector("#teh-full-lyrics"), "");
+  const lyrics = await loadLyrics(track);
+  paragraphs(document.querySelector("#teh-full-lyrics"), lyrics);
   full.showModal();
   updateWidgetPlacement();
   document.querySelector("#teh-full-scroll").scrollTop = 0;

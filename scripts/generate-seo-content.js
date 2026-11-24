@@ -51,6 +51,21 @@ function getLinks(track) {
   };
 }
 
+function getLyricsText(track) {
+  const pointer = typeof track.lyrics === "string" ? track.lyrics.trim() : "";
+  if (!pointer.startsWith("/lyrics/")) {
+    return "";
+  }
+
+  const lyricsPath = path.resolve(rootDir, "public", pointer.replace(/^\//, ""));
+  const publicPrefix = path.resolve(rootDir, "public") + path.sep;
+  if (!lyricsPath.startsWith(publicPrefix) || path.extname(lyricsPath) !== ".txt") {
+    throw new Error(`Invalid lyrics pointer for ${track.title}: ${pointer}`);
+  }
+
+  return fs.readFileSync(lyricsPath, "utf8").trim();
+}
+
 /**
  * @typedef {Object} TrackLinks
  * @property {string} soundcloud
@@ -69,6 +84,7 @@ function getLinks(track) {
  * @property {string} teaser
  * @property {string} story
  * @property {string} lyrics
+ * @property {string} lyricsText
  * @property {boolean} featured
  * @property {TrackLinks} links
  */
@@ -80,17 +96,21 @@ function normalizeTracks(items) {
   }
 
   return items
-    .map((item) => ({
-      title: typeof item.title === "string" ? item.title.trim() : "",
-      id: String(item.id || "").trim(),
-      cover: typeof item.cover === "string" ? item.cover : "",
-      thumbnail: typeof item.thumbnail === "string" ? item.thumbnail : "",
-      teaser: typeof item.teaser === "string" ? item.teaser : "",
-      story: typeof item.story === "string" ? item.story : "",
-      lyrics: typeof item.lyrics === "string" ? item.lyrics : "",
-      featured: item.featured === true,
-      links: getLinks(item)
-    }))
+    .map((item) => {
+      const track = {
+        title: typeof item.title === "string" ? item.title.trim() : "",
+        id: String(item.id || "").trim(),
+        cover: typeof item.cover === "string" ? item.cover : "",
+        thumbnail: typeof item.thumbnail === "string" ? item.thumbnail : "",
+        teaser: typeof item.teaser === "string" ? item.teaser : "",
+        story: typeof item.story === "string" ? item.story : "",
+        lyrics: typeof item.lyrics === "string" ? item.lyrics : "",
+        featured: item.featured === true,
+        links: getLinks(item)
+      };
+      track.lyricsText = getLyricsText(track);
+      return track;
+    })
     .filter((item) => item.title && item.id);
 }
 
@@ -123,10 +143,19 @@ function renderTrackList(tracks) {
   const rows = tracks.map((track) => {
     const title = escapeHtml(track.title);
     const teaser = escapeHtml(track.teaser);
+    const story = escapeHtml(track.story).replace(/\n/g, "<br>");
+    const lyrics = escapeHtml(track.lyricsText).replace(/\n/g, "<br>");
     const art = track.thumbnail || track.cover;
     const hasDiscover = Boolean(track.story || track.lyrics);
 
-    return `<div class="row">
+    const seoCopy = (story || lyrics)
+      ? `<div class="track-seo-copy">
+          ${story ? `<h3>${title} - Story</h3><p>${story}</p>` : ""}
+          ${lyrics ? `<h3>${title} - Lyrics</h3><p>${lyrics}</p>` : ""}
+        </div>`
+      : "";
+
+    return `<article class="row" aria-label="${title}">
         <div class="thumb">
           <div class="track-widget-slot" data-widget-track="${escapeHtml(track.id)}">
             ${art
@@ -139,7 +168,8 @@ function renderTrackList(tracks) {
         ${hasDiscover
           ? `<button class="quiet cursor-interaction" data-discover="${escapeHtml(track.id)}" type="button"><span class="desktop-wording">Discover the story ↗</span><span class="mobile-wording">Discover <span aria-hidden="true">↗</span></span></button>`
           : ""}
-      </div>`;
+        ${seoCopy}
+      </article>`;
   }).join("\n");
 
   return `${feature}
