@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "/playlist.schema.json",
+  "title": "The Energy Hour track presentation model",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["title", "id"],
+    "additionalProperties": true,
+    "properties": {
+      "title": { "type": "string", "minLength": 1 },
+      "id": { "type": "string", "minLength": 1 },
+      "cover": { "type": "string", "description": "Large cover image path" },
+      "thumbnail": { "type": "string", "description": "Track-list thumbnail path" },
+      "teaser": { "type": "string", "description": "Short text shown below the title" },
+      "story": { "type": "string", "description": "Discover Story tab text" },
+      "lyrics": { "type": "string", "description": "Discover Lyrics tab and full-player lyrics" },
+      "featured": { "type": "boolean", "description": "Mark the track shown in the feature position" },
+      "links": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "soundcloud": { "type": "string", "format": "uri" },
+          "spotify": { "type": "string", "format": "uri" },
+          "appleMusic": { "type": "string", "format": "uri" },
+          "tidal": { "type": "string", "format": "uri" }
+        }
+      }
+    }
+  }
+}

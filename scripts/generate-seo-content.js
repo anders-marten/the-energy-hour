@@ -51,6 +51,29 @@ function getLinks(track) {
   };
 }
 
+/**
+ * @typedef {Object} TrackLinks
+ * @property {string} soundcloud
+ * @property {string} spotify
+ * @property {string} appleMusic
+ * @property {string} tidal
+ */
+
+/**
+ * Presentation model for one track.
+ * @typedef {Object} Track
+ * @property {string} title
+ * @property {string} id
+ * @property {string} cover
+ * @property {string} thumbnail
+ * @property {string} teaser
+ * @property {string} story
+ * @property {string} lyrics
+ * @property {boolean} featured
+ * @property {TrackLinks} links
+ */
+
+/** @returns {Track[]} */
 function normalizeTracks(items) {
   if (!Array.isArray(items)) {
     throw new Error("playlist.json must contain an array.");

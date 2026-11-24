@@ -1,5 +1,38 @@
+/**
+ * @typedef {Object} TrackLinks
+ * @property {string} soundcloud
+ * @property {string} spotify
+ * @property {string} appleMusic
+ * @property {string} tidal
+ */
+
+/**
+ * Presentation model for one track.
+ * @typedef {Object} Track
+ * @property {string} title
+ * @property {string} id
+ * @property {string} cover
+ * @property {string} thumbnail
+ * @property {string} teaser
+ * @property {string} story
+ * @property {string} lyrics
+ * @property {boolean} featured
+ * @property {TrackLinks} links
+ */
+
+/** @type {Track[]} */
 const fallbackPlaylist = [
-  { title: "Track 1", id: "2304212519" }
+  {
+    title: "Track 1",
+    id: "2304212519",
+    cover: "",
+    thumbnail: "",
+    teaser: "",
+    story: "",
+    lyrics: "",
+    featured: false,
+    links: { soundcloud: "", spotify: "", appleMusic: "", tidal: "" }
+  }
 ];
 
 const player = document.createElement("iframe");
@@ -48,7 +81,12 @@ function normalizePlaylist(items) {
     story: typeof item.story === "string" ? item.story : "",
     lyrics: typeof item.lyrics === "string" ? item.lyrics : "",
     featured: item.featured === true,
-    links: item.links && typeof item.links === "object" ? item.links : {}
+    links: {
+      soundcloud: typeof item.links?.soundcloud === "string" ? item.links.soundcloud : "",
+      spotify: typeof item.links?.spotify === "string" ? item.links.spotify : "",
+      appleMusic: typeof item.links?.appleMusic === "string" ? item.links.appleMusic : "",
+      tidal: typeof item.links?.tidal === "string" ? item.links.tidal : ""
+    }
   })).filter((item) => item.title && item.id);
 }
 
