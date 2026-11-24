@@ -166,7 +166,7 @@ function renderTrackList(tracks) {
         </div>
         <div><strong class="track-name">${title}</strong>${teaser ? `<p>${teaser}</p>` : ""}</div>
         ${hasDiscover
-          ? `<button class="quiet cursor-interaction" data-discover="${escapeHtml(track.id)}" type="button"><span class="desktop-wording">Discover the story ↗</span><span class="mobile-wording">Discover <span aria-hidden="true">↗</span></span></button>`
+          ? `<button class="quiet cursor-interaction" data-discover="${escapeHtml(track.id)}" type="button"><span class="desktop-wording">Discover ↗</span><span class="mobile-wording">Discover <span aria-hidden="true">↗</span></span></button>`
           : ""}
         ${seoCopy}
       </article>`;
