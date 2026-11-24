@@ -399,6 +399,17 @@ document.querySelector("#teh-next").addEventListener("click", () => {
 });
 
 sheet.addEventListener("click", (event) => {
+  const rect = sheet.getBoundingClientRect();
+  const isOutsidePanel =
+    event.clientX < rect.left ||
+    event.clientX > rect.right ||
+    event.clientY < rect.top ||
+    event.clientY > rect.bottom;
+  if (isOutsidePanel) {
+    closeDiscover();
+    return;
+  }
+
   const sectionButton = event.target.closest("[data-section]");
   if (sectionButton) setSection(sectionButton.dataset.section);
 });
