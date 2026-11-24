@@ -116,6 +116,9 @@ body { min-height: 100vh; min-height: 100dvh; }
   #teh-design #teh-tracks .row p { grid-column:2/4; grid-row:2; font-size:13px; }
   #teh-design #teh-tracks .row > .quiet { grid-column:3; grid-row:1; padding:0; font-size:14px; }
   #teh-design .social-links { margin:8px 8px 0; }
+  #teh-design #teh-player { min-height:76px; padding:14px 16px calc(14px + env(safe-area-inset-bottom)); }
+  #teh-design .mini-play { width:52px; height:52px; flex-basis:52px; }
+  #teh-design .sheet-handle { min-height:56px; }
 }
 
 @container (min-width:900px) {

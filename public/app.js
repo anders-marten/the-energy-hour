@@ -241,8 +241,22 @@ function showTrackById(trackId, shouldPlay = true) {
   const index = playlist.findIndex((track) => track.id === trackId);
   if (index < 0) return false;
   if (index === currentTrackIndex && shouldPlay) {
-    if (isPlaying) widget.pause();
-    else widget.play();
+    if (isPlaying) {
+      widget.pause();
+    } else {
+      if (isAppleMobileSafari()) shouldPlayWhenReady = true;
+      widget.play();
+      if (isAppleMobileSafari()) {
+        window.setTimeout(() => {
+          widget.isPaused((paused) => {
+            if (paused) {
+              shouldPlayWhenReady = true;
+              widget.play();
+            }
+          });
+        }, 150);
+      }
+    }
   } else {
     showTrack(index, shouldPlay);
   }
@@ -518,15 +532,20 @@ sheet.addEventListener("close", () => {
   }
 });
 
-const grip = sheet.querySelector(".drag-grip");
 let drag = null;
-grip.addEventListener("pointerdown", (event) => {
+sheet.addEventListener("pointerdown", (event) => {
   if (sheetClosing || wide.matches || !event.isPrimary || event.button !== 0) return;
+  if (event.target.closest("button, a, input, select, textarea")) return;
+
+  const target = event.target;
+  const inScrollableReading = Boolean(target.closest(".reading"));
+  if (inScrollableReading) return;
+
   sheetSlide?.cancel();
   drag = { id: event.pointerId, y: event.clientY };
-  grip.setPointerCapture(event.pointerId);
+  sheet.setPointerCapture(event.pointerId);
 });
-grip.addEventListener("pointermove", (event) => {
+sheet.addEventListener("pointermove", (event) => {
   if (drag?.id !== event.pointerId || reducedMotion.matches) return;
   sheet.style.transform = `translateY(${Math.max(0, event.clientY - drag.y)}px)`;
 });
@@ -539,7 +558,7 @@ function finishDrag(event) {
     sheet.style.transform = "";
   }
 }
-grip.addEventListener("pointerup", finishDrag);
-grip.addEventListener("pointercancel", finishDrag);
+sheet.addEventListener("pointerup", finishDrag);
+sheet.addEventListener("pointercancel", finishDrag);
 
 loadPlaylist();
