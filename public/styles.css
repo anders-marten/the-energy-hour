@@ -1,5 +1,5 @@
-html, body { margin: 0; background: #050505; }
-body { min-height: 100vh; min-height: 100dvh; }
+html, body { margin: 0; background: #050505; touch-action: manipulation; }
+body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
 .cursor-interaction { cursor: pointer; }
 #teh-mobile-preview { container-type: inline-size; }
 #teh-design {
