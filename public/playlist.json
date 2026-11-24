@@ -38,7 +38,9 @@
       "spotify": "https://open.spotify.com/track/5hdPTbCKu50BOHVYU7bcvp",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/you-or-the-funk.jpg",
+    "thumbnail": "/images/covers/thumb/you-or-the-funk.jpg"
   },
   {
     "title": "Hold the balance",
@@ -48,7 +50,9 @@
       "spotify": "https://open.spotify.com/album/1p4exuYGzDDkf8oSa60QfE",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/hold-the-balance.jpg",
+    "thumbnail": "/images/covers/thumb/hold-the-balance.jpg"
   },
   {
     "title": "När kommer du hem",
@@ -58,7 +62,9 @@
       "spotify": "https://open.spotify.com/track/1wCX83tdQCy8tLCtbLVGNh",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/nar-kommer-du-hem.jpg",
+    "thumbnail": "/images/covers/thumb/nar-kommer-du-hem.jpg"
   },
   {
     "title": "All In",
@@ -68,7 +74,9 @@
       "spotify": "https://open.spotify.com/track/69hbOiOPjHC6yALVgfjvqD",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/all-in.jpg",
+    "thumbnail": "/images/covers/thumb/all-in.jpg"
   },
   {
     "title": "I love tomatoes",
@@ -78,7 +86,9 @@
       "spotify": "https://open.spotify.com/album/5QPPtRaWSgMGVweoKPNWZz",
       "appleMusic": "https://music.apple.com/se/album/i-love-tomatoes/6778599164?i=6778599165",
       "tidal": "https://tidal.com/album/532111657/u"
-    }
+    },
+    "cover": "/images/covers/i-love-tomatoes.jpg",
+    "thumbnail": "/images/covers/thumb/i-love-tomatoes.jpg"
   },
   {
     "title": "Vad vet jag",
@@ -88,7 +98,9 @@
       "spotify": "https://open.spotify.com/track/3qfKaguKgKOdlBwTltK7gI",
       "appleMusic": "https://music.apple.com/se/album/vad-vet-jag-single/6774033653",
       "tidal": "https://tidal.com/track/526851826/u"
-    }
+    },
+    "cover": "/images/covers/vad-vet-jag.jpg",
+    "thumbnail": "/images/covers/thumb/vad-vet-jag.jpg"
   },
   {
     "title": "Mama (english version)",
@@ -98,7 +110,9 @@
       "spotify": "https://open.spotify.com/track/5NW0G6NRAVNUKrrJ4rMzzL",
       "appleMusic": "https://music.apple.com/se/album/mama-english-version-single/1891771503",
       "tidal": "https://tidal.com/album/513978431/u"
-    }
+    },
+    "cover": "/images/covers/mama-english-version.jpg",
+    "thumbnail": "/images/covers/thumb/mama-english-version.jpg"
   },
   {
     "title": "Mamma",
@@ -108,7 +122,9 @@
       "spotify": "https://open.spotify.com/track/0iumyO4lRXAm1zkmDi8di8",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/mamma.jpg",
+    "thumbnail": "/images/covers/thumb/mamma.jpg"
   },
   {
     "title": "Luxury",
@@ -118,7 +134,9 @@
       "spotify": "https://open.spotify.com/track/35KFLhjjRysRHQAfQnRee9",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/luxury.jpg",
+    "thumbnail": "/images/covers/thumb/luxury.jpg"
   },
   {
     "title": "Synth Lab One",
@@ -128,7 +146,9 @@
       "spotify": "https://open.spotify.com/track/2DloDR0nrDuDpcMU15qPys",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/synth-lab-one.jpg",
+    "thumbnail": "/images/covers/thumb/synth-lab-one.jpg"
   },
   {
     "title": "Godhetssignal",
@@ -138,7 +158,9 @@
       "spotify": "https://open.spotify.com/track/1AqzqVl0SyONm8O7Z8YPG3",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/godhetssignal.jpg",
+    "thumbnail": "/images/covers/thumb/godhetssignal.jpg"
   },
   {
     "title": "Man cave",
@@ -148,7 +170,9 @@
       "spotify": "https://open.spotify.com/track/5X1prXSUPMsbWrsOk2Zrts",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/man-cave.jpg",
+    "thumbnail": "/images/covers/thumb/man-cave.jpg"
   },
   {
     "title": "Crack in the dance floor",
@@ -158,7 +182,9 @@
       "spotify": "https://open.spotify.com/track/0HQjeaQVv2URVlllOTQJNA",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/crack-in-the-dance-floor.jpg",
+    "thumbnail": "/images/covers/thumb/crack-in-the-dance-floor.jpg"
   },
   {
     "title": "Haze 2026",
@@ -168,7 +194,9 @@
       "spotify": "https://open.spotify.com/track/7cwscBWCgK302mInfzngya",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/haze-2026.jpg",
+    "thumbnail": "/images/covers/thumb/haze-2026.jpg"
   },
   {
     "title": "Goodness signal",
@@ -178,7 +206,9 @@
       "spotify": "https://open.spotify.com/track/4UFWxEIM3tl861yz87qBko",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/goodness-signal.jpg",
+    "thumbnail": "/images/covers/thumb/goodness-signal.jpg"
   },
   {
     "title": "I collect",
@@ -188,7 +218,9 @@
       "spotify": "https://open.spotify.com/track/4SMe975gComeRTP6t0Wt8q",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/i-collect.jpg",
+    "thumbnail": "/images/covers/thumb/i-collect.jpg"
   },
   {
     "title": "Bow of love (Holiday Edit)",
@@ -198,7 +230,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/bow-of-love-holiday-edit.jpg",
+    "thumbnail": "/images/covers/thumb/bow-of-love-holiday-edit.jpg"
   },
   {
     "title": "En strimma av hopp (Holiday Edit)",
@@ -208,7 +242,9 @@
       "spotify": "https://open.spotify.com/track/16bCIfdg84ATQVGUbZpYQE",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/en-strimma-av-hopp-holiday-edit.jpg",
+    "thumbnail": "/images/covers/thumb/en-strimma-av-hopp-holiday-edit.jpg"
   },
   {
     "title": "När första ljuset brinner (Holiday Edit)",
@@ -218,7 +254,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/nar-forsta-ljuset-brinner-holiday-edit.jpg",
+    "thumbnail": "/images/covers/thumb/nar-forsta-ljuset-brinner-holiday-edit.jpg"
   },
   {
     "title": "Rocket Funk",
@@ -228,7 +266,9 @@
       "spotify": "https://open.spotify.com/track/79jWpF4ccV1V69pEV5wEOV?si=57813aefe0134f6a",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/rocket-funk.jpg",
+    "thumbnail": "/images/covers/thumb/rocket-funk.jpg"
   },
   {
     "title": "You make my heart",
@@ -238,7 +278,9 @@
       "spotify": "https://open.spotify.com/track/4QiPqoDkXpbZEdG1JmEnRq?si=cbac7128c1044474",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/you-make-my-heart.jpg",
+    "thumbnail": "/images/covers/thumb/you-make-my-heart.jpg"
   },
   {
     "title": "U make my heart",
@@ -248,7 +290,9 @@
       "spotify": "https://open.spotify.com/track/4GcwTM6Y0gPm5e557pOJPK",
       "appleMusic": "https://music.apple.com/se/song/u-make-my-heart/6763500057",
       "tidal": "https://tidal.com/track/518947254"
-    }
+    },
+    "cover": "/images/covers/u-make-my-heart.jpg",
+    "thumbnail": "/images/covers/thumb/u-make-my-heart.jpg"
   },
   {
     "title": "Act of balance (Spectrum mix)",
@@ -258,7 +302,9 @@
       "spotify": "https://open.spotify.com/track/6Vi0ecrokYZ0MFYEjXjqWE?si=b78f167db3764b40",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/act-of-balance-spectrum-mix.jpg",
+    "thumbnail": "/images/covers/thumb/act-of-balance-spectrum-mix.jpg"
   },
   {
     "title": "Act of balance",
@@ -268,7 +314,9 @@
       "spotify": "https://open.spotify.com/track/1SnRQbCu5SNLmvhlKLn83h?si=ef9409f637f247ca",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/act-of-balance.jpg",
+    "thumbnail": "/images/covers/thumb/act-of-balance.jpg"
   },
   {
     "title": "Mälarfunk",
@@ -278,7 +326,9 @@
       "spotify": "https://open.spotify.com/track/6LEeO5a0fkvATAK4xrzvEc",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/malarfunk.jpg",
+    "thumbnail": "/images/covers/thumb/malarfunk.jpg"
   },
   {
     "title": "Feeling low (Trance)",
@@ -288,7 +338,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/feeling-low-trance.jpg",
+    "thumbnail": "/images/covers/thumb/feeling-low-trance.jpg"
   },
   {
     "title": "Feeling low (Deep house)",
@@ -298,7 +350,9 @@
       "spotify": "https://open.spotify.com/track/5Q1NjhOAv27V1IvEAMssMg",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/feeling-low-deep-house.jpg",
+    "thumbnail": "/images/covers/thumb/feeling-low-deep-house.jpg"
   },
   {
     "title": "Säg funk funk",
@@ -308,7 +362,9 @@
       "spotify": "https://open.spotify.com/track/0SC8gawDtq8IgloFhoAKex",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/sag-funk-funk.jpg",
+    "thumbnail": "/images/covers/thumb/sag-funk-funk.jpg"
   },
   {
     "title": "Boot out that punk (space mission)",
@@ -318,7 +374,9 @@
       "spotify": "https://open.spotify.com/track/023uF0MMm9xoWiJTU5mo10",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/boot-out-that-punk-space-mission.jpg",
+    "thumbnail": "/images/covers/thumb/boot-out-that-punk-space-mission.jpg"
   },
   {
     "title": "Mid Summer",
@@ -328,7 +386,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/mid-summer.jpg",
+    "thumbnail": "/images/covers/thumb/mid-summer.jpg"
   },
   {
     "title": "Feels like new",
@@ -338,7 +398,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/feels-like-new.jpg",
+    "thumbnail": "/images/covers/thumb/feels-like-new.jpg"
   },
   {
     "title": "Varje morgon är du ny",
@@ -348,7 +410,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/varje-morgon-ar-du-ny.jpg",
+    "thumbnail": "/images/covers/thumb/varje-morgon-ar-du-ny.jpg"
   },
   {
     "title": "Poly - Goa mix 2025",
@@ -358,7 +422,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/poly-goa-mix-2025.jpg",
+    "thumbnail": "/images/covers/thumb/poly-goa-mix-2025.jpg"
   },
   {
     "title": "Let yourself go - Body mix 2025",
@@ -368,7 +434,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/let-yourself-go-body-mix-2025.jpg",
+    "thumbnail": "/images/covers/thumb/let-yourself-go-body-mix-2025.jpg"
   },
   {
     "title": "Wild One - Stockholm Archipelago Raid 2025",
@@ -378,7 +446,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/wild-one-stockholm-archipelago-raid-2025.jpg",
+    "thumbnail": "/images/covers/thumb/wild-one-stockholm-archipelago-raid-2025.jpg"
   },
   {
     "title": "We got the funk (teaser)",
@@ -388,7 +458,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/we-got-the-funk-teaser.jpg",
+    "thumbnail": "/images/covers/thumb/we-got-the-funk-teaser.jpg"
   },
   {
     "title": "Gränsö funk",
@@ -398,7 +470,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/granso-funk.jpg",
+    "thumbnail": "/images/covers/thumb/granso-funk.jpg"
   },
   {
     "title": "Älgö funk",
@@ -408,7 +482,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/algo-funk.jpg",
+    "thumbnail": "/images/covers/thumb/algo-funk.jpg"
   },
   {
     "title": "Bow of love",
@@ -418,7 +494,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/bow-of-love.jpg",
+    "thumbnail": "/images/covers/thumb/bow-of-love.jpg"
   },
   {
     "title": "En strimma av hopp (Julen 2024)",
@@ -428,7 +506,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/en-strimma-av-hopp-julen-2024.jpg",
+    "thumbnail": "/images/covers/thumb/en-strimma-av-hopp-julen-2024.jpg"
   },
   {
     "title": "It was you",
@@ -438,7 +518,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/it-was-you.jpg",
+    "thumbnail": "/images/covers/thumb/it-was-you.jpg"
   },
   {
     "title": "Mörkrum - Hip hop remix",
@@ -448,7 +530,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/morkrum-hip-hop-remix.jpg",
+    "thumbnail": "/images/covers/thumb/morkrum-hip-hop-remix.jpg"
   },
   {
     "title": "Mörkrum - Dansband-ish",
@@ -458,7 +542,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/morkrum-dansband-ish.jpg",
+    "thumbnail": "/images/covers/thumb/morkrum-dansband-ish.jpg"
   },
   {
     "title": "Uno 50",
@@ -468,7 +554,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/uno-50.jpg",
+    "thumbnail": "/images/covers/thumb/uno-50.jpg"
   },
   {
     "title": "Minnen by the synth",
@@ -478,7 +566,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/minnen-by-the-synth.jpg",
+    "thumbnail": "/images/covers/thumb/minnen-by-the-synth.jpg"
   },
   {
     "title": "Sending it high - Stockholm Archipelago Raid 2024",
@@ -488,7 +578,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/sending-it-high-stockholm-archipelago-raid-2024.jpg",
+    "thumbnail": "/images/covers/thumb/sending-it-high-stockholm-archipelago-raid-2024.jpg"
   },
   {
     "title": "Som allt du gör",
@@ -498,7 +590,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/som-allt-du-gor.jpg",
+    "thumbnail": "/images/covers/thumb/som-allt-du-gor.jpg"
   },
   {
     "title": "Hjalmar - Skog Med Siri",
@@ -508,7 +602,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/hjalmar-skog-med-siri.jpg",
+    "thumbnail": "/images/covers/thumb/hjalmar-skog-med-siri.jpg"
   },
   {
     "title": "Julen på radion",
@@ -518,7 +614,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/julen-pa-radion.jpg",
+    "thumbnail": "/images/covers/thumb/julen-pa-radion.jpg"
   },
   {
     "title": "Vox On Vox",
@@ -528,7 +626,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/vox-on-vox.jpg",
+    "thumbnail": "/images/covers/thumb/vox-on-vox.jpg"
   },
   {
     "title": "THE ONE - The Energy Hour Remix",
@@ -538,7 +638,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/the-one-the-energy-hour-remix.jpg",
+    "thumbnail": "/images/covers/thumb/the-one-the-energy-hour-remix.jpg"
   },
   {
     "title": "Cowboys By The Waterhole - The Energy Hour Remix II",
@@ -548,7 +650,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/cowboys-by-the-waterhole-the-energy-hour-remix-ii.jpg",
+    "thumbnail": "/images/covers/thumb/cowboys-by-the-waterhole-the-energy-hour-remix-ii.jpg"
   },
   {
     "title": "Black Friday",
@@ -558,7 +662,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/black-friday.jpg",
+    "thumbnail": "/images/covers/thumb/black-friday.jpg"
   },
   {
     "title": "Farr 30",
@@ -568,7 +674,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/farr-30.jpg",
+    "thumbnail": "/images/covers/thumb/farr-30.jpg"
   },
   {
     "title": "T-Bone Band - Cowboys By The Waterhole (The Energy Hour Remix)",
@@ -578,7 +686,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/t-bone-band-cowboys-by-the-waterhole-the-energy-hour-remix.jpg",
+    "thumbnail": "/images/covers/thumb/t-bone-band-cowboys-by-the-waterhole-the-energy-hour-remix.jpg"
   },
   {
     "title": "Sleepy",
@@ -588,7 +698,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/sleepy.jpg",
+    "thumbnail": "/images/covers/thumb/sleepy.jpg"
   },
   {
     "title": "Alva - När Världen Håller Andan - The Energy Hour Remix",
@@ -598,7 +710,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/alva-nar-varlden-haller-andan-the-energy-hour-remix.jpg",
+    "thumbnail": "/images/covers/thumb/alva-nar-varlden-haller-andan-the-energy-hour-remix.jpg"
   },
   {
     "title": "Soundave - Symmetric Circles (The Energy Hour Remix)",
@@ -608,7 +722,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/soundave-symmetric-circles-the-energy-hour-remix.jpg",
+    "thumbnail": "/images/covers/thumb/soundave-symmetric-circles-the-energy-hour-remix.jpg"
   },
   {
     "title": "Techno Bitch- 1991",
@@ -618,7 +734,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/techno-bitch-1991.jpg",
+    "thumbnail": "/images/covers/thumb/techno-bitch-1991.jpg"
   },
   {
     "title": "Analog Bass Sweep - 1994",
@@ -628,7 +746,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/analog-bass-sweep-1994.jpg",
+    "thumbnail": "/images/covers/thumb/analog-bass-sweep-1994.jpg"
   },
   {
     "title": "House Break - 1994",
@@ -638,7 +758,9 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/house-break-1994.jpg",
+    "thumbnail": "/images/covers/thumb/house-break-1994.jpg"
   },
   {
     "title": "The Energy Hour - 1994",
@@ -648,6 +770,8 @@
       "spotify": "",
       "appleMusic": "",
       "tidal": ""
-    }
+    },
+    "cover": "/images/covers/the-energy-hour-1994.jpg",
+    "thumbnail": "/images/covers/thumb/the-energy-hour-1994.jpg"
   }
 ]
