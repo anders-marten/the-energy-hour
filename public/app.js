@@ -563,33 +563,88 @@ sheet.addEventListener("close", () => {
   }
 });
 
+// Swipe down anywhere on the sheet to close it. Touch uses touch events so a
+// swipe can start on a button or in the reading area (when it is scrolled to
+// the top); a mouse drags with pointer events, away from controls.
+const DRAG_START = 8;
+const DRAG_CLOSE = 65;
 let drag = null;
+let suppressClickUntil = 0;
+
+function moveSheet(offset) {
+  if (!reducedMotion.matches) sheet.style.transform = `translateY(${Math.max(0, offset)}px)`;
+}
+function endSheetDrag(offset) {
+  if (offset > DRAG_CLOSE) closeDiscover();
+  else sheet.style.transform = "";
+}
+
 sheet.addEventListener("pointerdown", (event) => {
+  if (event.pointerType === "touch") return;
   if (sheetClosing || wide.matches || !event.isPrimary || event.button !== 0) return;
-  if (event.target.closest("button, a, input, select, textarea")) return;
-
-  const target = event.target;
-  const inScrollableReading = Boolean(target.closest(".reading"));
-  if (inScrollableReading) return;
-
+  if (event.target.closest("button, a, input, select, textarea, .reading")) return;
   sheetSlide?.cancel();
   drag = { id: event.pointerId, y: event.clientY };
   sheet.setPointerCapture(event.pointerId);
 });
 sheet.addEventListener("pointermove", (event) => {
-  if (drag?.id !== event.pointerId || reducedMotion.matches) return;
-  sheet.style.transform = `translateY(${Math.max(0, event.clientY - drag.y)}px)`;
+  if (drag?.id === event.pointerId) moveSheet(event.clientY - drag.y);
 });
-function finishDrag(event) {
+function finishPointerDrag(event) {
   if (drag?.id !== event.pointerId) return;
-  const distance = event.clientY - drag.y;
+  const offset = event.clientY - drag.y;
   drag = null;
-  if (distance > 65) closeDiscover();
-  else {
-    sheet.style.transform = "";
-  }
+  endSheetDrag(offset);
 }
-sheet.addEventListener("pointerup", finishDrag);
-sheet.addEventListener("pointercancel", finishDrag);
+sheet.addEventListener("pointerup", finishPointerDrag);
+sheet.addEventListener("pointercancel", finishPointerDrag);
+
+sheet.addEventListener("touchstart", (event) => {
+  if (sheetClosing || wide.matches || event.touches.length !== 1) {
+    drag = null;
+    return;
+  }
+  const touch = event.touches[0];
+  drag = { touch: true, x: touch.clientX, y: touch.clientY, scroller: event.target.closest(".reading"), active: false };
+}, { passive: true });
+sheet.addEventListener("touchmove", (event) => {
+  if (!drag?.touch) return;
+  const touch = event.touches[0];
+  const dx = touch.clientX - drag.x;
+  const dy = touch.clientY - drag.y;
+  const atTop = !drag.scroller || drag.scroller.scrollTop <= 0;
+
+  if (!drag.active) {
+    if (!atTop || dy < -DRAG_START || Math.abs(dx) > Math.max(DRAG_START, dy)) {
+      drag = null;
+      return;
+    }
+    if (dy > 0 && event.cancelable) event.preventDefault();
+    if (dy < DRAG_START) return;
+    sheetSlide?.cancel();
+    drag.active = true;
+    drag.y = touch.clientY;
+  }
+  if (event.cancelable) event.preventDefault();
+  moveSheet(touch.clientY - drag.y);
+}, { passive: false });
+function finishTouchDrag(event) {
+  if (!drag?.touch) return;
+  const wasActive = drag.active;
+  const offset = event.type === "touchend" ? event.changedTouches[0].clientY - drag.y : 0;
+  drag = null;
+  if (!wasActive) return;
+  suppressClickUntil = performance.now() + 500;
+  endSheetDrag(offset);
+}
+sheet.addEventListener("touchend", finishTouchDrag);
+sheet.addEventListener("touchcancel", finishTouchDrag);
+// A swipe that started on a button must not also press it.
+sheet.addEventListener("click", (event) => {
+  if (performance.now() < suppressClickUntil) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+}, true);
 
 loadPlaylist();
