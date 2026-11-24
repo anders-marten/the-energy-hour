@@ -87,11 +87,11 @@ function renderTrackList(tracks) {
         <div class="feature-actions">
           <button class="cursor-interaction" id="teh-feature-play" data-play="${escapeHtml(featured.id)}" type="button" aria-label="Play ${featuredTitle}"><span aria-hidden="true">▶</span></button>
           ${(featured.story || featured.lyrics)
-            ? `<button class="cursor-interaction" data-discover="${escapeHtml(featured.id)}" type="button">Discover</button>`
+            ? `<button class="cursor-interaction" id="teh-feature-discover" data-discover="${escapeHtml(featured.id)}" type="button">Discover</button>`
             : ""}
         </div>
       </div>
-      <div class="feature-copy"><h1>${featuredTitle}</h1>${featuredTeaser ? `<p>${featuredTeaser}</p>` : ""}</div>
+      <div class="feature-copy"><h1 id="teh-feature-title">${featuredTitle}</h1><p id="teh-feature-teaser">${featuredTeaser}</p></div>
     </div>`;
 
   const intro = `<div class="intro"><p>THE ENERGY HOUR</p><h1>From outer space<br>to my heart</h1></div>

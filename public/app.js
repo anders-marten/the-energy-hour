@@ -197,6 +197,20 @@ function updatePlayerUi() {
   }
 
   playerBar.hidden = false;
+  const featureTitle = document.querySelector("#teh-feature-title");
+  const featureTeaser = document.querySelector("#teh-feature-teaser");
+  if (featureTitle) featureTitle.textContent = track.title;
+  if (featureTeaser) featureTeaser.textContent = track.teaser || "";
+  const featurePlay = document.querySelector("#teh-feature-play");
+  if (featurePlay) {
+    featurePlay.dataset.play = track.id;
+    featurePlay.setAttribute("aria-label", (isPlaying ? "Pause " : "Play ") + track.title);
+  }
+  const featureDiscover = document.querySelector("#teh-feature-discover");
+  if (featureDiscover) {
+    featureDiscover.dataset.discover = track.id;
+    featureDiscover.hidden = !(track.story || track.lyrics);
+  }
   const art = track.thumbnail || track.cover || "";
   document.querySelector("#teh-now").textContent = track.title;
   document.querySelector("#teh-now-art").src = art;

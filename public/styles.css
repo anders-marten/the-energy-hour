@@ -122,8 +122,9 @@ body { min-height: 100vh; min-height: 100dvh; }
 
 @container (min-width:900px) {
   #teh-design { --edge:max(58px,calc((100cqw - 1200px) / 2)); height:100dvh; overflow:hidden; }
+  #teh-design > header { display:none; }
   #teh-design header, #teh-design #teh-player, #teh-design .full-bar { padding-inline:var(--edge); }
-  #teh-design main { height:calc(100dvh - 138px); padding:48px var(--edge) 24px; overflow:hidden; }
+  #teh-design main { height:100dvh; padding:48px var(--edge) 24px; overflow:hidden; }
   #teh-design #teh-tracks { height:100%; display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); column-gap:64px; align-items:start; overflow:hidden; }
   #teh-design .mobile-feature { display:block; grid-column:1; grid-row:1; height:100%; overflow-y:auto; overscroll-behavior:contain; }
   #teh-design .desktop-right { grid-column:2; grid-row:1; height:100%; overflow-y:auto; overscroll-behavior:contain; scrollbar-gutter:stable; }
