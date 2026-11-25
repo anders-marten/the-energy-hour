@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 concurrency:
   group: the-energy-hour-production
@@ -56,3 +57,19 @@ jobs:
           scw edge-services purge-request create \
             pipeline-id=${{ secrets.SCW_EDGE_PIPELINE_ID }} \
             all=true
+
+      # CloudFront serves the apex domain in front of Edge Services and caches
+      # files for up to a day, so it is purged too. The role can only
+      # invalidate this one distribution (GitHub OIDC, main branch only).
+      - name: Configure AWS credentials for CloudFront
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_INVALIDATION_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Purge CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*" \
+            --query Invalidation.Id --output text
