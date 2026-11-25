@@ -44,7 +44,9 @@ const fallbackPlaylist = [
 // Every track plays through one shared <audio> element. play() is called
 // synchronously in the click handler, which is what iOS needs.
 const audio = new Audio();
-audio.preload = "none";
+// The selected track (feature slot and footer) is buffered ahead, so the first
+// tap on it starts without waiting for the network.
+audio.preload = "auto";
 
 const featureAudio = document.createElement("div");
 featureAudio.className = "feature-audio";
