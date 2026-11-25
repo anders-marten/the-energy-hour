@@ -152,6 +152,21 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
   #teh-design .sheet-handle { min-height:56px; }
 }
 
+/* Portrait: title panel and player controls sit over the bottom of the
+   cover, which fades into the page background behind them. */
+@container (max-width:899px) {
+  @media (orientation: portrait) {
+    #teh-design .mobile-feature { display:grid; grid-template-columns:minmax(0,1fr); grid-template-rows:1fr auto auto; }
+    #teh-design .mobile-feature .feature-art,
+    #teh-design .mobile-feature .feature-player-slot,
+    #teh-design .mobile-feature .feature-audio { display:contents; }
+    #teh-design .mobile-feature .feature-audio-art { grid-column:1; grid-row:1 / -1; width:100%; height:auto; aspect-ratio:1; border-radius:10px; }
+    #teh-design .mobile-feature::after { content:""; grid-column:1; grid-row:1 / -1; z-index:1; border-radius:10px; pointer-events:none; background:linear-gradient(to bottom, rgb(5 5 5 / 0) 30%, rgb(5 5 5 / .7) 62%, #050505 100%); }
+    #teh-design .mobile-feature .feature-audio-controls { position:relative; inset:auto; grid-column:1; grid-row:2; z-index:2; padding:0 16px 8px; background:none; }
+    #teh-design .mobile-feature .feature-copy { grid-column:1; grid-row:3; z-index:2; padding:0 16px 16px; }
+  }
+}
+
 @container (min-width:900px) {
   #teh-design { --edge:max(58px,calc((100cqw - 1200px) / 2)); height:100dvh; overflow:hidden; }
   #teh-design > header { display:none; }
