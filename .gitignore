@@ -7,3 +7,4 @@ config/the-energy-hour-deploy.local.json
 .terraform/
 terraform.tfstate
 terraform.tfstate.backup
+.DS_Store
