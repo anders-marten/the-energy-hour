@@ -5,14 +5,18 @@ const rootDir = path.resolve(__dirname, "..");
 const indexPath = path.join(rootDir, "index.html");
 const playlistPath = path.join(rootDir, "public", "playlist.json");
 
-const SITE_URL = "https://the-energy-hour.com";
-const ARTIST_NAME = "The Energy Hour";
-const ARTIST_DESCRIPTION =
-  "The Energy Hour is an electronic music project from Stockholm blending rave roots, synth textures, funk, pop, and AI-assisted songwriting.";
-const ARTIST_SAME_AS = [
-  "https://soundcloud.com/the_energy_hour",
-  "https://open.spotify.com/artist/0QpQBk3Gu2aW99YiDHOBLe"
-];
+const {
+  SITE_URL,
+  ARTIST_NAME,
+  ARTIST_PERSON,
+  ARTIST_LOCATION,
+  ARTIST_SUMMARY,
+  ARTIST_BIO,
+  ARTIST_SAME_AS,
+  trackSlugs,
+  trackUrl,
+  isoDuration
+} = require("./site-content");
 
 function escapeHtml(value) {
   return String(value)
@@ -105,6 +109,9 @@ function normalizeTracks(items) {
         teaser: typeof item.teaser === "string" ? item.teaser : "",
         story: typeof item.story === "string" ? item.story : "",
         lyrics: typeof item.lyrics === "string" ? item.lyrics : "",
+        credits: typeof item.credits === "string" ? item.credits : "",
+        audio: typeof item.audio === "string" ? item.audio : "",
+        duration: typeof item.duration === "number" ? item.duration : 0,
         featured: item.featured === true,
         links: getLinks(item)
       };
@@ -114,7 +121,17 @@ function normalizeTracks(items) {
     .filter((item) => item.title && item.id);
 }
 
+function renderAbout() {
+  const paragraphs = ARTIST_BIO.map((text) => `<p>${escapeHtml(text)}</p>`).join("\n        ");
+  return `<section class="about" id="about" aria-labelledby="about-title">
+        <h2 id="about-title">About</h2>
+        ${paragraphs}
+        <p class="about-signature">— ${escapeHtml(ARTIST_PERSON)}, ${escapeHtml(ARTIST_NAME)}</p>
+      </section>`;
+}
+
 function renderTrackList(tracks) {
+  const slugs = trackSlugs(tracks);
   const featured = tracks.find((track) => track.featured) || tracks.find((track) => track.cover) || tracks[0];
   if (!featured) {
     return "";
@@ -145,12 +162,12 @@ function renderTrackList(tracks) {
     const art = track.thumbnail || track.cover;
     const hasDiscover = Boolean(track.story || track.lyrics);
 
-    const seoCopy = (story || lyrics)
-      ? `<div class="track-seo-copy">
+    const pageUrl = `/tracks/${slugs.get(track.id)}/`;
+    const seoCopy = `<div class="track-seo-copy">
+          <a href="${pageUrl}">${title}</a>
           ${story ? `<h3>${title} - Story</h3><p>${story}</p>` : ""}
           ${lyrics ? `<h3>${title} - Lyrics</h3><p>${lyrics}</p>` : ""}
-        </div>`
-      : "";
+        </div>`;
 
     return `<article class="row" aria-label="${title}">
         <div class="thumb">
@@ -173,53 +190,75 @@ function renderTrackList(tracks) {
     <div class="desktop-right">
       ${intro}
       ${rows}
+      ${renderAbout()}
     </div>`;
 }
 
-function renderMusicSchema(tracks) {
-  const schema = {
-    "@context": "https://schema.org",
+function absoluteUrl(path) {
+  if (!path) return "";
+  return /^https?:\/\//.test(path) ? path : `${SITE_URL}${path.startsWith("/") ? "" : "/"}${path}`;
+}
+
+/** MusicGroup node for the artist. */
+function artistSchema() {
+  return {
     "@type": "MusicGroup",
+    "@id": `${SITE_URL}/#artist`,
     name: ARTIST_NAME,
     url: SITE_URL,
-    description: ARTIST_DESCRIPTION,
+    description: ARTIST_SUMMARY,
     genre: ["Electronic", "Synth", "Funk", "Pop", "Rave"],
-    foundingLocation: {
-      "@type": "Place",
-      name: "Stockholm, Sweden"
-    },
-    sameAs: ARTIST_SAME_AS,
-    track: tracks.map((track) => {
-      const links = [
-        track.links.soundcloud,
-        track.links.spotify,
-        track.links.appleMusic,
-        track.links.tidal
-      ].filter(Boolean);
-      const recording = {
-        "@type": "MusicRecording",
-        name: track.title,
-        byArtist: {
-          "@type": "MusicGroup",
-          name: ARTIST_NAME
-        }
-      };
-
-      if (links[0]) {
-        recording.url = links[0];
-      }
-
-      if (links.length > 1) {
-        recording.sameAs = links.slice(1);
-      }
-
-      return recording;
-    })
+    foundingLocation: { "@type": "Place", name: ARTIST_LOCATION },
+    member: { "@type": "Person", name: ARTIST_PERSON },
+    sameAs: ARTIST_SAME_AS
   };
+}
 
+/** MusicRecording node for one track; lyrics only where requested (track pages). */
+function recordingSchema(track, slug, { withLyrics = false } = {}) {
+  const recording = {
+    "@type": "MusicRecording",
+    "@id": `${trackUrl(slug)}#recording`,
+    name: track.title,
+    url: trackUrl(slug),
+    byArtist: { "@id": `${SITE_URL}/#artist` }
+  };
+  const duration = isoDuration(track.duration);
+  if (duration) recording.duration = duration;
+  if (track.teaser) recording.description = track.teaser;
+  const image = absoluteUrl(track.cover || track.thumbnail);
+  if (image) recording.image = image;
+  if (track.audio) {
+    recording.audio = {
+      "@type": "AudioObject",
+      contentUrl: track.audio,
+      encodingFormat: track.audio.endsWith(".mp3") ? "audio/mpeg" : "audio/mp4",
+      ...(duration ? { duration } : {})
+    };
+  }
+  if (track.credits) recording.creditText = track.credits;
+  if (withLyrics && track.lyricsText) {
+    recording.recordingOf = {
+      "@type": "MusicComposition",
+      name: track.title,
+      lyrics: { "@type": "CreativeWork", text: track.lyricsText }
+    };
+  }
+  const sameAs = [track.links.soundcloud, track.links.spotify, track.links.appleMusic, track.links.tidal].filter(Boolean);
+  if (sameAs.length) recording.sameAs = sameAs;
+  return recording;
+}
+
+function renderSchemaScript(graph) {
   return `<script id="music-schema" type="application/ld+json">
-${JSON.stringify(schema, null, 2)}
+${JSON.stringify({ "@context": "https://schema.org", "@graph": graph }, null, 2)}
   </script>`;
+}
+
+function renderMusicSchema(tracks) {
+  const slugs = trackSlugs(tracks);
+  const artist = { ...artistSchema(), track: tracks.map((track) => ({ "@id": `${trackUrl(slugs.get(track.id))}#recording` })) };
+  return renderSchemaScript([artist, ...tracks.map((track) => recordingSchema(track, slugs.get(track.id)))]);
 }
 
 function replaceGeneratedBlock(source, name, content) {
@@ -234,13 +273,24 @@ function replaceGeneratedBlock(source, name, content) {
   return source.replace(pattern, `${start}\n  ${content}\n  ${end}`);
 }
 
-const playlist = JSON.parse(fs.readFileSync(playlistPath, "utf8"));
-const tracks = normalizeTracks(playlist);
-let indexHtml = fs.readFileSync(indexPath, "utf8");
+function loadTracks() {
+  return normalizeTracks(JSON.parse(fs.readFileSync(playlistPath, "utf8")));
+}
 
-indexHtml = replaceGeneratedBlock(indexHtml, "MUSIC_SCHEMA", renderMusicSchema(tracks));
-indexHtml = replaceGeneratedBlock(indexHtml, "TRACK_LIST", renderTrackList(tracks));
+module.exports = {
+  escapeHtml,
+  loadTracks,
+  artistSchema,
+  recordingSchema,
+  renderSchemaScript,
+  replaceGeneratedBlock
+};
 
-fs.writeFileSync(indexPath, indexHtml);
-
-console.log(`Generated SEO content for ${tracks.length} tracks.`);
+if (require.main === module) {
+  const tracks = loadTracks();
+  let indexHtml = fs.readFileSync(indexPath, "utf8");
+  indexHtml = replaceGeneratedBlock(indexHtml, "MUSIC_SCHEMA", renderMusicSchema(tracks));
+  indexHtml = replaceGeneratedBlock(indexHtml, "TRACK_LIST", renderTrackList(tracks));
+  fs.writeFileSync(indexPath, indexHtml);
+  console.log(`Generated SEO content for ${tracks.length} tracks.`);
+}

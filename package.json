@@ -5,8 +5,9 @@
   "scripts": {
     "generate:seo": "node scripts/generate-seo-content.js",
     "dev": "vite",
-    "build": "npm run generate:seo && vite build",
-    "preview": "vite preview"
+    "build": "npm run generate:seo && vite build && npm run generate:site",
+    "preview": "vite preview",
+    "generate:site": "node scripts/generate-site-files.js"
   },
   "devDependencies": {
     "vite": "^7.1.7"

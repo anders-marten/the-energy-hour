@@ -161,6 +161,7 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
   #teh-design #teh-tracks .row p { grid-column:2/4; grid-row:2; font-size:13px; }
   #teh-design #teh-tracks .row > .quiet { grid-column:3; grid-row:1; padding:0; font-size:14px; }
   #teh-design .social-links { margin:8px 8px 0; }
+  #teh-design .about { margin:32px 16px 8px; }
   #teh-design .sheet-handle { min-height:56px; }
 }
 
@@ -215,6 +216,11 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
   #teh-design .social-links { padding:0 var(--edge) 30px; }
 }
 
+#teh-design .about { max-width:62ch; margin:40px 0 8px; padding-top:24px; border-top:1px solid var(--rule); }
+#teh-design .about h2 { font-size:22px; letter-spacing:-.02em; margin:0 0 12px; }
+#teh-design .about p { color:var(--muted); line-height:1.6; }
+#teh-design .about p + p { margin-top:1em; }
+#teh-design .about .about-signature { color:#f8f5ef; font-weight:600; }
 #teh-design .social-links { display:flex; gap:16px; align-items:center; margin-left:0; }
 #teh-design .social-links a { display:block; width:24px; height:24px; }
 #teh-design .social-links img { width:24px; height:24px; aspect-ratio:auto; object-fit:contain; }

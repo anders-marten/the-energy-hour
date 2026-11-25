@@ -1,0 +1,5 @@
+# All crawlers, including AI search and training crawlers, may read this site.
+User-agent: *
+Allow: /
+
+Sitemap: https://the-energy-hour.com/sitemap.xml

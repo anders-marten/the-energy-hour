@@ -469,7 +469,10 @@ async function loadPlaylist() {
   } catch (error) {
     console.warn("Using fallback playlist.", error);
   }
-  showTrack(0, false);
+  // Track pages (/tracks/<slug>/) name their track in <meta name="teh-track">.
+  const pageTrackId = document.querySelector('meta[name="teh-track"]')?.content;
+  const pageTrackIndex = pageTrackId ? playlist.findIndex((track) => track.id === pageTrackId) : -1;
+  showTrack(Math.max(0, pageTrackIndex), false);
 }
 
 trackList.addEventListener("click", (event) => {
