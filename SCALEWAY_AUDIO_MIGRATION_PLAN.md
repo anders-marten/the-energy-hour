@@ -1,6 +1,14 @@
 # Plan: move the tracks to Scaleway
 
-Status: steps 1–5 done and the step 6 pilot done (2026-11-25). Remaining: encode and upload the other 61 tracks, then step 7.
+Status: steps 1–6 done (2026-11-25). All 64 tracks are self-hosted. Remaining: remove the SoundCloud widget code (investigation plan step 7).
+
+- **Pilot on iPhone:** Anders confirmed that the first tap starts playback.
+- **Full run:**
+  - 64 files encoded (46 AAC 256 kbps from lossless masters, 9 AAC remuxes, 9 MP3 remuxes). 433 MB in total.
+  - The pilot files kept the same hash, because the encoding is deterministic.
+  - All 64 uploaded; `playlist.json` has `audio` and `duration` for every track.
+  - Every URL answers `206` to a `Range` request with the right size.
+- **Local preview:** auto-advance from one self-hosted track to the next works, and no SoundCloud iframe is loaded.
 
 Done:
 - **Step 1:** `deploy/infra/media.tf` applied. 10 resources added, 0 changed, 0 destroyed:
