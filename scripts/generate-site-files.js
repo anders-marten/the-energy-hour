@@ -36,6 +36,15 @@ function absoluteUrl(value) {
   return /^https?:\/\//.test(value) ? value : `${SITE_URL}${value.startsWith("/") ? "" : "/"}${value}`;
 }
 
+function linkLabel(url) {
+  const host = new URL(url).hostname;
+  if (host.includes("spotify")) return "Spotify";
+  if (host.includes("soundcloud")) return "SoundCloud";
+  if (host.includes("musicbrainz")) return "MusicBrainz";
+  if (host.includes("wikidata")) return "Wikidata";
+  return host;
+}
+
 function firstSentence(text) {
   const match = String(text || "").match(/^[\s\S]*?[.!?](\s|$)/);
   return (match ? match[0] : String(text || "")).trim();
@@ -108,7 +117,7 @@ const llms = [
   "## Links",
   "",
   `- [Website](${SITE_URL}/)`,
-  ...ARTIST_SAME_AS.map((url) => `- [${url.includes("spotify") ? "Spotify" : "SoundCloud"}](${url})`),
+  ...ARTIST_SAME_AS.map((url) => `- [${linkLabel(url)}](${url})`),
   `- [Playlist data (JSON)](${SITE_URL}/playlist.json): every track with title, teaser, story, lyrics path, credits, audio URL and duration`,
   "",
   "## Tracks",
