@@ -76,6 +76,7 @@ let playPending = false;
 let sheetSlide = null;
 let sheetClosing = false;
 let sheetTrackId = null;
+let sheetResize = null;
 const lyricsCache = new Map();
 
 const sheet = document.querySelector("#teh-song");
@@ -332,6 +333,14 @@ function setSection(name) {
 async function openDiscover(trackId) {
   const track = playlist.find((item) => item.id === trackId);
   if (!track) return;
+  // When the sheet is already open (Previous/Next), remember its height so the
+  // change to the new track's content can be animated.
+  const startHeight = sheet.open && !sheetClosing && !wide.matches ? sheet.getBoundingClientRect().height : 0;
+  // Hold that height while the new content (and its lyrics) loads.
+  if (startHeight) {
+    sheetResize?.cancel();
+    sheet.style.height = `${startHeight}px`;
+  }
   sheetClosing = false;
   sheetTrackId = trackId;
   document.querySelector("#teh-title").textContent = track.title;
@@ -379,6 +388,19 @@ async function openDiscover(trackId) {
     sheet.style.transform = "none";
   }
   updatePlayerUi();
+  if (startHeight && sheetTrackId === trackId) animateSheetHeight(startHeight);
+}
+
+function animateSheetHeight(startHeight) {
+  sheetResize?.cancel();
+  sheet.style.height = "";
+  const endHeight = sheet.getBoundingClientRect().height;
+  if (reducedMotion.matches || wide.matches || Math.abs(endHeight - startHeight) < 1) return;
+  sheetResize = sheet.animate(
+    [{ height: `${startHeight}px` }, { height: `${endHeight}px` }],
+    { duration: 250, easing }
+  );
+  sheetResize.onfinish = () => { sheetResize = null; };
 }
 
 function closeDiscover() {
@@ -583,6 +605,8 @@ root.addEventListener("click", (event) => {
   if (discoverButton) opener = discoverButton;
 });
 sheet.addEventListener("close", () => {
+  sheetResize?.cancel();
+  sheet.style.height = "";
   if (opener) {
     opener.focus();
     opener = null;
