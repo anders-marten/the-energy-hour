@@ -39,6 +39,8 @@ function absoluteUrl(value) {
 function linkLabel(url) {
   const host = new URL(url).hostname;
   if (host.includes("spotify")) return "Spotify";
+  if (host === "music.youtube.com") return "YouTube Music";
+  if (host.endsWith("youtube.com")) return "YouTube";
   if (host.includes("soundcloud")) return "SoundCloud";
   if (host.includes("musicbrainz")) return "MusicBrainz";
   if (host.includes("wikidata")) return "Wikidata";

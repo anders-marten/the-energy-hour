@@ -123,12 +123,22 @@ function normalizeTracks(items) {
     .filter((item) => item.title && item.id);
 }
 
+const SOCIAL_LINKS = [
+  { label: "Spotify", url: "https://open.spotify.com/artist/0QpQBk3Gu2aW99YiDHOBLe", icon: "/images/spotify-logo-white.png" },
+  { label: "SoundCloud", url: "https://soundcloud.com/the_energy_hour", icon: "/images/soundcloud-logo-white.png" },
+  { label: "YouTube Music", url: "https://music.youtube.com/@TheEnergyHour-MusicLabel", icon: "/images/youtube-music-logo-white.svg" },
+  { label: "GitHub", url: "https://github.com/anders-marten/the-energy-hour", icon: "/images/github-logo-white.png" }
+];
+
 function renderAbout() {
   const paragraphs = ARTIST_BIO.map((text) => `<p>${escapeHtml(text)}</p>`).join("\n        ");
   return `<section class="about" id="about" aria-labelledby="about-title">
         <h2 id="about-title">About</h2>
         ${paragraphs}
         <p class="about-signature">— ${escapeHtml(ARTIST_PERSON)}, ${escapeHtml(ARTIST_NAME)}</p>
+        <nav class="social-links" aria-label="Artist social links">
+          ${SOCIAL_LINKS.map(({ label, url, icon }) => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(label)}"><img src="${escapeHtml(icon)}" alt="${escapeHtml(label)}"></a>`).join("\n          ")}
+        </nav>
       </section>`;
 }
 

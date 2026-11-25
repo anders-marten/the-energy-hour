@@ -25,6 +25,8 @@ const ARTIST_BIO = [
 const ARTIST_SAME_AS = [
   "https://soundcloud.com/the_energy_hour",
   "https://open.spotify.com/artist/0QpQBk3Gu2aW99YiDHOBLe",
+  "https://music.youtube.com/@TheEnergyHour-MusicLabel",
+  "https://www.youtube.com/@TheEnergyHour-MusicLabel",
   "https://musicbrainz.org/artist/c4079535-c5f4-44b2-92fa-196476d36ce9",
   "https://www.wikidata.org/wiki/Q142282293"
 ];
