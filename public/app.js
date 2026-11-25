@@ -1,6 +1,7 @@
 /**
  * @typedef {Object} TrackLinks
  * @property {string} soundcloud
+ * @property {string} youtube
  * @property {string} spotify
  * @property {string} appleMusic
  * @property {string} tidal
@@ -105,6 +106,7 @@ function normalizePlaylist(items) {
       spotify: typeof item.links?.spotify === "string" ? item.links.spotify : "",
       appleMusic: typeof item.links?.appleMusic === "string" ? item.links.appleMusic : "",
       tidal: typeof item.links?.tidal === "string" ? item.links.tidal : "",
+      youtube: typeof item.links?.youtube === "string" ? item.links.youtube : "",
       musicbrainz: typeof item.links?.musicbrainz === "string" ? item.links.musicbrainz : ""
     }
   })).filter((item) => item.title && item.id);
@@ -376,6 +378,9 @@ async function openDiscover(trackId) {
   document.querySelector("#teh-spotify").href = track.links.spotify || "";
   document.querySelector("#teh-spotify").hidden = !track.links.spotify;
   document.querySelector("#teh-soundcloud").hidden = !track.links.soundcloud;
+  const youtubeLink = document.querySelector("#teh-youtube");
+  youtubeLink.href = track.links.youtube || "";
+  youtubeLink.hidden = !track.links.youtube;
   document.querySelector("#teh-musicbrainz").href = track.links.musicbrainz || "";
   document.querySelector("#teh-musicbrainz").hidden = !track.links.musicbrainz;
   renderReleaseInfo(track.release);

@@ -8,10 +8,18 @@
     "story": "On a crowded Tokyo train, a woman catches the narrator’s eye for a moment. She might be a stranger or Tokyo itself. As the night goes on, the city begins to feel like someone you’ve just met and want to spend a little longer with.",
     "lyrics": "/lyrics/tokyo.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-11-20",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QTAF92639918",
+      "barcode": "700074941161"
+    },
     "audio": "https://media.the-energy-hour.com/2441734662-7c28e3ad.m4a",
     "duration": 245.0,
     "featured": true,
     "links": {
+      "youtube": "https://www.youtube.com/watch?v=u0vsSjT3Gw4",
       "soundcloud": "https://soundcloud.com/the_energy_hour/tokyo",
       "spotify": "https://open.spotify.com/album/0eC5WDG2xKN7N9qescZA2w",
       "appleMusic": "",
@@ -37,6 +45,7 @@
     "audio": "https://media.the-energy-hour.com/2441732988-69b17ddf.m4a",
     "duration": 259.34,
     "links": {
+      "youtube": "https://www.youtube.com/watch?v=LnPxY1H8NQY",
       "soundcloud": "https://soundcloud.com/the_energy_hour/morning-can-wait",
       "spotify": "https://open.spotify.com/album/1BDfaraMfYzTPdgXQ0PXR6",
       "appleMusic": "",
@@ -53,9 +62,17 @@
     "story": "Someone asks the narrator to put down the bassline and come dancing. The question catches them off guard: how are you supposed to choose between the person you love and the groove that won’t let you go?",
     "lyrics": "/lyrics/you-or-the-funk.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-09-03",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QT6J22623280",
+      "barcode": "700997271833"
+    },
     "audio": "https://media.the-energy-hour.com/2393656881-9da61734.m4a",
     "duration": 200.75,
     "links": {
+      "youtube": "https://www.youtube.com/watch?v=jJv65eTFAsY",
       "soundcloud": "https://soundcloud.com/the_energy_hour/you-or-the-funk",
       "spotify": "https://open.spotify.com/track/5hdPTbCKu50BOHVYU7bcvp",
       "appleMusic": "",
@@ -71,9 +88,17 @@
     "story": "Towers may rise and borders may be drawn, but beneath them the roots keep moving. The song stays with the voices that will not be silenced.",
     "lyrics": "/lyrics/hold-the-balance.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-08-20",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QT6HP2641078",
+      "barcode": "700364837389"
+    },
     "audio": "https://media.the-energy-hour.com/2381647056-45db355f.m4a",
     "duration": 245.37,
     "links": {
+      "youtube": "https://www.youtube.com/watch?v=R6nkoud5Pl0",
       "soundcloud": "https://soundcloud.com/the_energy_hour/hold-the-balance",
       "spotify": "https://open.spotify.com/album/1p4exuYGzDDkf8oSa60QfE",
       "appleMusic": "",
@@ -89,9 +114,17 @@
     "story": "Resan gick norrut till Strömsund för att hitta hem. Men det hemmet visade sig vara en illusion, en barndomsdröm.\n\nHemmet finns hos familj och vänner i Stockholm. Ändå blir det fler resor tillbaka, och de fina minnena finns kvar där.",
     "lyrics": "/lyrics/nar-kommer-du-hem.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-08-06",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QT6G42660731",
+      "barcode": "881839080384"
+    },
     "audio": "https://media.the-energy-hour.com/2376580448-acc51379.m4a",
     "duration": 341.23,
     "links": {
+      "youtube": "https://www.youtube.com/watch?v=_WPsVrYJ2Oo",
       "soundcloud": "https://soundcloud.com/the_energy_hour/nar-kommer-du-hem",
       "spotify": "https://open.spotify.com/track/1wCX83tdQCy8tLCtbLVGNh",
       "appleMusic": "",
@@ -107,9 +140,17 @@
     "story": "",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-07-22",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QT6FF2681736",
+      "barcode": "882197478271"
+    },
     "audio": "https://media.the-energy-hour.com/2365131305-e4c309af.m4a",
     "duration": 253.85,
     "links": {
+      "youtube": "https://www.youtube.com/watch?v=woygUT4MfmQ",
       "soundcloud": "https://soundcloud.com/the_energy_hour/all-in",
       "spotify": "https://open.spotify.com/track/69hbOiOPjHC6yALVgfjvqD",
       "appleMusic": "",
@@ -125,9 +166,17 @@
     "story": "A daughter asks whether an entire tomato plant really grew from one little seed. Her question makes the narrator look again at something familiar and see what had been there all along.",
     "lyrics": "/lyrics/i-love-tomatoes.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-06-09",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QT3FC2626849",
+      "barcode": "883306062749"
+    },
     "audio": "https://media.the-energy-hour.com/2336081048-de431950.m4a",
     "duration": 248.5,
     "links": {
+      "youtube": "https://www.youtube.com/watch?v=YIhimcfs5io",
       "soundcloud": "https://soundcloud.com/the_energy_hour/i-love-tomatoes",
       "spotify": "https://open.spotify.com/album/5QPPtRaWSgMGVweoKPNWZz",
       "appleMusic": "https://music.apple.com/se/album/i-love-tomatoes/6778599164?i=6778599165",
@@ -143,9 +192,16 @@
     "story": "En maskin ritar upp hjärtats rytm och hittar en störning. Låten stannar vid ögonblicket då något som känns inifrån blir ett mönster på en skärm.",
     "lyrics": "/lyrics/vad-vet-jag.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "date": "2026-05-18",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZZ7U2628527",
+      "barcode": "825192292374"
+    },
     "audio": "https://media.the-energy-hour.com/2322475403-70b1bab0.m4a",
     "duration": 278.64,
     "links": {
+      "youtube": "https://www.youtube.com/watch?v=MBPpak1D12c",
       "soundcloud": "https://soundcloud.com/the_energy_hour/vad-vet-jag-wav",
       "spotify": "https://open.spotify.com/track/3qfKaguKgKOdlBwTltK7gI",
       "appleMusic": "https://music.apple.com/se/album/vad-vet-jag-single/6774033653",
@@ -161,9 +217,17 @@
     "story": "An old photograph becomes an imagined doorway. For a moment, the narrator can meet their mother across time and wonder what she would have seen if she could look ahead.",
     "lyrics": "/lyrics/mama-english-version.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-04-07",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZTBB2694423",
+      "barcode": "825500047672"
+    },
     "audio": "https://media.the-energy-hour.com/2298091322-8390175f.m4a",
     "duration": 326.3,
     "links": {
+      "youtube": "https://www.youtube.com/watch?v=F76zVnTWZQE",
       "soundcloud": "https://soundcloud.com/the_energy_hour/mama",
       "spotify": "https://open.spotify.com/track/5NW0G6NRAVNUKrrJ4rMzzL",
       "appleMusic": "https://music.apple.com/se/album/mama-english-version-single/1891771503",
@@ -179,9 +243,17 @@
     "story": "Ett gammalt fotografi blir en tänkt dörr genom tiden. Berättaren får för en stund möta sin mamma i bilden och undrar vad hon hade sett om hon kunnat blicka framåt.",
     "lyrics": "/lyrics/mamma.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-04-07",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZTBB2680403",
+      "barcode": "825500093761"
+    },
     "audio": "https://media.the-energy-hour.com/2297934956-c050ea10.m4a",
     "duration": 320.73,
     "links": {
+      "youtube": "https://www.youtube.com/watch?v=eKMqlHkCvFY",
       "soundcloud": "https://soundcloud.com/the_energy_hour/mamma",
       "spotify": "https://open.spotify.com/track/0iumyO4lRXAm1zkmDi8di8",
       "appleMusic": "",
@@ -197,6 +269,13 @@
     "story": "The people in Luxury sing about champagne friends and a life they see as their destiny. They’re delighted with the world they’ve made for themselves. The song leaves the listener to hear what’s missing from that picture.",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-03-20",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZTAU2622920",
+      "barcode": "825702250658"
+    },
     "audio": "https://media.the-energy-hour.com/2287088489-58a06490.m4a",
     "duration": 275.61,
     "links": {
@@ -215,6 +294,13 @@
     "story": "Synth Lab One started as a hardware jam with a Roland TR-8S, a Moog Grandmother and a Behringer Pro-800. The vocals were made with Suno and chopped in the DAW for extra energy.",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-03-17",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZTAS2609188",
+      "barcode": "825715329150"
+    },
     "audio": "https://media.the-energy-hour.com/2285131661-ed9558b7.m4a",
     "duration": 222.81,
     "links": {
@@ -233,6 +319,13 @@
     "story": "Låten börjar som en radiosändning. När den första förälskelsen brunnit ut och vardagen hunnit ikapp, letar texten efter något som kan fortsätta färdas mellan människor.",
     "lyrics": "/lyrics/godhetssignal.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-03-08",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZNWX2694434",
+      "barcode": "825200968109"
+    },
     "audio": "https://media.the-energy-hour.com/2279831405-1dd6319d.m4a",
     "duration": 323.48,
     "links": {
@@ -251,6 +344,13 @@
     "story": "Berättaren bjuder in sin älskling bland kablar, blinkande maskiner och plastblommor. När hon börjar nicka i takt anar han att hans privata jakt på funken kanske kan bli något de delar.",
     "lyrics": "/lyrics/man-cave.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-02-03",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZHN92653567",
+      "barcode": "821451485051"
+    },
     "audio": "https://media.the-energy-hour.com/2258416265-a6365227.m4a",
     "duration": 193.77,
     "links": {
@@ -269,6 +369,13 @@
     "story": "When trust is threatened, the dance floor cracks. But the music brings people back together: one rhythm, one tribe, all voices.",
     "lyrics": "/lyrics/crack-in-the-dance-floor.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-01-22",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZES72673980",
+      "barcode": "821513040297"
+    },
     "audio": "https://media.the-energy-hour.com/2251892351-a7d65410.m4a",
     "duration": 212.66,
     "links": {
@@ -287,6 +394,13 @@
     "story": "",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-01-15",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZDA62681687",
+      "barcode": "821526601263"
+    },
     "audio": "https://media.the-energy-hour.com/2247806234-493f79c9.m4a",
     "duration": 231.88,
     "links": {
@@ -305,6 +419,13 @@
     "story": "Goodness signal breathes new life into a track The Energy Hour made twenty years ago, reworked as a reggaeton dancehall banger.",
     "lyrics": "/lyrics/goodness-signal.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-12-30",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QT6HL2520259",
+      "barcode": "199937383840"
+    },
     "audio": "https://media.the-energy-hour.com/2239157618-127257c0.m4a",
     "duration": 251.7,
     "links": {
@@ -323,6 +444,13 @@
     "story": "It starts with the things that stay and the things that slip through your hands. Then come the people, the habits and the mistakes you carry. They all find their way into the collection of everything that made you who you are.",
     "lyrics": "/lyrics/i-collect.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-12-22",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QT6G52513489",
+      "barcode": "199940462976"
+    },
     "audio": "https://media.the-energy-hour.com/2233811534-ddd77d8f.m4a",
     "duration": 178.73,
     "links": {
@@ -341,6 +469,12 @@
     "story": "Bow of love is about the moment a child grows up, moves away and steps into adult life. It holds a bittersweet mix of pride, love and letting go.\n\nThis is the holiday edit of the song.",
     "lyrics": "/lyrics/bow-of-love.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "date": "2025-11-22",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QT6F32534943",
+      "barcode": "199951823964"
+    },
     "audio": "https://media.the-energy-hour.com/2216860634-edc28992.m4a",
     "duration": 204.24,
     "links": {
@@ -359,6 +493,12 @@
     "story": "En strimma av hopp handlar om de mörka och osäkra tider vi lever i. Låten reflekterar över rädsla, spänning och det sköra hopp som ändå finns kvar.",
     "lyrics": "/lyrics/en-strimma-av-hopp.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "date": "2025-11-22",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QT6F32534942",
+      "barcode": "199951823964"
+    },
     "audio": "https://media.the-energy-hour.com/2216860631-991d5a76.m4a",
     "duration": 228.57,
     "links": {
@@ -377,6 +517,12 @@
     "story": "",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "date": "2025-11-22",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QT6F32534941",
+      "barcode": "199951823964"
+    },
     "audio": "https://media.the-energy-hour.com/2216860637-8287c966.m4a",
     "duration": 333.92,
     "links": {
@@ -395,6 +541,13 @@
     "story": "En funkbesättning landar på en planet som sänt ut ett nödrop. De kommer i fred, med syntar och bas, och hoppas att invånarna fortfarande kan öppna sina hjärtan och dansa tillsammans.",
     "lyrics": "/lyrics/rocket-funk.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-10-28",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QT6E92566131",
+      "barcode": "199749052859"
+    },
     "audio": "https://media.the-energy-hour.com/2200194103-547f270d.m4a",
     "duration": 420.77,
     "links": {
@@ -413,6 +566,13 @@
     "story": "With a steady pulse, warm analog textures and intimate vocals, the track moves between melancholy and hope. Love is what keeps the rhythm alive.",
     "lyrics": "/lyrics/you-make-my-heart.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-10-11",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QT3FC2548642",
+      "barcode": "199745799581"
+    },
     "audio": "https://media.the-energy-hour.com/2186965518-146943c8.m4a",
     "duration": 305.57,
     "links": {
@@ -431,6 +591,13 @@
     "story": "The Energy Hour wrote U make my heart while waiting for a cardiac ablation. The procedure went well.",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-04-24",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZWFP2640854",
+      "barcode": "825353418797"
+    },
     "audio": "https://media.the-energy-hour.com/2308189358-da94caca.m4a",
     "duration": 237.79,
     "links": {
@@ -449,6 +616,13 @@
     "story": "One voice counts gold and draws borders. Another holds a child and works the soil. The song sets those voices against each other and asks how long a balance can hold when each side has so much at stake.",
     "lyrics": "/lyrics/act-of-balance.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-10-01",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QT3F62588913",
+      "barcode": "199742490689"
+    },
     "audio": "https://media.the-energy-hour.com/2180214895-fd638726.m4a",
     "duration": 292.21,
     "links": {
@@ -467,6 +641,13 @@
     "story": "One voice counts gold and draws borders. Another holds a child and works the soil. The song sets those voices against each other and asks how long a balance can hold when each side has so much at stake.",
     "lyrics": "/lyrics/act-of-balance.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-10-01",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QT3F52572323",
+      "barcode": "199741011274"
+    },
     "audio": "https://media.the-energy-hour.com/2178180507-d41c605c.m4a",
     "duration": 187.9,
     "links": {
@@ -485,6 +666,13 @@
     "story": "Mälarfunk started as a live, raw recording by FUNKMA. It was then reworked with AI into a sparse funk jam where the groove keeps growing.",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-09-05",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZZ7R2590975",
+      "barcode": "199735251587"
+    },
     "audio": "https://media.the-energy-hour.com/2165333457-182f9599.m4a",
     "duration": 227.5,
     "links": {
@@ -503,6 +691,13 @@
     "story": "The narrator feels low and can’t quite say why. The beat keeps moving while they try to let the feeling show.",
     "lyrics": "/lyrics/feeling-low.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-09-03",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZZ7R2503165",
+      "barcode": "199735680332"
+    },
     "audio": "https://media.the-energy-hour.com/2164466322-e4eec389.m4a",
     "duration": 230.25,
     "links": {
@@ -521,6 +716,13 @@
     "story": "The narrator feels low and can’t quite say why. The beat keeps moving while they try to let the feeling show.",
     "lyrics": "/lyrics/feeling-low.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-09-03",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZZ7Q2577868",
+      "barcode": "199735801126"
+    },
     "audio": "https://media.the-energy-hour.com/2163943317-05d2f71a.m4a",
     "duration": 314.85,
     "links": {
@@ -539,6 +741,13 @@
     "story": "Låten skrevs till en väns bröllop, där bandet skulle spela funk. Texten är en inbjudan till gästerna att lämna sina platser och göra dansgolvet till sitt.",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-08-27",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZZ7M2512908",
+      "barcode": "199733589002"
+    },
     "audio": "https://media.the-energy-hour.com/2159859330-9b87f4e0.m4a",
     "duration": 197.87,
     "links": {
@@ -557,6 +766,12 @@
     "story": "A political statement takes the form of a funk mission in space. James Brown captains the crew and a love bomb is on board. The call and response turns the audience into part of the mission.",
     "lyrics": "/lyrics/boot-out-that-punk.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "date": "2025-07-23",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZWFL2559921",
+      "barcode": "199511018489"
+    },
     "audio": "https://media.the-energy-hour.com/2134941870-ac448772.m4a",
     "duration": 272.86,
     "links": {
@@ -575,6 +790,13 @@
     "story": "Mid Summer was made for a live Midsummer ritual in 2025.",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-06-20",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZTB52574413",
+      "barcode": "199519561987"
+    },
     "audio": "https://media.the-energy-hour.com/2114298273-681c669f.m4a",
     "duration": 141.89,
     "links": {
@@ -593,6 +815,13 @@
     "story": "A Swedish song written for a friend’s wedding in Greece became the starting point for this Goa trance version. The original idea carries through: falling in love can still take you by surprise at an age when you thought that part of life had passed.",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-06-11",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZTB22556556",
+      "barcode": "199521169560"
+    },
     "audio": "https://media.the-energy-hour.com/2111051817-71a1259b.m4a",
     "duration": 202.48,
     "links": {
@@ -611,6 +840,13 @@
     "story": "Låten skrevs till ett bröllop på Rhodos den 6 juni 2025. Den börjar med någon som tror sig ha blivit för gammal för att bli kär, och följer vad som händer när någon plötsligt lyfter på locket.",
     "lyrics": "/lyrics/varje-morgon-ar-du-ny.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-06-06",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZTAX2506352",
+      "barcode": "199522906713"
+    },
     "audio": "https://media.the-energy-hour.com/2106087543-c5b99614.m4a",
     "duration": 203.48,
     "links": {
@@ -629,6 +865,13 @@
     "story": "Poly was one of The Energy Hour's favorite tracks in the 1990s. It was made on an Atari ST with a Roland MKS-50 and a Yamaha TX sampler.\n\nThe 2025 Goa mix uses AI to remix the original and give it new life.",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-05-23",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZRP52547283",
+      "barcode": "199328225377"
+    },
     "audio": "https://media.the-energy-hour.com/2100196611-593e156a.m4a",
     "duration": 195.14,
     "links": {
@@ -647,6 +890,13 @@
     "story": "Let yourself go is one of The Energy Hour's 1990s techno tracks, given a new mix in 2025. Old school energy meets a newer sound, with deeper bass and a new ride through the rave years.",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-05-18",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZPLS2557181",
+      "barcode": "199329239410"
+    },
     "audio": "https://media.the-energy-hour.com/2097959391-f20770fe.m4a",
     "duration": 208.72,
     "links": {
@@ -665,6 +915,13 @@
     "story": "A racing catamaran introduces itself as a wild ride. The song puts you on board for the Stockholm Archipelago Raid, where speed, spray and the feeling of taking flight are part of the invitation.",
     "lyrics": "/lyrics/wild-one.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-05-18",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZPLS2559591",
+      "barcode": "199329253898"
+    },
     "audio": "https://media.the-energy-hour.com/2092408632-111ca71e.m4a",
     "duration": 177.38,
     "links": {
@@ -701,6 +958,13 @@
     "story": "",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-05-30",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZTAU2597760",
+      "barcode": "199523464335"
+    },
     "audio": "https://media.the-energy-hour.com/2081787027-daa847a1.m4a",
     "duration": 185.96,
     "links": {
@@ -719,6 +983,13 @@
     "story": "Älgö funk started as a funk fusion jam recorded at Raketbasen in April 2025, with drums and synth playing over a polyrhythmic bassline. The recording was then reworked with Suno AI.",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-05-30",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZTAW2500148",
+      "barcode": "199523462553"
+    },
     "audio": "https://media.the-energy-hour.com/2078448168-617eb8ab.m4a",
     "duration": 167.72,
     "links": {
@@ -737,6 +1008,12 @@
     "story": "Bow of love is about letting go when a child grows up, moves away and steps into adult life – a bittersweet mix of pride, love and letting go.",
     "lyrics": "/lyrics/bow-of-love.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2025-01-08",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZFZ22502611"
+    },
     "audio": "https://media.the-energy-hour.com/2004157815-a621f973.m4a",
     "duration": 178.22,
     "links": {
@@ -755,6 +1032,13 @@
     "story": "Stearinljuset lyser bakom gardinerna medan en missil ritar ett streck över vinterhimlen. Låten om jul i en tid av oro håller fast vid den lilla strimma hopp som finns kvar.",
     "lyrics": "/lyrics/en-strimma-av-hopp.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2024-12-11",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZZ7V2454929",
+      "barcode": "199095794557"
+    },
     "audio": "https://media.the-energy-hour.com/1971962695-7bb7db78.m4a",
     "duration": 180.0,
     "links": {
@@ -773,6 +1057,12 @@
     "story": "During a DJ set at Café Bojan in 1996, someone caught Anders Mårtén’s eye. The song is dedicated to the woman he met that night, now his wife. It returns to that instant, when the room was still dancing and his attention had gone somewhere else.",
     "lyrics": "",
     "credits": "Lyrics by Anders Mårtén. Music composed with Suno AI.",
+    "release": {
+      "date": "2024-10-29",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZWFW2487740",
+      "barcode": "198879610021"
+    },
     "audio": "https://media.the-energy-hour.com/1968310423-8a9af8fd.m4a",
     "duration": 254.44,
     "links": {
@@ -845,6 +1135,12 @@
     "story": "På en brygga i solnedgången försöker berättaren stanna i nuet. Det är svårt när den stilla vattenytan får tankarna att vandra till dagar som redan gått.",
     "lyrics": "/lyrics/minnen-vid-vattnet.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "date": "2024-10-29",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZWFV2495834",
+      "barcode": "198879608622"
+    },
     "audio": "https://media.the-energy-hour.com/1908048179-5f507dc4.m4a",
     "duration": 233.0,
     "links": {
@@ -863,6 +1159,12 @@
     "story": "The Energy Hour made Sending it high for the film from the Stockholm Archipelago Raid 2024.\n\nCover photo: Henrik Trygg.",
     "lyrics": "/lyrics/sending-it-high.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "date": "2024-10-28",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZWFW2481447",
+      "barcode": "198879623939"
+    },
     "audio": "https://media.the-energy-hour.com/1908008435-57324a10.mp3",
     "duration": 214.68,
     "links": {
@@ -881,6 +1183,13 @@
     "story": "Efter tretton år i skolbänken kommer frågan om vad som händer nu. Sången ger studenten tid att njuta av dagen och föräldrarnas tillåtelse att hitta sin egen väg.",
     "lyrics": "/lyrics/som-allt-du-gor.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2024-10-28",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZWFV2494211",
+      "barcode": "198879622642"
+    },
     "audio": "https://media.the-energy-hour.com/1850442969-51779ece.mp3",
     "duration": 208.96,
     "links": {
@@ -917,6 +1226,13 @@
     "story": "",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2024-09-24",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZWFJ2461208",
+      "barcode": "198886091110"
+    },
     "audio": "https://media.the-energy-hour.com/1184957014-eac11840.mp3",
     "duration": 172.0,
     "links": {
@@ -935,6 +1251,13 @@
     "story": "",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2024-09-24",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZWFH2498367",
+      "barcode": "198886084716"
+    },
     "audio": "https://media.the-energy-hour.com/1120683526-9837006e.m4a",
     "duration": 99.82,
     "links": {
@@ -989,6 +1312,13 @@
     "story": "",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2024-09-24",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZWFH2498362",
+      "barcode": "198886087212"
+    },
     "audio": "https://media.the-energy-hour.com/541810173-bbd0965f.m4a",
     "duration": 101.14,
     "links": {
@@ -1007,6 +1337,13 @@
     "story": "",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2024-09-24",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZWFJ2461230",
+      "barcode": "198886086192"
+    },
     "audio": "https://media.the-energy-hour.com/341387088-c4bafa82.m4a",
     "duration": 81.82,
     "links": {
@@ -1043,6 +1380,13 @@
     "story": "",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2024-09-24",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZWFH2498341",
+      "barcode": "198886088387"
+    },
     "audio": "https://media.the-energy-hour.com/286640127-915d8104.mp3",
     "duration": 174.81,
     "links": {
@@ -1097,6 +1441,13 @@
     "story": "Techno Bitch was recorded in the 1990s, with two guest vocalists. It comes from the years of raving in the woods and DJing at parties.",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2024-09-24",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZWFH2495501",
+      "barcode": "198886095705"
+    },
     "audio": "https://media.the-energy-hour.com/186345237-5925611b.mp3",
     "duration": 256.05,
     "links": {
@@ -1115,6 +1466,13 @@
     "story": "",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2024-09-24",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZWFH2495498",
+      "barcode": "198886096672"
+    },
     "audio": "https://media.the-energy-hour.com/32767315-df9f9680.m4a",
     "duration": 140.99,
     "links": {
@@ -1133,6 +1491,13 @@
     "story": "The goal was a track built on fast synth and piano chords. Listening back years later, it still has the energy it was made for.",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2024-09-24",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZWFH2491298",
+      "barcode": "198886105459"
+    },
     "audio": "https://media.the-energy-hour.com/32522641-e6d4e9aa.mp3",
     "duration": 265.09,
     "links": {
@@ -1151,6 +1516,13 @@
     "story": "",
     "lyrics": "",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2024-09-04",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QZTBD2462291",
+      "barcode": "198889799693"
+    },
     "audio": "https://media.the-energy-hour.com/32397380-8d5abc98.mp3",
     "duration": 241.42,
     "links": {
