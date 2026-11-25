@@ -51,7 +51,8 @@ function getLinks(track) {
     soundcloud: typeof links.soundcloud === "string" ? cleanExternalUrl(links.soundcloud) : "",
     spotify: typeof links.spotify === "string" ? cleanExternalUrl(links.spotify) : "",
     appleMusic: typeof links.appleMusic === "string" ? cleanExternalUrl(links.appleMusic) : "",
-    tidal: typeof links.tidal === "string" ? cleanExternalUrl(links.tidal) : ""
+    tidal: typeof links.tidal === "string" ? cleanExternalUrl(links.tidal) : "",
+    musicbrainz: typeof links.musicbrainz === "string" ? cleanExternalUrl(links.musicbrainz) : ""
   };
 }
 
@@ -112,6 +113,7 @@ function normalizeTracks(items) {
         credits: typeof item.credits === "string" ? item.credits : "",
         audio: typeof item.audio === "string" ? item.audio : "",
         duration: typeof item.duration === "number" ? item.duration : 0,
+        release: item.release && typeof item.release === "object" ? item.release : null,
         featured: item.featured === true,
         links: getLinks(item)
       };
@@ -237,6 +239,26 @@ function recordingSchema(track, slug, { withLyrics = false } = {}) {
     };
   }
   if (track.credits) recording.creditText = track.credits;
+  const release = track.release;
+  if (release) {
+    if (release.isrc) recording.isrcCode = release.isrc;
+    if (release.date) recording.datePublished = release.date;
+    recording.inAlbum = {
+      "@type": "MusicAlbum",
+      name: track.title,
+      ...(release.type ? { albumReleaseType: `https://schema.org/${release.type}Release` } : {}),
+      byArtist: { "@id": `${SITE_URL}/#artist` },
+      ...(release.date ? { datePublished: release.date } : {}),
+      albumRelease: {
+        "@type": "MusicRelease",
+        name: track.title,
+        ...(release.date ? { datePublished: release.date } : {}),
+        ...(release.label ? { recordLabel: { "@type": "Organization", name: release.label } } : {}),
+        ...(release.barcode ? { gtin: release.barcode } : {}),
+        ...(track.links.musicbrainz ? { sameAs: track.links.musicbrainz } : {})
+      }
+    };
+  }
   if (withLyrics && track.lyricsText) {
     recording.recordingOf = {
       "@type": "MusicComposition",
@@ -244,7 +266,7 @@ function recordingSchema(track, slug, { withLyrics = false } = {}) {
       lyrics: { "@type": "CreativeWork", text: track.lyricsText }
     };
   }
-  const sameAs = [track.links.soundcloud, track.links.spotify, track.links.appleMusic, track.links.tidal].filter(Boolean);
+  const sameAs = [track.links.soundcloud, track.links.spotify, track.links.appleMusic, track.links.tidal, track.links.musicbrainz].filter(Boolean);
   if (sameAs.length) recording.sameAs = sameAs;
   return recording;
 }

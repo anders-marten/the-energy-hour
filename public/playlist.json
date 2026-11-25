@@ -27,13 +27,21 @@
     "story": "The lights come up at an art school rave in Umeå in 1990, but for two people the night is just beginning. Years later, the memory became a song that lingers in the quiet after the music, through daylight and coffee gone cold.",
     "lyrics": "/lyrics/morning-can-wait.txt",
     "credits": "Written by Anders Mårtén",
+    "release": {
+      "type": "Single",
+      "date": "2026-11-20",
+      "label": "THE ENERGY HOUR",
+      "isrc": "QTAF92642851",
+      "barcode": "700074941109"
+    },
     "audio": "https://media.the-energy-hour.com/2441732988-69b17ddf.m4a",
     "duration": 259.34,
     "links": {
       "soundcloud": "https://soundcloud.com/the_energy_hour/morning-can-wait",
       "spotify": "https://open.spotify.com/album/1BDfaraMfYzTPdgXQ0PXR6",
       "appleMusic": "",
-      "tidal": ""
+      "tidal": "",
+      "musicbrainz": "https://musicbrainz.org/release/01619fab-983b-4905-b3ca-86a2ab581dec"
     }
   },
   {

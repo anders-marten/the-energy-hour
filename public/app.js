@@ -98,12 +98,14 @@ function normalizePlaylist(items) {
     credits: typeof item.credits === "string" ? item.credits : "",
     audio: typeof item.audio === "string" ? item.audio : "",
     duration: typeof item.duration === "number" ? item.duration : 0,
+    release: item.release && typeof item.release === "object" ? item.release : null,
     featured: item.featured === true,
     links: {
       soundcloud: typeof item.links?.soundcloud === "string" ? item.links.soundcloud : "",
       spotify: typeof item.links?.spotify === "string" ? item.links.spotify : "",
       appleMusic: typeof item.links?.appleMusic === "string" ? item.links.appleMusic : "",
-      tidal: typeof item.links?.tidal === "string" ? item.links.tidal : ""
+      tidal: typeof item.links?.tidal === "string" ? item.links.tidal : "",
+      musicbrainz: typeof item.links?.musicbrainz === "string" ? item.links.musicbrainz : ""
     }
   })).filter((item) => item.title && item.id);
 }
@@ -328,6 +330,33 @@ function setSection(name) {
   document.querySelector("#teh-" + name)?.scrollTo({ top: 0 });
 }
 
+function formatReleaseDate(value) {
+  const [year, month, day] = String(value || "").split("-").map(Number);
+  if (!year) return "";
+  if (!month) return String(year);
+  const date = new Date(Date.UTC(year, month - 1, day || 1));
+  return date.toLocaleDateString("en-GB", { timeZone: "UTC", year: "numeric", month: "long", ...(day ? { day: "numeric" } : {}) });
+}
+
+// Release facts under Info, as registered in MusicBrainz (playlist.json "release").
+function renderReleaseInfo(release) {
+  const list = document.querySelector("#teh-release");
+  const rows = release ? [
+    ["Released", [formatReleaseDate(release.date), release.type].filter(Boolean).join(" · ")],
+    ["Label", release.label],
+    ["ISRC", release.isrc],
+    ["Barcode", release.barcode]
+  ].filter(([, value]) => value) : [];
+  list.replaceChildren(...rows.flatMap(([term, value]) => {
+    const dt = document.createElement("dt");
+    dt.textContent = term;
+    const dd = document.createElement("dd");
+    dd.textContent = value;
+    return [dt, dd];
+  }));
+  list.hidden = rows.length === 0;
+}
+
 async function openDiscover(trackId) {
   const track = playlist.find((item) => item.id === trackId);
   if (!track) return;
@@ -347,6 +376,9 @@ async function openDiscover(trackId) {
   document.querySelector("#teh-spotify").href = track.links.spotify || "";
   document.querySelector("#teh-spotify").hidden = !track.links.spotify;
   document.querySelector("#teh-soundcloud").hidden = !track.links.soundcloud;
+  document.querySelector("#teh-musicbrainz").href = track.links.musicbrainz || "";
+  document.querySelector("#teh-musicbrainz").hidden = !track.links.musicbrainz;
+  renderReleaseInfo(track.release);
   const credits = document.querySelector("#teh-credits");
   credits.textContent = track.credits;
   credits.hidden = !track.credits;

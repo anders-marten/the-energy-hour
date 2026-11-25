@@ -18,6 +18,18 @@
       "credits": { "type": "string", "description": "Verified writing credit shown under Info; empty when unknown" },
       "audio": { "type": "string", "pattern": "^https://media\\.the-energy-hour\\.com/[0-9]+-[0-9a-f]{8}\\.(m4a|mp3)$", "description": "Self-hosted audio file (written by scripts/upload-audio.py)" },
       "duration": { "type": "number", "minimum": 0, "description": "Audio length in seconds" },
+      "release": {
+        "type": "object",
+        "description": "Release facts shown under Info (as registered in MusicBrainz)",
+        "additionalProperties": false,
+        "properties": {
+          "type": { "type": "string", "enum": ["Single", "EP", "Album"] },
+          "date": { "type": "string", "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$" },
+          "label": { "type": "string" },
+          "isrc": { "type": "string", "pattern": "^[A-Z]{2}[A-Z0-9]{3}\\d{7}$" },
+          "barcode": { "type": "string", "pattern": "^\\d{8,14}$" }
+        }
+      },
       "featured": { "type": "boolean", "description": "Mark the track shown in the feature position" },
       "links": {
         "type": "object",
@@ -26,7 +38,8 @@
           "soundcloud": { "type": "string", "format": "uri" },
           "spotify": { "type": "string", "format": "uri" },
           "appleMusic": { "type": "string", "format": "uri" },
-          "tidal": { "type": "string", "format": "uri" }
+          "tidal": { "type": "string", "format": "uri" },
+          "musicbrainz": { "type": "string", "format": "uri" }
         }
       }
     }
