@@ -41,6 +41,12 @@ jobs:
           aws s3 sync dist/ s3://${{ secrets.SCW_BUCKET_NAME }}/ \
             --delete \
             --endpoint-url https://s3.fr-par.scw.cloud
+          # Text files (llms.txt, robots.txt, lyrics) need an explicit UTF-8
+          # charset, otherwise browsers may show å, ä and ö garbled.
+          aws s3 cp dist/ s3://${{ secrets.SCW_BUCKET_NAME }}/ \
+            --recursive --exclude "*" --include "*.txt" \
+            --content-type "text/plain; charset=utf-8" \
+            --endpoint-url https://s3.fr-par.scw.cloud
 
       - name: Install Scaleway CLI
         run: |
