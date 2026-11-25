@@ -50,6 +50,12 @@ Användaren når samma domän oavsett backend:
 
 AWS Route 53 och CloudFront kan tas bort eller ersättas när Scaleway stöder samma apexdomän på ett lämpligt DNS/CDN-sätt.
 
+CloudFront-distributionen `E27BVM56VP6GE4` och Route 53-posterna för `the-energy-hour.com` och `www` ägs av CloudFormation-stacken `the-energy-hour-main-stack` (CDK, `eu-west-1`).
+
+- **Ta inte bort stacken.** Då försvinner CloudFront och DNS-posterna, och sajten går ner.
+- **Driftsätt inte stacken igen.** Distributionens origin pekar nu på Scaleway, vilket har ändrats utanför CDK. En ny CDK-driftsättning kan återställa origin till den gamla S3-bucketen.
+- **Stackens pipeline används inte.** `the-energy-hour-main-pipeline` och den separata `the-energy-hour-pipeline-3` är avstängda (övergången till byggsteget är blockerad sedan 2026-11-25). Driftsättningen görs av `.github/workflows/deploy.yml`, som också tömmer CloudFront-cachen.
+
 ## Scaleway-resurser
 
 Produktionen använder ett separat Scaleway-projekt:

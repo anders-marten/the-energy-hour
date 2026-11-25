@@ -1,3 +1,5 @@
+> **Historical.** This AWS pipeline (CodePipeline/CodeBuild to S3) is no longer used. The site is deployed by `.github/workflows/deploy.yml` to Scaleway; the AWS pipelines were disabled on 2026-11-25. See README.md.
+
 # Guide: Static Website with AWS CI/CD (GitHub -> CodePipeline -> CodeBuild -> S3 -> CloudFront)
 
 This document describes a proven workflow to set up a static website with CI/CD on AWS. It includes step-by-step instructions, explanations, common pitfalls, and solutions.
