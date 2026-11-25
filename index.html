@@ -739,7 +739,7 @@
         <button class="brand cursor-interaction" id="teh-brand" type="button">THE ENERGY HOUR</button>
         <button class="quiet cursor-interaction" id="teh-tracks-link" type="button">Tracks</button>
       </header>
-      <footer hidden id="teh-player">
+      <footer id="teh-player">
         <button class="player-expand cursor-interaction" id="teh-player-expand" type="button" aria-label="Open Discover">
           <svg class="chevron" viewBox="0 0 52 14" aria-hidden="true"><polyline points="2,12 26,2 50,12"/></svg>
         </button>
@@ -747,8 +747,13 @@
           <img class="bar-thumb" id="teh-now-art" alt="">
           <strong id="teh-now"></strong><small id="teh-now-status">Paused</small>
         </button>
-        <button class="mini-play cursor-interaction" id="teh-toggle" type="button" aria-label="Play"></button>
+        <div class="player-controls" role="group" aria-label="Playback">
+          <button class="player-skip cursor-interaction" id="teh-prev-track" type="button" aria-label="Previous track"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="2.5" height="14" rx="1"/><path d="M19 5.8v12.4a1 1 0 0 1-1.5.86L9 13.86a1 1 0 0 1 0-1.72l8.5-5.2A1 1 0 0 1 19 5.8z"/></svg></button>
+          <button class="mini-play cursor-interaction" id="teh-toggle" type="button" aria-label="Play"></button>
+          <button class="player-skip cursor-interaction" id="teh-next-track" type="button" aria-label="Next track"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="16.5" y="5" width="2.5" height="14" rx="1"/><path d="M5 5.8v12.4a1 1 0 0 0 1.5.86L15 13.86a1 1 0 0 0 0-1.72l-8.5-5.2A1 1 0 0 0 5 5.8z"/></svg></button>
+        </div>
       </footer>
+      <div class="sheet-backdrop" id="teh-sheet-backdrop" hidden></div>
       <main>
         <section id="teh-tracks">
     <!-- TRACK_LIST_START -->
@@ -1643,14 +1648,6 @@
             <p id="teh-credits" hidden></p>
             <div class="services"><a id="teh-soundcloud" target="_blank" rel="noopener noreferrer">SoundCloud ↗</a><a id="teh-spotify" target="_blank" rel="noopener noreferrer">Spotify ↗</a></div>
           </section>
-          <div class="sheet-now" id="teh-sheet-now" hidden>
-            <button class="mini-play cursor-interaction" id="teh-sheet-toggle" type="button" aria-label="Toggle playback"></button>
-            <div><strong id="teh-sheet-now-title"></strong><small id="teh-sheet-now-state"></small></div>
-          </div>
-          <div class="song-footer" role="group" aria-label="Navigate tracks">
-            <button class="quiet cursor-interaction" id="teh-previous" type="button">← Previous</button>
-            <button class="quiet cursor-interaction" id="teh-next" type="button">Next →</button>
-          </div>
         </dialog>
       </main>
       <nav class="social-links" aria-label="Artist social links">

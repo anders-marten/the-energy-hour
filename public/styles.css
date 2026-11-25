@@ -12,6 +12,7 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
   --muted: #c1bbc4;
   --rule: #39343e;
 }
+#teh-design { --player-h: calc(100px + env(safe-area-inset-bottom)); }
 #teh-design * { box-sizing: border-box; }
 #teh-design [hidden] { display: none !important; }
 #teh-design button { font: inherit; color: inherit; background: none; border: 0; padding: 9px 0; min-height: 44px; text-align: left; }
@@ -22,7 +23,7 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
 #teh-design .brand, #teh-design .intro > p { font-size: 12px; font-weight: 700; letter-spacing: .17em; }
 #teh-design .brand, #teh-design .quiet { color: var(--accent); }
 #teh-design main { padding: 26px clamp(18px,5vw,58px) 40px; }
-#teh-design:has(#teh-player:not([hidden])) main { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+#teh-design:has(#teh-player:not([hidden])) main { padding-bottom: calc(var(--player-h) + 16px); }
 #teh-design .intro { padding: 35px 0 46px; }
 #teh-design .intro h1 { font-size: clamp(38px,8vw,76px); line-height: 1; letter-spacing: -.055em; margin: 10px 0 18px; }
 #teh-design .desktop-track-heading { font-size: 24px; margin-bottom: 12px; }
@@ -76,20 +77,37 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
   color:var(--muted);
 }
 
-#teh-design #teh-player { position:fixed; inset:auto 0 0; z-index:10; display:flex; justify-content:space-between; align-items:center; gap:12px; padding:24px 16px calc(10px + env(safe-area-inset-bottom)); border-top:1px solid var(--rule); background:#17151b; box-shadow:0 -8px 24px rgb(0 0 0 / 45%); }
-#teh-design .player-expand { position:absolute; z-index:2; top:0; left:50%; width:64px; height:22px; min-height:22px; padding:0; transform:translateX(-50%); background:transparent; }
+#teh-design #teh-player { position:fixed; inset:auto 0 0; z-index:30; height:var(--player-h); display:flex; justify-content:space-between; align-items:center; gap:12px; padding:26px 16px calc(14px + env(safe-area-inset-bottom)); border-top:1px solid var(--rule); background:#17151b; box-shadow:0 -8px 24px rgb(0 0 0 / 45%); }
+/* The expand button fills the whole footer behind the other controls, so any
+   empty area of the footer opens Discover. */
+#teh-design .player-expand { position:absolute; z-index:0; inset:0; width:auto; height:auto; min-height:0; padding:0; display:block; background:transparent; }
+#teh-design #teh-player > :not(.player-expand) { position:relative; z-index:1; }
 #teh-design .chevron { display:block; width:52px; height:14px; margin:auto; overflow:visible; fill:none; stroke:#b3b3b3; stroke-width:4; stroke-linecap:butt; stroke-linejoin:miter; }
-#teh-design .player-expand .chevron { margin:6px auto 0; }
+#teh-design .player-expand .chevron { position:absolute; top:6px; left:50%; margin:0; transform:translateX(-50%); }
+#teh-design:has(#teh-song[open]) .player-expand { visibility:hidden; }
+/* Narrow layout: round the footer's top like the Discover sheet, as a hint
+   that it opens as a panel. Square while the sheet is open, so they join. */
+@container (max-width:899px) {
+  #teh-design #teh-player { border:1px solid var(--rule); border-bottom:0; border-radius:22px 22px 0 0; transition:border-radius .25s ease; }
+  #teh-design:has(#teh-song[open]) #teh-player { border-radius:0; }
+}
 #teh-design .now-open { flex:1; min-width:0; display:grid; grid-template-columns:44px minmax(0,1fr); column-gap:12px; align-items:center; padding:0; text-align:left; }
 #teh-design .now-open strong { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; align-self:end; }
 #teh-design .now-open small { align-self:start; display:block; }
 #teh-design .now-open .bar-thumb { grid-row:1/3; width:44px; height:44px; border-radius:6px; }
 #teh-design .mini-play { flex:0 0 44px; width:44px; height:44px; padding:0; border-radius:50%; background:var(--accent); color:#1b1110; font-weight:700; text-align:center; }
+#teh-design .player-controls { flex:0 0 auto; display:flex; align-items:center; gap:6px; }
+#teh-design #teh-player .mini-play { flex-basis:56px; width:56px; height:56px; font-size:18px; }
+#teh-design .player-skip { display:grid; place-items:center; width:48px; height:48px; min-height:48px; padding:0; border-radius:50%; color:#f8f5ef; text-align:center; }
+#teh-design .player-skip svg { width:24px; height:24px; fill:currentColor; }
+#teh-design .player-skip:disabled { opacity:.3; cursor:default; }
+#teh-design .sheet-backdrop { position:fixed; inset:0; z-index:24; background:rgb(0 0 0 / 62%); opacity:0; transition:opacity .25s ease; }
+#teh-design .sheet-backdrop.is-visible { opacity:1; }
 
-#teh-design #teh-song { position:fixed; inset:auto 0 0; width:100%; max-width:100%; max-height:85vh; max-height:85dvh; margin:0; padding:0 22px calc(12px + env(safe-area-inset-bottom)); border:1px solid var(--rule); border-bottom:0; border-radius:22px 22px 0 0; background:#17151b; color:#f8f5ef; overflow:hidden; overscroll-behavior:contain; }
+#teh-design #teh-song { position:fixed; inset:auto 0 var(--player-h); z-index:25; width:100%; max-width:100%; max-height:calc(85vh - var(--player-h)); max-height:calc(92dvh - var(--player-h)); margin:0; padding:0 22px 4px; border:1px solid var(--rule); border-bottom:0; border-radius:22px 22px 0 0; background:#17151b; color:#f8f5ef; overflow:hidden; overscroll-behavior:contain; }
 #teh-design #teh-song::backdrop { background:rgb(0 0 0 / 62%); opacity:0; transition:opacity .25s ease; }
 #teh-design #teh-song.is-visible::backdrop { opacity:1; }
-#teh-design #teh-song[open] { display:grid; grid-template-rows:auto auto auto minmax(180px,1fr) auto auto; }
+#teh-design #teh-song[open] { display:grid; grid-template-rows:auto auto auto minmax(180px,1fr); }
 #teh-design .sheet-handle { position:relative; min-height:44px; display:flex; justify-content:flex-end; touch-action:none; background:#17151b; }
 #teh-design .sheet-handle::before { display:none; }
 #teh-design .sheet-handle button { display:grid; place-items:center; width:44px; height:44px; padding:0; border-radius:50%; background:rgb(0 0 0 / 60%); color:#fff; font-size:20px; font-weight:700; }
@@ -108,10 +126,6 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
 #teh-design #teh-lyrics-text p { white-space:pre-wrap; overflow-wrap:anywhere; }
 #teh-design .reading p+p { margin-top:1em; }
 #teh-design .services { display:flex; gap:16px; margin-top:12px; }
-#teh-design .sheet-now { display:flex; align-items:center; gap:12px; padding:10px 0; border-top:1px solid var(--rule); }
-#teh-design .sheet-now strong { display:block; font-size:15px; }
-#teh-design .song-footer { display:flex; justify-content:space-between; gap:12px; border-top:1px solid var(--rule); }
-#teh-design .song-footer button:disabled { color:var(--muted); opacity:.55; cursor:default; }
 
 #teh-design #teh-full { position:fixed; inset:0; width:100%; height:100%; max-width:none; max-height:none; margin:0; padding:0; border:0; background:transparent; color:#f8f5ef; overflow:hidden; }
 #teh-design #teh-full[open] { display:flex; flex-direction:column; }
@@ -147,8 +161,6 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
   #teh-design #teh-tracks .row p { grid-column:2/4; grid-row:2; font-size:13px; }
   #teh-design #teh-tracks .row > .quiet { grid-column:3; grid-row:1; padding:0; font-size:14px; }
   #teh-design .social-links { margin:8px 8px 0; }
-  #teh-design #teh-player { min-height:76px; padding:24px 16px calc(14px + env(safe-area-inset-bottom)); }
-  #teh-design .mini-play { width:52px; height:52px; flex-basis:52px; }
   #teh-design .sheet-handle { min-height:56px; }
 }
 
@@ -164,6 +176,17 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
     #teh-design .mobile-feature::after { content:""; grid-column:1; grid-row:1 / -1; z-index:1; border-radius:10px; pointer-events:none; background:linear-gradient(to bottom, rgb(5 5 5 / 0) 30%, rgb(5 5 5 / .7) 62%, #050505 100%); }
     #teh-design .mobile-feature .feature-audio-controls { position:relative; inset:auto; grid-column:1; grid-row:2; z-index:2; padding:0 16px 8px; background:none; }
     #teh-design .mobile-feature .feature-copy { grid-column:1; grid-row:3; z-index:2; padding:0 16px 16px; }
+    /* Drag-to-reveal (set from app.js) */
+    #teh-design .mobile-feature { --reveal:0px; --reveal-fade:1; overflow:hidden; border-radius:10px; }
+    #teh-design .mobile-feature .feature-audio-art { touch-action:pan-x pan-y; }
+    #teh-design .mobile-feature::after,
+    #teh-design .mobile-feature .feature-audio-controls,
+    #teh-design .mobile-feature .feature-copy { transform:translateY(var(--reveal)); }
+    #teh-design .mobile-feature .feature-audio-controls,
+    #teh-design .mobile-feature .feature-copy { opacity:var(--reveal-fade); }
+    #teh-design .mobile-feature.is-settling::after,
+    #teh-design .mobile-feature.is-settling .feature-audio-controls,
+    #teh-design .mobile-feature.is-settling .feature-copy { transition:transform .5s cubic-bezier(.34,1.45,.64,1), opacity .3s ease; }
   }
 }
 
@@ -179,10 +202,10 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
   #teh-design .intro h1 { font-size:clamp(44px,4.6vw,68px); }
   #teh-design #teh-player, #teh-design .full-bar { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); }
   #teh-design #teh-player .now-open, #teh-design .full-bar .now-open { grid-column:1; }
-  #teh-design #teh-player .mini-play, #teh-design .full-bar .mini-play { grid-column:2; }
+  #teh-design #teh-player .player-controls, #teh-design .full-bar .mini-play { grid-column:2; }
   #teh-design .sheet-handle { padding-top:16px; }
   #teh-design .sheet-handle::before { display:none; }
-  #teh-design #teh-song { inset:0 0 0 auto; width:min(520px,100%); height:100%; max-height:none; padding:0 32px 16px; border:0; border-left:1px solid var(--rule); border-radius:0; }
+  #teh-design #teh-song { inset:0 0 var(--player-h) auto; width:min(520px,100%); height:auto; max-height:none; padding:0 32px 16px; border:0; border-left:1px solid var(--rule); border-radius:0; }
   #teh-design #teh-full { --col:calc((100cqw - 2 * var(--edge) - 64px) / 2); --art:min(var(--col),calc(100dvh - 200px)); }
   #teh-design .full-scroll { display:grid; grid-template-columns:var(--art) minmax(0,1fr); grid-template-rows:auto auto 1fr; column-gap:64px; align-items:start; padding:48px var(--edge); }
   #teh-design #teh-full-art { grid-column:1; grid-row:1 / 4; position:sticky; top:0; margin:0; }

@@ -81,6 +81,7 @@ const lyricsCache = new Map();
 
 const sheet = document.querySelector("#teh-song");
 const full = document.querySelector("#teh-full");
+const sheetBackdrop = document.querySelector("#teh-sheet-backdrop");
 
 function normalizePlaylist(items) {
   if (!Array.isArray(items)) return [];
@@ -276,7 +277,7 @@ function updatePlayerUi() {
     featureAudioToggle.setAttribute("aria-label", (isPlaying ? "Pause " : "Play ") + track.title);
     featureAudio.classList.toggle("is-loading", playPending && !isPlaying);
   }
-  if (!track || !hasPlayed) {
+  if (!track) {
     playerBar.hidden = true;
     return;
   }
@@ -290,7 +291,10 @@ function updatePlayerUi() {
   document.querySelector("#teh-full-now-art").src = art;
   document.querySelector("#teh-full-status").textContent = isPlaying ? "Now playing" : (playPending ? "Loading…" : "Paused");
 
-  for (const id of ["teh-toggle", "teh-full-toggle", "teh-sheet-toggle"]) {
+  document.querySelector("#teh-prev-track").disabled = currentTrackIndex <= 0;
+  document.querySelector("#teh-next-track").disabled = currentTrackIndex >= playlist.length - 1;
+
+  for (const id of ["teh-toggle", "teh-full-toggle"]) {
     const button = document.querySelector("#" + id);
     button.textContent = isPlaying ? "Ⅱ" : "▶";
     button.setAttribute("aria-label", (isPlaying ? "Pause " : "Play ") + track.title);
@@ -301,14 +305,6 @@ function updatePlayerUi() {
     button.querySelector("span")?.replaceChildren(document.createTextNode(active ? "Ⅱ" : "▶"));
     button.setAttribute("aria-label", (active ? "Pause " : "Play ") + (playlist.find((item) => item.id === button.dataset.play)?.title || "track"));
   });
-
-  const sheetNow = document.querySelector("#teh-sheet-now");
-  const sheetPlayingDifferentTrack = sheetTrackId && sheetTrackId !== track.id;
-  sheetNow.hidden = !sheetPlayingDifferentTrack;
-  if (sheetPlayingDifferentTrack) {
-    document.querySelector("#teh-sheet-now-title").textContent = track.title;
-    document.querySelector("#teh-sheet-now-state").textContent = isPlaying ? "Now playing" : "Paused";
-  }
 
   const discoverTrack = sheetTrackId ? playlist.find((item) => item.id === sheetTrackId) : null;
   if (discoverTrack) {
@@ -370,14 +366,13 @@ async function openDiscover(trackId) {
   const firstSection = track.story ? "story" : (lyrics ? "lyrics" : "info");
   setSection(firstSection);
 
-  const position = playlist.findIndex((item) => item.id === trackId);
-  document.querySelector("#teh-previous").disabled = position <= 0;
-  document.querySelector("#teh-next").disabled = position >= playlist.length - 1;
-
   if (!sheet.open) {
-    sheet.showModal();
+    // Non-modal, so the player footer stays visible and usable below the sheet.
+    sheet.show();
+    sheetBackdrop.hidden = false;
     sheet.getBoundingClientRect();
     sheet.classList.add("is-visible");
+    sheetBackdrop.classList.add("is-visible");
     if (!reducedMotion.matches) {
       const offscreen = wide.matches ? "translateX(100%)" : "translateY(100%)";
       sheetSlide = sheet.animate([{ transform: offscreen }, { transform: "none" }], { duration: 250, easing, fill: "forwards" });
@@ -408,6 +403,7 @@ function closeDiscover() {
   sheetClosing = true;
   sheetSlide?.cancel();
   sheet.classList.remove("is-visible");
+  sheetBackdrop.classList.remove("is-visible");
   if (reducedMotion.matches) {
     sheet.close();
     sheetClosing = false;
@@ -561,17 +557,19 @@ document.querySelector("#teh-play").addEventListener("click", () => {
   if (!sheetTrackId) return;
   showTrackById(sheetTrackId, true);
 });
-document.querySelector("#teh-sheet-toggle").addEventListener("click", toggleCurrentTrack);
+// With Discover open, the sheet follows the footer's Previous/Next.
+function followInDiscover() {
+  if (sheet.open && !sheetClosing && getCurrentTrack()) openDiscover(getCurrentTrack().id);
+}
+document.querySelector("#teh-prev-track").addEventListener("click", () => {
+  showPreviousTrack(isPlaying || playPending);
+  followInDiscover();
+});
+document.querySelector("#teh-next-track").addEventListener("click", () => {
+  showForwardTrack(isPlaying || playPending);
+  followInDiscover();
+});
 
-document.querySelector("#teh-previous").addEventListener("click", () => {
-  const position = playlist.findIndex((item) => item.id === sheetTrackId);
-  if (position > 0) openDiscover(playlist[position - 1].id);
-});
-document.querySelector("#teh-next").addEventListener("click", (event) => {
-  event.preventDefault();
-  const position = playlist.findIndex((item) => item.id === sheetTrackId);
-  if (position >= 0 && position < playlist.length - 1) openDiscover(playlist[position + 1].id);
-});
 
 sheet.addEventListener("click", (event) => {
   const rect = sheet.getBoundingClientRect();
@@ -593,6 +591,10 @@ sheet.addEventListener("cancel", (event) => {
   event.preventDefault();
   closeDiscover();
 });
+sheetBackdrop.addEventListener("click", closeDiscover);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && sheet.open) closeDiscover();
+});
 
 full.addEventListener("cancel", (event) => {
   event.preventDefault();
@@ -605,6 +607,8 @@ root.addEventListener("click", (event) => {
   if (discoverButton) opener = discoverButton;
 });
 sheet.addEventListener("close", () => {
+  sheetBackdrop.hidden = true;
+  sheetBackdrop.classList.remove("is-visible");
   sheetResize?.cancel();
   sheet.style.height = "";
   if (opener) {
@@ -696,5 +700,58 @@ sheet.addEventListener("click", (event) => {
     event.stopPropagation();
   }
 }, true);
+
+// Portrait feature: dragging down on the cover slides the controls and title
+// panel down to show more of the image, and springs back on release.
+const featureBlock = document.querySelector(".mobile-feature");
+let reveal = null;
+function setReveal(offset, max) {
+  featureBlock.style.setProperty("--reveal", `${offset}px`);
+  featureBlock.style.setProperty("--reveal-fade", String(max ? Math.max(0, 1 - offset / max) : 1));
+}
+featureBlock?.addEventListener("touchstart", (event) => {
+  if (event.touches.length !== 1 || !event.target.closest(".feature-audio-art")) return;
+  if (getComputedStyle(featureBlock).display !== "grid" || window.scrollY > 0) return;
+  const touch = event.touches[0];
+  const panel = featureBlock.querySelector(".feature-copy").offsetHeight + featureAudio.querySelector(".feature-audio-controls").offsetHeight;
+  reveal = { x: touch.clientX, y: touch.clientY, active: false, max: panel };
+  featureBlock.classList.remove("is-settling");
+}, { passive: true });
+featureBlock?.addEventListener("touchmove", (event) => {
+  if (!reveal) return;
+  const touch = event.touches[0];
+  const dx = touch.clientX - reveal.x;
+  const dy = touch.clientY - reveal.y;
+  if (!reveal.active) {
+    if (dy < -8 || Math.abs(dx) > Math.max(8, dy)) {
+      reveal = null;
+      return;
+    }
+    if (dy < 8) return;
+    reveal.active = true;
+    reveal.y = touch.clientY;
+  }
+  if (event.cancelable) event.preventDefault();
+  const pull = Math.max(0, touch.clientY - reveal.y);
+  // Rubber-band: follows the finger at first, then resists.
+  const offset = reveal.max * (1 - Math.exp(-pull / reveal.max));
+  setReveal(reduceMotionOffset(offset), reveal.max);
+}, { passive: false });
+function reduceMotionOffset(offset) {
+  return reducedMotion.matches ? 0 : offset;
+}
+function settleReveal() {
+  if (!reveal) return;
+  const wasActive = reveal.active;
+  reveal = null;
+  if (!wasActive) return;
+  featureBlock.classList.add("is-settling");
+  setReveal(0, 0);
+}
+featureBlock?.addEventListener("touchend", settleReveal);
+featureBlock?.addEventListener("touchcancel", settleReveal);
+featureBlock?.addEventListener("transitionend", (event) => {
+  if (event.propertyName === "transform") featureBlock.classList.remove("is-settling");
+});
 
 loadPlaylist();
