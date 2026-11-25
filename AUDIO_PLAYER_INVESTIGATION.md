@@ -1,6 +1,6 @@
 # Investigation: own audio player instead of the SoundCloud widget
 
-Status: investigation, updated with decisions. All 64 originals downloaded (2026-11-24). No code changed. Updated: 2026-11-25.
+Status: **implemented (2026-11-25).** All 64 tracks play through the site's own `<audio>` player from `media.the-energy-hour.com`, and the SoundCloud widget is removed. Implementation details: `SCALEWAY_AUDIO_MIGRATION_PLAN.md`.
 
 ## Decisions (Anders, 2026-11-24)
 

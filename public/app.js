@@ -17,7 +17,7 @@
  * @property {string} story
  * @property {string} lyrics Pointer to a plain-text lyrics file
  * @property {string} credits Verified writing credit shown under Info
- * @property {string} audio Self-hosted audio URL; empty means the SoundCloud widget plays it
+ * @property {string} audio Self-hosted audio URL; empty when the track has no file
  * @property {number} duration Audio length in seconds (0 when unknown)
  * @property {boolean} featured
  * @property {TrackLinks} links
@@ -41,15 +41,8 @@ const fallbackPlaylist = [
   }
 ];
 
-const player = document.createElement("iframe");
-player.id = "soundcloud-player";
-player.title = "SoundCloud player";
-player.scrolling = "no";
-player.frameBorder = "no";
-player.allow = "autoplay";
-// Tracks with a self-hosted file play through one shared <audio> element.
-// play() is called synchronously in the click handler, which is what iOS needs.
-// Tracks without a file still play through the SoundCloud widget.
+// Every track plays through one shared <audio> element. play() is called
+// synchronously in the click handler, which is what iOS needs.
 const audio = new Audio();
 audio.preload = "none";
 
@@ -78,10 +71,6 @@ let playlist = fallbackPlaylist;
 let currentTrackIndex = -1;
 let isPlaying = false;
 let isAdvancingAfterFinish = false;
-let shouldPlayWhenReady = false;
-let widgetReady = false;
-let widget = null;
-let playerStateTimer = 0;
 let hasPlayed = false;
 let playPending = false;
 let sheetSlide = null;
@@ -91,16 +80,6 @@ const lyricsCache = new Map();
 
 const sheet = document.querySelector("#teh-song");
 const full = document.querySelector("#teh-full");
-
-function isAppleMobileSafari() {
-  const userAgent = window.navigator.userAgent;
-  const isIOS = /iP(ad|hone|od)/.test(userAgent) ||
-    (window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
-  const isSafari = /Safari/.test(userAgent) &&
-    !/CriOS|FxiOS|EdgiOS/.test(userAgent);
-
-  return isIOS && isSafari;
-}
 
 function normalizePlaylist(items) {
   if (!Array.isArray(items)) return [];
@@ -125,35 +104,6 @@ function normalizePlaylist(items) {
   })).filter((item) => item.title && item.id);
 }
 
-const widgetOptions = {
-  color: "#ff987e",
-  auto_play: false,
-  hide_related: true,
-  show_comments: false,
-  show_user: true,
-  show_reposts: false,
-  show_teaser: false,
-  visual: true
-};
-
-function trackApiUrl(trackId) {
-  return `https://api.soundcloud.com/tracks/${encodeURIComponent(trackId)}`;
-}
-
-function buildSoundCloudSrc(trackId, autoPlay = false) {
-  const params = new URLSearchParams({ url: trackApiUrl(trackId) });
-  for (const [key, value] of Object.entries(widgetOptions)) params.set(key, String(value));
-  params.set("auto_play", autoPlay ? "true" : "false");
-  return "https://w.soundcloud.com/player/?" + params.toString();
-}
-
-function playIfRequested() {
-  if (!shouldPlayWhenReady) return;
-  shouldPlayWhenReady = false;
-  playPending = true;
-  widget.play();
-}
-
 function getCurrentTrack() {
   return playlist[currentTrackIndex] || null;
 }
@@ -174,15 +124,8 @@ async function loadLyrics(track) {
   }
 }
 
-// The widget stays in the feature slot. Moving an iframe in the DOM reloads it
-// and stops playback, so other views show the cover image instead.
-function mountWidget() {
-  const slot = document.querySelector("#teh-feature-widget-slot");
-  if (slot && !slot.contains(player)) slot.replaceChildren(player);
-}
-
 function mountFeatureAudio(track) {
-  const slot = document.querySelector("#teh-feature-widget-slot");
+  const slot = document.querySelector("#teh-feature-player-slot");
   if (!slot) return;
   featureAudioArt.src = track.cover || track.thumbnail || "";
   featureAudioArt.alt = track.title + " cover";
@@ -218,6 +161,10 @@ function updateAudioProgress() {
 }
 
 function playAudio() {
+  if (!usesAudio()) {
+    console.warn("This track has no audio file.");
+    return;
+  }
   playPending = true;
   hasPlayed = true;
   updatePlayerUi();
@@ -248,65 +195,10 @@ function paragraphs(target, text) {
   }));
 }
 
-function syncPlayerState() {
-  if (!widget || usesAudio()) return;
-  widget.isPaused((paused) => {
-    if (paused) {
-      isPlaying = false;
-      playPending = false;
-    } else {
-      isPlaying = true;
-      playPending = false;
-    }
-    updatePlayerUi();
-  });
-}
-
-function checkTrackFinished() {
-  if (!widget || usesAudio() || isAdvancingAfterFinish) return;
-  widget.getDuration((duration) => {
-    if (!duration) return;
-    widget.getPosition((position) => {
-      if (position > 0 && duration - position <= 1000) handleTrackFinished();
-    });
-  });
-}
-
-function startPlayerStatePolling() {
-  window.clearInterval(playerStateTimer);
-  playerStateTimer = window.setInterval(() => {
-    syncPlayerState();
-    checkTrackFinished();
-  }, 1000);
-}
-
 function handleTrackFinished() {
   if (isAdvancingAfterFinish) return;
   isAdvancingAfterFinish = true;
   showForwardTrack(true);
-}
-
-function bindWidgetEvents() {
-  widget.bind(SC.Widget.Events.READY, () => {
-    widgetReady = true;
-    playIfRequested();
-    syncPlayerState();
-    startPlayerStatePolling();
-  });
-  widget.bind(SC.Widget.Events.PLAY, () => {
-    if (usesAudio()) {
-      widget.pause();
-      return;
-    }
-    hasPlayed = true;
-    isPlaying = true;
-    playPending = false;
-    updatePlayerUi();
-  });
-  widget.bind(SC.Widget.Events.PAUSE, syncPlayerState);
-  widget.bind(SC.Widget.Events.FINISH, () => {
-    if (!usesAudio()) handleTrackFinished();
-  });
 }
 
 function showTrack(index, shouldPlay = false) {
@@ -314,38 +206,18 @@ function showTrack(index, shouldPlay = false) {
   currentTrackIndex = index;
   isAdvancingAfterFinish = false;
   const track = getCurrentTrack();
-  if (usesAudio(track)) {
-    showAudioTrack(track, shouldPlay);
-    return;
-  }
-  audio.pause();
-  const shouldUseEmbedAutoplay = shouldPlay && !isAppleMobileSafari();
-  shouldPlayWhenReady = shouldPlay && !shouldUseEmbedAutoplay;
-  playPending = shouldPlay;
-  isPlaying = false;
-  player.title = `SoundCloud player: ${track.title}`;
-  player.src = buildSoundCloudSrc(track.id, shouldUseEmbedAutoplay);
-  mountWidget();
-  widget = SC.Widget(player);
-  bindWidgetEvents();
-  startPlayerStatePolling();
-  if (shouldPlay) hasPlayed = true;
-  updatePlayerUi();
-}
-
-function showAudioTrack(track, shouldPlay) {
-  window.clearInterval(playerStateTimer);
-  if (widget && widgetReady) widget.pause();
-  player.removeAttribute("src");
-  widget = null;
-  widgetReady = false;
-  shouldPlayWhenReady = false;
   isPlaying = false;
   playPending = false;
-  const source = new URL(track.audio, location.href).href;
-  if (audio.src !== source) {
-    audio.src = source;
-    audio.currentTime = 0;
+  if (usesAudio(track)) {
+    const source = new URL(track.audio, location.href).href;
+    if (audio.src !== source) {
+      audio.src = source;
+      audio.currentTime = 0;
+    }
+  } else {
+    audio.pause();
+    audio.removeAttribute("src");
+    audio.load();
   }
   mountFeatureAudio(track);
   setMediaSession(track);
@@ -370,23 +242,8 @@ function showForwardTrack(shouldPlay = isPlaying) {
 function showTrackById(trackId, shouldPlay = true) {
   const index = playlist.findIndex((track) => track.id === trackId);
   if (index < 0) return false;
-  if (index === currentTrackIndex && shouldPlay && usesAudio()) {
-    if (isPlaying) audio.pause();
-    else playAudio();
-  } else if (index === currentTrackIndex && shouldPlay) {
-    if (isPlaying) {
-      widget.pause();
-    } else {
-      shouldPlayWhenReady = true;
-      playPending = true;
-      if (widgetReady) {
-        playIfRequested();
-      }
-      window.setTimeout(() => {
-        if (!isPlaying) playPending = false;
-        updatePlayerUi();
-      }, 1500);
-    }
+  if (index === currentTrackIndex && shouldPlay) {
+    toggleCurrentTrack();
   } else {
     showTrack(index, shouldPlay);
   }
@@ -395,22 +252,8 @@ function showTrackById(trackId, shouldPlay = true) {
 
 function toggleCurrentTrack() {
   if (!getCurrentTrack()) return;
-  if (usesAudio()) {
-    if (isPlaying) audio.pause();
-    else playAudio();
-    return;
-  }
-  if (isPlaying) {
-    widget.pause();
-  } else {
-    shouldPlayWhenReady = true;
-    playPending = true;
-    if (widgetReady) playIfRequested();
-    window.setTimeout(() => {
-      if (!isPlaying) playPending = false;
-      updatePlayerUi();
-    }, 1500);
-  }
+  if (isPlaying) audio.pause();
+  else playAudio();
 }
 
 function updatePlayerUi() {
@@ -426,7 +269,8 @@ function updatePlayerUi() {
     featureDiscover.setAttribute("aria-label", "Discover the story of " + track.title);
     featureDiscover.hidden = !(track.story || track.lyrics);
   }
-  if (track && usesAudio(track)) {
+  if (track) {
+    featureAudioToggle.disabled = !usesAudio(track);
     featureAudioToggle.querySelector("span").textContent = isPlaying ? "Ⅱ" : "▶";
     featureAudioToggle.setAttribute("aria-label", (isPlaying ? "Pause " : "Play ") + track.title);
     featureAudio.classList.toggle("is-loading", playPending && !isPlaying);

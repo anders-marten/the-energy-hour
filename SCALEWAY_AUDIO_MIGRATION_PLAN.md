@@ -1,6 +1,10 @@
 # Plan: move the tracks to Scaleway
 
-Status: steps 1–6 done (2026-11-25). All 64 tracks are self-hosted. Remaining: remove the SoundCloud widget code (investigation plan step 7).
+Status: done (2026-11-25). All 64 tracks are self-hosted, and the SoundCloud widget is removed from the site (investigation plan step 7).
+
+- **Widget removal:** the iframe, `api.js`, the state polling and the widget fallback are gone from `app.js`; the `widget` CSS and markup are renamed or removed.
+- **Tracks without a file:** a track without `audio` shows its cover, its play button is disabled, and nothing plays.
+- **Remaining SoundCloud use:** SoundCloud stays only as a link in Discover → Info.
 
 - **Pilot on iPhone:** Anders confirmed that the first tap starts playback.
 - **Full run:**

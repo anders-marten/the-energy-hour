@@ -126,7 +126,7 @@ function renderTrackList(tracks) {
 
   const feature = `<div class="mobile-feature">
       <div class="feature-art">
-        <div class="soundcloud-widget-slot feature-widget-slot" id="teh-feature-widget-slot" aria-label="SoundCloud player"></div>
+        <div class="feature-player-slot" id="teh-feature-player-slot" aria-label="Player"></div>
       </div>
       <div class="feature-copy">
         <h2 id="teh-feature-title">${featuredTitle}</h2><p id="teh-feature-teaser">${featuredTeaser}</p>
@@ -154,7 +154,7 @@ function renderTrackList(tracks) {
 
     return `<article class="row" aria-label="${title}">
         <div class="thumb">
-          <div class="track-widget-slot" data-widget-track="${escapeHtml(track.id)}">
+          <div class="track-art">
             ${art
               ? `<img src="${escapeHtml(art)}" alt="" loading="lazy">`
               : `<div class="neutral-thumb" role="img" aria-label=""></div>`}
