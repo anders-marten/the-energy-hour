@@ -17,6 +17,8 @@
  * @property {string} story
  * @property {string} lyrics Pointer to a plain-text lyrics file
  * @property {string} credits Verified writing credit shown under Info
+ * @property {string} audio Self-hosted audio URL; empty means the SoundCloud widget plays it
+ * @property {number} duration Audio length in seconds (0 when unknown)
  * @property {boolean} featured
  * @property {TrackLinks} links
  */
@@ -32,6 +34,8 @@ const fallbackPlaylist = [
     story: "",
     lyrics: "",
     credits: "",
+    audio: "",
+    duration: 0,
     featured: false,
     links: { soundcloud: "", spotify: "", appleMusic: "", tidal: "" }
   }
@@ -43,6 +47,27 @@ player.title = "SoundCloud player";
 player.scrolling = "no";
 player.frameBorder = "no";
 player.allow = "autoplay";
+// Tracks with a self-hosted file play through one shared <audio> element.
+// play() is called synchronously in the click handler, which is what iOS needs.
+// Tracks without a file still play through the SoundCloud widget.
+const audio = new Audio();
+audio.preload = "none";
+
+const featureAudio = document.createElement("div");
+featureAudio.className = "feature-audio";
+featureAudio.innerHTML = `
+  <img class="feature-audio-art" alt="">
+  <div class="feature-audio-controls">
+    <button class="feature-audio-toggle cursor-interaction" type="button" aria-label="Play"><span aria-hidden="true">▶</span></button>
+    <input class="feature-audio-seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="Seek">
+    <span class="feature-audio-time" aria-hidden="true">0:00 / 0:00</span>
+  </div>`;
+const featureAudioArt = featureAudio.querySelector(".feature-audio-art");
+const featureAudioToggle = featureAudio.querySelector(".feature-audio-toggle");
+const featureAudioSeek = featureAudio.querySelector(".feature-audio-seek");
+const featureAudioTime = featureAudio.querySelector(".feature-audio-time");
+let isSeeking = false;
+
 const root = document.querySelector("#teh-design");
 const trackList = document.querySelector("#teh-tracks");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -88,6 +113,8 @@ function normalizePlaylist(items) {
     story: typeof item.story === "string" ? item.story : "",
     lyrics: typeof item.lyrics === "string" ? item.lyrics : "",
     credits: typeof item.credits === "string" ? item.credits : "",
+    audio: typeof item.audio === "string" ? item.audio : "",
+    duration: typeof item.duration === "number" ? item.duration : 0,
     featured: item.featured === true,
     links: {
       soundcloud: typeof item.links?.soundcloud === "string" ? item.links.soundcloud : "",
@@ -154,6 +181,64 @@ function mountWidget() {
   if (slot && !slot.contains(player)) slot.replaceChildren(player);
 }
 
+function mountFeatureAudio(track) {
+  const slot = document.querySelector("#teh-feature-widget-slot");
+  if (!slot) return;
+  featureAudioArt.src = track.cover || track.thumbnail || "";
+  featureAudioArt.alt = track.title + " cover";
+  if (!slot.contains(featureAudio)) slot.replaceChildren(featureAudio);
+  slot.setAttribute("aria-label", "Player: " + track.title);
+  updateAudioProgress();
+}
+
+function usesAudio(track = getCurrentTrack()) {
+  return Boolean(track?.audio);
+}
+
+function formatTime(seconds) {
+  const total = Math.max(0, Math.floor(seconds || 0));
+  return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")}`;
+}
+
+function audioDuration() {
+  return Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : (getCurrentTrack()?.duration || 0);
+}
+
+function updateAudioProgress() {
+  const length = audioDuration();
+  featureAudioSeek.max = String(length);
+  if (!isSeeking) featureAudioSeek.value = String(audio.currentTime || 0);
+  featureAudioSeek.style.setProperty("--progress", length ? `${(Number(featureAudioSeek.value) / length) * 100}%` : "0%");
+  featureAudioTime.textContent = `${formatTime(Number(featureAudioSeek.value))} / ${formatTime(length)}`;
+  if ("mediaSession" in navigator && length && navigator.mediaSession.setPositionState) {
+    try {
+      navigator.mediaSession.setPositionState({ duration: length, position: Math.min(audio.currentTime || 0, length), playbackRate: audio.playbackRate || 1 });
+    } catch {}
+  }
+}
+
+function playAudio() {
+  playPending = true;
+  hasPlayed = true;
+  updatePlayerUi();
+  audio.play().catch((error) => {
+    if (error?.name !== "AbortError") console.warn("Audio playback did not start.", error);
+    playPending = false;
+    isPlaying = false;
+    updatePlayerUi();
+  });
+}
+
+function setMediaSession(track) {
+  if (!("mediaSession" in navigator)) return;
+  const art = track.cover || track.thumbnail;
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: track.title,
+    artist: "The Energy Hour",
+    artwork: art ? [{ src: new URL(art, location.href).href, sizes: "512x512" }] : []
+  });
+}
+
 function paragraphs(target, text) {
   if (!target) return;
   target.replaceChildren(...String(text || "").split(/\n\n+/).filter(Boolean).map((block) => {
@@ -164,7 +249,7 @@ function paragraphs(target, text) {
 }
 
 function syncPlayerState() {
-  if (!widget) return;
+  if (!widget || usesAudio()) return;
   widget.isPaused((paused) => {
     if (paused) {
       isPlaying = false;
@@ -178,7 +263,7 @@ function syncPlayerState() {
 }
 
 function checkTrackFinished() {
-  if (!widget || isAdvancingAfterFinish) return;
+  if (!widget || usesAudio() || isAdvancingAfterFinish) return;
   widget.getDuration((duration) => {
     if (!duration) return;
     widget.getPosition((position) => {
@@ -209,13 +294,19 @@ function bindWidgetEvents() {
     startPlayerStatePolling();
   });
   widget.bind(SC.Widget.Events.PLAY, () => {
+    if (usesAudio()) {
+      widget.pause();
+      return;
+    }
     hasPlayed = true;
     isPlaying = true;
     playPending = false;
     updatePlayerUi();
   });
   widget.bind(SC.Widget.Events.PAUSE, syncPlayerState);
-  widget.bind(SC.Widget.Events.FINISH, handleTrackFinished);
+  widget.bind(SC.Widget.Events.FINISH, () => {
+    if (!usesAudio()) handleTrackFinished();
+  });
 }
 
 function showTrack(index, shouldPlay = false) {
@@ -223,6 +314,11 @@ function showTrack(index, shouldPlay = false) {
   currentTrackIndex = index;
   isAdvancingAfterFinish = false;
   const track = getCurrentTrack();
+  if (usesAudio(track)) {
+    showAudioTrack(track, shouldPlay);
+    return;
+  }
+  audio.pause();
   const shouldUseEmbedAutoplay = shouldPlay && !isAppleMobileSafari();
   shouldPlayWhenReady = shouldPlay && !shouldUseEmbedAutoplay;
   playPending = shouldPlay;
@@ -235,6 +331,26 @@ function showTrack(index, shouldPlay = false) {
   startPlayerStatePolling();
   if (shouldPlay) hasPlayed = true;
   updatePlayerUi();
+}
+
+function showAudioTrack(track, shouldPlay) {
+  window.clearInterval(playerStateTimer);
+  if (widget && widgetReady) widget.pause();
+  player.removeAttribute("src");
+  widget = null;
+  widgetReady = false;
+  shouldPlayWhenReady = false;
+  isPlaying = false;
+  playPending = false;
+  const source = new URL(track.audio, location.href).href;
+  if (audio.src !== source) {
+    audio.src = source;
+    audio.currentTime = 0;
+  }
+  mountFeatureAudio(track);
+  setMediaSession(track);
+  if (shouldPlay) playAudio();
+  else updatePlayerUi();
 }
 
 function showPreviousTrack(shouldPlay = isPlaying) {
@@ -254,7 +370,10 @@ function showForwardTrack(shouldPlay = isPlaying) {
 function showTrackById(trackId, shouldPlay = true) {
   const index = playlist.findIndex((track) => track.id === trackId);
   if (index < 0) return false;
-  if (index === currentTrackIndex && shouldPlay) {
+  if (index === currentTrackIndex && shouldPlay && usesAudio()) {
+    if (isPlaying) audio.pause();
+    else playAudio();
+  } else if (index === currentTrackIndex && shouldPlay) {
     if (isPlaying) {
       widget.pause();
     } else {
@@ -276,6 +395,11 @@ function showTrackById(trackId, shouldPlay = true) {
 
 function toggleCurrentTrack() {
   if (!getCurrentTrack()) return;
+  if (usesAudio()) {
+    if (isPlaying) audio.pause();
+    else playAudio();
+    return;
+  }
   if (isPlaying) {
     widget.pause();
   } else {
@@ -301,6 +425,11 @@ function updatePlayerUi() {
     featureDiscover.dataset.discover = track.id;
     featureDiscover.setAttribute("aria-label", "Discover the story of " + track.title);
     featureDiscover.hidden = !(track.story || track.lyrics);
+  }
+  if (track && usesAudio(track)) {
+    featureAudioToggle.querySelector("span").textContent = isPlaying ? "Ⅱ" : "▶";
+    featureAudioToggle.setAttribute("aria-label", (isPlaying ? "Pause " : "Play ") + track.title);
+    featureAudio.classList.toggle("is-loading", playPending && !isPlaying);
   }
   if (!track || !hasPlayed) {
     playerBar.hidden = true;
@@ -490,6 +619,65 @@ trackList.addEventListener("click", (event) => {
 });
 
 document.querySelector("#teh-toggle").addEventListener("click", toggleCurrentTrack);
+featureAudioToggle.addEventListener("click", toggleCurrentTrack);
+featureAudioSeek.addEventListener("input", () => {
+  isSeeking = true;
+  updateAudioProgress();
+});
+featureAudioSeek.addEventListener("change", () => {
+  audio.currentTime = Number(featureAudioSeek.value);
+  isSeeking = false;
+  updateAudioProgress();
+});
+
+audio.addEventListener("playing", () => {
+  if (!usesAudio()) return;
+  isPlaying = true;
+  playPending = false;
+  hasPlayed = true;
+  updatePlayerUi();
+});
+audio.addEventListener("waiting", () => {
+  if (!usesAudio()) return;
+  playPending = true;
+  updatePlayerUi();
+});
+audio.addEventListener("pause", () => {
+  if (!usesAudio()) return;
+  isPlaying = false;
+  playPending = false;
+  updatePlayerUi();
+});
+audio.addEventListener("ended", () => {
+  if (usesAudio()) handleTrackFinished();
+});
+audio.addEventListener("error", () => {
+  if (!usesAudio() || !audio.getAttribute("src")) return;
+  console.warn("Audio file could not be played.", audio.error);
+  isPlaying = false;
+  playPending = false;
+  updatePlayerUi();
+});
+for (const name of ["timeupdate", "durationchange", "loadedmetadata", "seeked"]) {
+  audio.addEventListener(name, updateAudioProgress);
+}
+
+if ("mediaSession" in navigator) {
+  const handlers = {
+    play: () => usesAudio() && playAudio(),
+    pause: () => usesAudio() && audio.pause(),
+    previoustrack: () => showPreviousTrack(true),
+    nexttrack: () => showForwardTrack(true),
+    seekto: (details) => {
+      if (usesAudio() && typeof details.seekTime === "number") audio.currentTime = details.seekTime;
+    }
+  };
+  for (const [action, handler] of Object.entries(handlers)) {
+    try {
+      navigator.mediaSession.setActionHandler(action, handler);
+    } catch {}
+  }
+}
 document.querySelector("#teh-full-toggle").addEventListener("click", toggleCurrentTrack);
 function openCurrentDiscover() {
   const track = getCurrentTrack();
