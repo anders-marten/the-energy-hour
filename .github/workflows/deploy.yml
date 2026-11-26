@@ -44,10 +44,8 @@ jobs:
           aws s3 sync dist/assets/ s3://${{ secrets.SCW_BUCKET_NAME }}/assets/ \
             --cache-control "public, max-age=31536000, immutable" \
             --endpoint-url https://s3.fr-par.scw.cloud
-          # /app.js and /styles.css are what pages from before hashed assets
-          # (2026-11-26) still load from browser caches; they are kept too.
           aws s3 sync dist/ s3://${{ secrets.SCW_BUCKET_NAME }}/ \
-            --delete --exclude "assets/*" --exclude "app.js" --exclude "styles.css" \
+            --delete --exclude "assets/*" \
             --endpoint-url https://s3.fr-par.scw.cloud
           # HTML pages keep their names, so browsers must check them with the
           # server each time; otherwise an old page points at old JS and CSS.
