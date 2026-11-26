@@ -38,8 +38,23 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SCW_DEPLOY_SECRET_KEY }}
           AWS_DEFAULT_REGION: fr-par
         run: |
+          # Vite's hashed JS and CSS never change under the same name, so they
+          # may be cached for a year. They are uploaded first and old ones are
+          # kept, so a page cached somewhere still finds the files it links to.
+          aws s3 sync dist/assets/ s3://${{ secrets.SCW_BUCKET_NAME }}/assets/ \
+            --cache-control "public, max-age=31536000, immutable" \
+            --endpoint-url https://s3.fr-par.scw.cloud
+          # /app.js and /styles.css are what pages from before hashed assets
+          # (2026-11-26) still load from browser caches; they are kept too.
           aws s3 sync dist/ s3://${{ secrets.SCW_BUCKET_NAME }}/ \
-            --delete \
+            --delete --exclude "assets/*" --exclude "app.js" --exclude "styles.css" \
+            --endpoint-url https://s3.fr-par.scw.cloud
+          # HTML pages keep their names, so browsers must check them with the
+          # server each time; otherwise an old page points at old JS and CSS.
+          aws s3 cp dist/ s3://${{ secrets.SCW_BUCKET_NAME }}/ \
+            --recursive --exclude "*" --include "*.html" \
+            --content-type "text/html; charset=utf-8" \
+            --cache-control "no-cache" \
             --endpoint-url https://s3.fr-par.scw.cloud
           # Text files (llms.txt, robots.txt, lyrics) need an explicit UTF-8
           # charset, otherwise browsers may show å, ä and ö garbled.

@@ -109,8 +109,11 @@ Statiska resurser ligger under `public/`:
 
 - `public/playlist.json` — låtlistan och externa länkar
 - `public/images/` — logotyper, favicon och appikoner
-- `public/styles.css` — webbplatsens stil
-- `public/app.js` — spelare och playlistlogik
+
+Stil och kod byggs av Vite, som ger filerna en hash i namnet (`dist/assets/index-<hash>.js|css`) så att webbläsare alltid hämtar en ny version efter en deploy:
+
+- `src/styles.css` — webbplatsens stil
+- `src/app.js` — spelare och playlistlogik
 
 Repository:
 
