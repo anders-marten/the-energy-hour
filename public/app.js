@@ -67,6 +67,8 @@ const featureAudioTime = featureAudio.querySelector(".feature-audio-time");
 const playerSeek = document.querySelector("#teh-player-seek");
 const seekInputs = [featureAudioSeek, playerSeek].filter(Boolean);
 let seekingInput = null;
+const playerElapsed = document.querySelector("#teh-player-elapsed");
+const playerLength = document.querySelector("#teh-player-length");
 
 const root = document.querySelector("#teh-design");
 const trackList = document.querySelector("#teh-tracks");
@@ -168,6 +170,8 @@ function updateAudioProgress() {
     input.style.setProperty("--progress", length ? `${(position / length) * 100}%` : "0%");
   }
   featureAudioTime.textContent = `${formatTime(position)} / ${formatTime(length)}`;
+  playerElapsed.textContent = formatTime(position);
+  playerLength.textContent = formatTime(length);
   if ("mediaSession" in navigator && length && navigator.mediaSession.setPositionState) {
     try {
       navigator.mediaSession.setPositionState({ duration: length, position: Math.min(audio.currentTime || 0, length), playbackRate: audio.playbackRate || 1 });
