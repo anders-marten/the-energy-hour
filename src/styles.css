@@ -223,7 +223,10 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
   #teh-design #teh-tracks .track-name { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; line-height:1.35; }
   #teh-design #teh-tracks .row > div:nth-child(2) p { display:block; min-height:0; height:auto; margin:2px 0 0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; line-height:1.4; }
   #teh-design #teh-tracks .row > .quiet { padding:0; font-size:14px; }
-  #teh-design .about { margin:32px 16px 8px; }
+  /* Same inset as the track rows and the pinned cover, so About and the
+     version line stay hidden under the cover when they scroll beneath it. */
+  #teh-design #teh-tracks .about { margin:32px 16px 8px; }
+  #teh-design #teh-tracks .app-version { margin:24px 16px 8px; }
   #teh-design .sheet-handle { min-height:56px; }
 }
 
@@ -280,6 +283,7 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
 #teh-design .about p { color:var(--muted); line-height:1.6; }
 #teh-design .about p + p { margin-top:1em; }
 #teh-design .about .about-signature { color:#f8f5ef; font-weight:600; }
+#teh-design .app-version { max-width:62ch; margin:24px 0 8px; color:rgb(255 255 255 / 50%); font-size:13px; font-variant-numeric:tabular-nums; }
 #teh-design .social-links { display:flex; gap:20px; align-items:center; margin:20px 0 0; }
 #teh-design .social-links a { display:grid; place-items:center; width:44px; height:44px; margin:-10px; }
 #teh-design .social-links img { width:24px; height:24px; aspect-ratio:auto; object-fit:contain; }

@@ -27,7 +27,22 @@ const {
 } = require("./site-content");
 
 const distDir = path.resolve(__dirname, "..", "dist");
-const baseHtml = fs.readFileSync(path.join(distDir, "index.html"), "utf8");
+// Adds the commit the site was built from to the version line, so the live
+// site shows which deploy it runs (GITHUB_SHA in CI, git locally).
+function buildCommit() {
+  if (process.env.GITHUB_SHA) return process.env.GITHUB_SHA.slice(0, 7);
+  try {
+    return require("child_process").execSync("git rev-parse --short=7 HEAD", { stdio: ["ignore", "pipe", "ignore"] }).toString().trim();
+  } catch {
+    return "";
+  }
+}
+const commit = buildCommit();
+const builtHtml = fs.readFileSync(path.join(distDir, "index.html"), "utf8");
+const baseHtml = commit
+  ? builtHtml.replace(/(<p class="app-version">Version [^<]+)<\/p>/, `$1 · ${commit}</p>`)
+  : builtHtml;
+fs.writeFileSync(path.join(distDir, "index.html"), baseHtml);
 const tracks = loadTracks();
 const slugs = trackSlugs(tracks);
 

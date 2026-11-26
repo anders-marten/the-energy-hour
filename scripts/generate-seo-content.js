@@ -130,6 +130,14 @@ const SOCIAL_LINKS = [
   { label: "GitHub", url: "https://github.com/anders-marten/the-energy-hour", icon: "/images/github-logo-white.png" }
 ];
 
+const APP_VERSION = require("../package.json").version;
+
+// The app version, last in the track list. generate-site-files.js adds the
+// commit it was built from.
+function renderVersion() {
+  return `<p class="app-version">Version ${escapeHtml(APP_VERSION)}</p>`;
+}
+
 function renderAbout() {
   const paragraphs = ARTIST_BIO.map((text) => `<p>${escapeHtml(text)}</p>`).join("\n        ");
   return `<section class="about" id="about" aria-labelledby="about-title">
@@ -203,6 +211,7 @@ function renderTrackList(tracks) {
       ${intro}
       ${rows}
       ${renderAbout()}
+      ${renderVersion()}
     </div>`;
 }
 
