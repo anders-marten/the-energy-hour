@@ -84,13 +84,21 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
 #teh-design #teh-player > :not(.player-expand) { position:relative; z-index:1; }
 #teh-design .chevron { display:block; width:52px; height:14px; margin:auto; overflow:visible; fill:none; stroke:#b3b3b3; stroke-width:4; stroke-linecap:butt; stroke-linejoin:miter; }
 #teh-design .player-expand .chevron { position:absolute; top:6px; left:50%; margin:0; transform:translateX(-50%); }
-#teh-design:has(#teh-song[open]) .player-expand { visibility:hidden; }
+#teh-design:has(#teh-song[open]) .player-expand .chevron { visibility:hidden; }
 #teh-design .now-discover { display:none; }
-/* Narrow layout: round the footer's top like the Discover sheet, as a hint
-   that it opens as a panel. Square while the sheet is open, so they join. */
+/* Narrow layout: the footer is a floating panel with rounded corners near
+   the bottom edge, content centred vertically. The Discover sheet reaches
+   down behind it, so the panel floats over the sheet while it is open. */
 @container (max-width:899px) {
-  #teh-design #teh-player { border:1px solid var(--rule); border-bottom:0; border-radius:22px 22px 0 0; transition:border-radius .25s ease; }
-  #teh-design:has(#teh-song[open]) #teh-player { border-radius:0; }
+  #teh-design { --player-bottom:max(8px, env(safe-area-inset-bottom)); --player-h:calc(76px + var(--player-bottom)); }
+  #teh-design #teh-player { inset:auto 8px var(--player-bottom); height:76px; padding:0 8px 0 12px; border:1px solid var(--rule); border-radius:22px; box-shadow:0 8px 28px rgb(0 0 0 / 55%); }
+  #teh-design #teh-player .player-skip { width:44px; }
+  #teh-design .player-expand .chevron { display:none; }
+  /* With Discover open, the sheet and the footer are one card: the sheet
+     sits on the same insets with the footer inside its bottom, and the
+     footer keeps its frame, so its top edge reads as a divider. */
+  #teh-mobile-preview #teh-design #teh-song { inset:auto 8px var(--player-bottom); width:auto; max-height:calc(92dvh - var(--player-bottom)); padding-bottom:80px; border:1px solid var(--rule); border-radius:22px; }
+  #teh-design:has(#teh-song[open]) #teh-player { border-radius:0 0 22px 22px; box-shadow:none; }
   /* "Discover the story" sits under the playing track's title, in place of
      the play status, so it reads as belonging to that track. The whole
      now-playing button opens Discover. It replaces the chevron and the
@@ -98,7 +106,6 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
   #teh-design .feature-discover { display:none; }
   #teh-design #teh-player { gap:6px; }
   #teh-design #teh-player .player-controls { gap:2px; }
-  #teh-design:has(#teh-now-discover:not([hidden])) .player-expand .chevron { display:none; }
   #teh-design:not(:has(#teh-song[open])):has(#teh-now-discover:not([hidden])) #teh-now-status { display:none; }
   #teh-design:not(:has(#teh-song[open])) .now-discover:not([hidden]) { display:block; align-self:start; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--accent); font-size:13px; font-weight:700; }
 }
@@ -132,7 +139,22 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
 #teh-design #teh-song nav button[aria-pressed=true] { color:#f8f5ef; box-shadow:inset 0 -2px var(--accent); }
 #teh-design #teh-song nav [data-section="info"] { margin-inline-start:auto; }
 #teh-design #teh-song .reading { grid-row:4; grid-column:1; min-height:0; overflow:auto; overscroll-behavior:contain; padding:24px 0; max-width:62ch; }
-#teh-design #teh-song .reading[hidden] { display:block !important; visibility:hidden; }
+/* Wide layout: tabs show one section at a time (the teaser goes with Story). */
+@container (min-width:900px) {
+  #teh-design #teh-song .reading h3 { display:none; }
+  #teh-design #teh-reading:not([data-active="story"]) > #teh-teaser,
+  #teh-design #teh-reading[data-active="story"] > section:not(#teh-story),
+  #teh-design #teh-reading[data-active="lyrics"] > section:not(#teh-lyrics),
+  #teh-design #teh-reading[data-active="info"] > section:not(#teh-info) { display:none; }
+}
+/* Narrow layout: no tabs; Story, Lyrics and Info run as one flowing text with
+   section headings, scrolled on its own below the title. */
+@container (max-width:899px) {
+  #teh-design #teh-song nav { display:none; }
+  #teh-design #teh-song .reading { padding:16px 0 24px; border-top:1px solid var(--rule); }
+  #teh-design #teh-song .reading > section { margin-top:32px; }
+  #teh-design #teh-song .reading h3 { margin:0 0 12px; color:var(--accent); font-size:13px; font-weight:750; letter-spacing:.08em; text-transform:uppercase; }
+}
 #teh-design #teh-teaser { margin-bottom:16px; color:var(--muted); }
 #teh-design #teh-lyrics-text p { white-space:pre-wrap; overflow-wrap:anywhere; }
 #teh-design .reading p+p { margin-top:1em; }

@@ -323,17 +323,6 @@ function updatePlayerUi() {
   }
 }
 
-function setSection(name) {
-  for (const key of ["story", "lyrics", "info"]) {
-    const section = document.querySelector("#teh-" + key);
-    section.hidden = key !== name;
-    section.style.visibility = key === name ? "visible" : "hidden";
-    const button = document.querySelector(`[data-section="${key}"]`);
-    if (button) button.setAttribute("aria-pressed", key === name ? "true" : "false");
-  }
-  document.querySelector("#teh-" + name)?.scrollTo({ top: 0 });
-}
-
 function formatReleaseDate(value) {
   const [year, month, day] = String(value || "").split("-").map(Number);
   if (!year) return "";
@@ -359,6 +348,17 @@ function renderReleaseInfo(release) {
     return [dt, dd];
   }));
   list.hidden = rows.length === 0;
+}
+
+// Wide layout: Story, Lyrics and Info are tabs. Narrow layout: the tabs are
+// hidden and all three run as one text with headings (see styles.css).
+function setSection(name) {
+  const reading = document.querySelector("#teh-reading");
+  reading.dataset.active = name;
+  for (const button of document.querySelectorAll("#teh-song [data-section]")) {
+    button.setAttribute("aria-pressed", String(button.dataset.section === name));
+  }
+  reading.scrollTo({ top: 0 });
 }
 
 async function openDiscover(trackId) {
@@ -391,21 +391,20 @@ async function openDiscover(trackId) {
   credits.hidden = !track.credits;
   paragraphs(document.querySelector("#teh-story-text"), track.story);
   paragraphs(document.querySelector("#teh-lyrics-text"), "");
+  // Story, Lyrics and Info run as one text with headings, scrolled on its own.
+  document.querySelector("#teh-story").hidden = !track.story;
+  document.querySelector("#teh-lyrics").hidden = true;
+  document.querySelector("#teh-reading").scrollTo({ top: 0 });
   document.querySelector("#teh-full-title").textContent = track.title;
 
-  const storyButton = document.querySelector('[data-section="story"]');
-  const lyricsButton = document.querySelector('[data-section="lyrics"]');
-  const infoButton = document.querySelector('[data-section="info"]');
   const lyrics = await loadLyrics(track);
   if (sheetTrackId === trackId) {
     paragraphs(document.querySelector("#teh-lyrics-text"), lyrics);
+    document.querySelector("#teh-lyrics").hidden = !lyrics;
   }
-  storyButton.hidden = !track.story;
-  lyricsButton.hidden = !lyrics;
-  infoButton.hidden = false;
-
-  const firstSection = track.story ? "story" : (lyrics ? "lyrics" : "info");
-  setSection(firstSection);
+  document.querySelector('[data-section="story"]').hidden = !track.story;
+  document.querySelector('[data-section="lyrics"]').hidden = !lyrics;
+  setSection(track.story ? "story" : (lyrics ? "lyrics" : "info"));
 
   if (!sheet.open) {
     // Non-modal, so the player footer stays visible and usable below the sheet.
@@ -415,8 +414,9 @@ async function openDiscover(trackId) {
     sheet.classList.add("is-visible");
     sheetBackdrop.classList.add("is-visible");
     if (!reducedMotion.matches) {
-      const offscreen = wide.matches ? "translateX(100%)" : "translateY(100%)";
-      sheetSlide = sheet.animate([{ transform: offscreen }, { transform: "none" }], { duration: 250, easing, fill: "forwards" });
+      sheetSlide = wide.matches
+        ? sheet.animate([{ transform: "translateX(100%)" }, { transform: "none" }], { duration: 250, easing, fill: "forwards" })
+        : sheet.animate([{ clipPath: sheetClip(collapsedSheetInset()) }, { clipPath: sheetClip(0) }], { duration: 320, easing });
     }
   } else {
     sheet.classList.add("is-visible");
@@ -424,7 +424,16 @@ async function openDiscover(trackId) {
     sheet.style.transform = "none";
   }
   updatePlayerUi();
+  setDiscoverExpanded(true);
   if (startHeight && sheetTrackId === trackId) animateSheetHeight(startHeight);
+}
+
+// Tells assistive tech whether the footer's Discover toggles are open.
+function setDiscoverExpanded(expanded) {
+  for (const id of ["#teh-player-expand", "#teh-now-open"]) {
+    document.querySelector(id).setAttribute("aria-expanded", String(expanded));
+  }
+  document.querySelector("#teh-player-expand").setAttribute("aria-label", expanded ? "Close Discover" : "Open Discover");
 }
 
 function animateSheetHeight(startHeight) {
@@ -439,9 +448,20 @@ function animateSheetHeight(startHeight) {
   sheetResize.onfinish = () => { sheetResize = null; };
 }
 
+// Narrow layout: the sheet and the player footer form one card. Opening grows
+// the card up from the footer; closing shrinks it back down to the footer.
+// Both are done by clipping the sheet's top edge.
+function sheetClip(top) {
+  return `inset(${Math.max(0, top)}px 0px 0px 0px round 22px)`;
+}
+function collapsedSheetInset() {
+  return sheet.getBoundingClientRect().height - document.querySelector("#teh-player").getBoundingClientRect().height;
+}
+
 function closeDiscover() {
   if (!sheet.open || sheetClosing) return;
   sheetClosing = true;
+  setDiscoverExpanded(false);
   sheetSlide?.cancel();
   sheet.classList.remove("is-visible");
   sheetBackdrop.classList.remove("is-visible");
@@ -450,11 +470,13 @@ function closeDiscover() {
     sheetClosing = false;
     return;
   }
-  const offscreen = wide.matches ? "translateX(100%)" : "translateY(100%)";
-  sheetSlide = sheet.animate([{ transform: getComputedStyle(sheet).transform }, { transform: offscreen }], { duration: 250, easing, fill: "forwards" });
+  sheetSlide = wide.matches
+    ? sheet.animate([{ transform: getComputedStyle(sheet).transform }, { transform: "translateX(100%)" }], { duration: 250, easing, fill: "forwards" })
+    : sheet.animate([{ clipPath: getComputedStyle(sheet).clipPath === "none" ? sheetClip(0) : getComputedStyle(sheet).clipPath }, { clipPath: sheetClip(collapsedSheetInset()) }], { duration: 280, easing, fill: "forwards" });
   sheetSlide.onfinish = () => {
     sheet.close();
     sheetSlide.cancel();
+    sheet.style.clipPath = "";
     sheetClosing = false;
   };
 }
@@ -589,8 +611,13 @@ function openCurrentDiscover() {
   const track = getCurrentTrack();
   if (track) openDiscover(track.id);
 }
-document.querySelector("#teh-now-open").addEventListener("click", openCurrentDiscover);
-document.querySelector("#teh-player-expand").addEventListener("click", openCurrentDiscover);
+// A click on the footer (outside the playback controls) toggles Discover.
+function toggleCurrentDiscover() {
+  if (sheet.open && !sheetClosing) closeDiscover();
+  else openCurrentDiscover();
+}
+document.querySelector("#teh-now-open").addEventListener("click", toggleCurrentDiscover);
+document.querySelector("#teh-player-expand").addEventListener("click", toggleCurrentDiscover);
 document.querySelector("#teh-full-collapse").addEventListener("click", closeFull);
 document.querySelector("#teh-full-close").addEventListener("click", closeFull);
 document.querySelector("#teh-sheet-close").addEventListener("click", closeDiscover);
@@ -655,6 +682,7 @@ sheet.addEventListener("close", () => {
   sheetBackdrop.classList.remove("is-visible");
   sheetResize?.cancel();
   sheet.style.height = "";
+  sheet.style.clipPath = "";
   if (opener) {
     opener.focus();
     opener = null;
@@ -670,11 +698,16 @@ let drag = null;
 let suppressClickUntil = 0;
 
 function moveSheet(offset) {
-  if (!reducedMotion.matches) sheet.style.transform = `translateY(${Math.max(0, offset)}px)`;
+  if (!reducedMotion.matches) sheet.style.clipPath = sheetClip(Math.min(offset, collapsedSheetInset()));
 }
 function endSheetDrag(offset) {
-  if (offset > DRAG_CLOSE) closeDiscover();
-  else sheet.style.transform = "";
+  if (offset > DRAG_CLOSE) {
+    closeDiscover();
+    return;
+  }
+  const from = sheet.style.clipPath;
+  sheet.style.clipPath = "";
+  if (from && !reducedMotion.matches) sheet.animate([{ clipPath: from }, { clipPath: sheetClip(0) }], { duration: 200, easing });
 }
 
 sheet.addEventListener("pointerdown", (event) => {

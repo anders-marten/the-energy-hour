@@ -3879,13 +3879,17 @@
             <button class="quiet cursor-interaction" data-section="lyrics" aria-pressed="false">Lyrics</button>
             <button class="quiet cursor-interaction" data-section="info" aria-pressed="false">Info</button>
           </nav>
-          <section class="reading" id="teh-story"><p id="teh-teaser"></p><div id="teh-story-text"></div></section>
-          <section class="reading" id="teh-lyrics" hidden><div id="teh-lyrics-text"></div></section>
-          <section class="reading" id="teh-info" hidden>
-            <p id="teh-credits" hidden></p>
-            <dl class="release-info" id="teh-release" hidden></dl>
-            <div class="services"><a id="teh-soundcloud" target="_blank" rel="noopener noreferrer">SoundCloud ↗</a><a id="teh-spotify" target="_blank" rel="noopener noreferrer">Spotify ↗</a><a id="teh-youtube" target="_blank" rel="noopener noreferrer" hidden>YouTube ↗</a><a id="teh-musicbrainz" target="_blank" rel="noopener noreferrer">MusicBrainz ↗</a></div>
-          </section>
+          <div class="reading" id="teh-reading" data-active="story">
+            <p id="teh-teaser"></p>
+            <section id="teh-story" aria-labelledby="teh-story-heading"><h3 id="teh-story-heading">Story</h3><div id="teh-story-text"></div></section>
+            <section id="teh-lyrics" aria-labelledby="teh-lyrics-heading" hidden><h3 id="teh-lyrics-heading">Lyrics</h3><div id="teh-lyrics-text"></div></section>
+            <section id="teh-info" aria-labelledby="teh-info-heading">
+              <h3 id="teh-info-heading">Info</h3>
+              <p id="teh-credits" hidden></p>
+              <dl class="release-info" id="teh-release" hidden></dl>
+              <div class="services"><a id="teh-soundcloud" target="_blank" rel="noopener noreferrer">SoundCloud ↗</a><a id="teh-spotify" target="_blank" rel="noopener noreferrer">Spotify ↗</a><a id="teh-youtube" target="_blank" rel="noopener noreferrer" hidden>YouTube ↗</a><a id="teh-musicbrainz" target="_blank" rel="noopener noreferrer">MusicBrainz ↗</a></div>
+            </section>
+          </div>
         </dialog>
       </main>
     </div>
