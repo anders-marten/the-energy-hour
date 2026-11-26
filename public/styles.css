@@ -85,11 +85,22 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
 #teh-design .chevron { display:block; width:52px; height:14px; margin:auto; overflow:visible; fill:none; stroke:#b3b3b3; stroke-width:4; stroke-linecap:butt; stroke-linejoin:miter; }
 #teh-design .player-expand .chevron { position:absolute; top:6px; left:50%; margin:0; transform:translateX(-50%); }
 #teh-design:has(#teh-song[open]) .player-expand { visibility:hidden; }
+#teh-design .now-discover { display:none; }
 /* Narrow layout: round the footer's top like the Discover sheet, as a hint
    that it opens as a panel. Square while the sheet is open, so they join. */
 @container (max-width:899px) {
   #teh-design #teh-player { border:1px solid var(--rule); border-bottom:0; border-radius:22px 22px 0 0; transition:border-radius .25s ease; }
   #teh-design:has(#teh-song[open]) #teh-player { border-radius:0; }
+  /* "Discover the story" sits under the playing track's title, in place of
+     the play status, so it reads as belonging to that track. The whole
+     now-playing button opens Discover. It replaces the chevron and the
+     button under the cover. While the sheet is open the status shows again. */
+  #teh-design .feature-discover { display:none; }
+  #teh-design #teh-player { gap:6px; }
+  #teh-design #teh-player .player-controls { gap:2px; }
+  #teh-design:has(#teh-now-discover:not([hidden])) .player-expand .chevron { display:none; }
+  #teh-design:not(:has(#teh-song[open])):has(#teh-now-discover:not([hidden])) #teh-now-status { display:none; }
+  #teh-design:not(:has(#teh-song[open])) .now-discover:not([hidden]) { display:block; align-self:start; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--accent); font-size:13px; font-weight:700; }
 }
 #teh-design .now-open { flex:1; min-width:0; display:grid; grid-template-columns:44px minmax(0,1fr); column-gap:12px; align-items:center; padding:0; text-align:left; }
 #teh-design .now-open strong { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; align-self:end; }
@@ -157,12 +168,12 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
   #teh-design .feature-discover { width:100%; }
   #teh-design .feature-copy h2 { font-size:clamp(24px,11.4cqw,45px); margin:0 0 9px; text-wrap:balance; overflow-wrap:anywhere; }
   #teh-design .feature-copy p { font-size:14px; color:var(--muted); }
-  #teh-design #teh-tracks .row { margin:0 8px; padding:10px 8px; grid-template-columns:56px minmax(0,1fr) auto; gap:0 10px; background:#141217; align-items:start; }
-  #teh-design #teh-tracks .row img, #teh-design #teh-tracks .neutral-thumb { grid-row:1/3; margin-top:7px; }
-  #teh-design #teh-tracks .row > div:nth-child(2) { display:contents; }
-  #teh-design #teh-tracks .track-name { grid-column:2; grid-row:1; align-self:center; font-size:14px; }
-  #teh-design #teh-tracks .row p { grid-column:2/4; grid-row:2; font-size:13px; }
-  #teh-design #teh-tracks .row > .quiet { grid-column:3; grid-row:1; padding:0; font-size:14px; }
+  /* Compact row: 48px cover, title over a one-line teaser, Discover centred. */
+  #teh-design #teh-tracks .row { margin:0 8px; padding:10px 8px; grid-template-columns:48px minmax(0,1fr) auto; gap:0 12px; background:#141217; align-items:center; }
+  #teh-design #teh-tracks .track-art { width:48px; height:48px; }
+  #teh-design #teh-tracks .track-name { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; line-height:1.35; }
+  #teh-design #teh-tracks .row > div:nth-child(2) p { display:block; min-height:0; height:auto; margin:2px 0 0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; line-height:1.4; }
+  #teh-design #teh-tracks .row > .quiet { padding:0; font-size:14px; }
   #teh-design .about { margin:32px 16px 8px; }
   #teh-design .sheet-handle { min-height:56px; }
 }

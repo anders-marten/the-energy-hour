@@ -192,7 +192,7 @@ function renderTrackList(tracks) {
         </div>
         <div><strong class="track-name">${title}</strong>${teaser ? `<p>${teaser}</p>` : ""}</div>
         ${hasDiscover
-          ? `<button class="quiet cursor-interaction" data-discover="${escapeHtml(track.id)}" type="button" aria-label="Discover the story of ${title}"><span class="desktop-wording">Discover ↗</span><span class="mobile-wording">Discover <span aria-hidden="true">↗</span></span></button>`
+          ? `<button class="quiet cursor-interaction" data-discover="${escapeHtml(track.id)}" type="button" aria-label="Discover the story of ${title}"><span class="desktop-wording">Discover ↗</span><span class="mobile-wording">Discover</span></button>`
           : ""}
         ${seoCopy}
       </article>`;

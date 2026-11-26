@@ -277,6 +277,8 @@ function updatePlayerUi() {
     featureDiscover.setAttribute("aria-label", "Discover the story of " + track.title);
     featureDiscover.hidden = !(track.story || track.lyrics);
   }
+  const nowDiscover = document.querySelector("#teh-now-discover");
+  if (track && nowDiscover) nowDiscover.hidden = !(track.story || track.lyrics);
   if (track) {
     featureAudioToggle.disabled = !usesAudio(track);
     featureAudioToggle.querySelector("span").textContent = isPlaying ? "Ⅱ" : "▶";
