@@ -107,6 +107,11 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
   #teh-design .player-seek::-moz-range-progress { height:4px; border-radius:2px; background:var(--accent); }
   #teh-design .player-seek::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; margin-top:-6px; border-radius:50%; background:#fff; }
   #teh-design .player-seek::-moz-range-thumb { width:16px; height:16px; border:0; border-radius:50%; background:#fff; }
+  /* Until the track has loaded (on iPhone: until it has started playing) the
+     bar is dimmed and cannot be dragged. */
+  #teh-design .player-seek:disabled { cursor:default; opacity:.45; }
+  #teh-design .player-seek:disabled::-webkit-slider-thumb { visibility:hidden; }
+  #teh-design .player-seek:disabled::-moz-range-thumb { visibility:hidden; }
   #teh-design .player-expand .chevron { display:none; }
   /* With Discover open, the sheet and the footer are one card: the sheet
      sits on the same insets with the footer inside its bottom, and the

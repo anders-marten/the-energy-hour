@@ -67,10 +67,9 @@ const featureAudioTime = featureAudio.querySelector(".feature-audio-time");
 const playerSeek = document.querySelector("#teh-player-seek");
 const seekInputs = [featureAudioSeek, playerSeek].filter(Boolean);
 let seekingInput = null;
-// iOS loads no audio before the first play(), and a seek made before the
-// audio has metadata is lost. Such a seek is kept here and applied once the
-// metadata arrives.
-let pendingSeek = null;
+// iOS loads no audio before play(), and a seek made before the audio has
+// metadata is lost and can leave the element in a broken state. So the seek
+// bars stay disabled until the selected track's metadata has loaded.
 const playerElapsed = document.querySelector("#teh-player-elapsed");
 const playerLength = document.querySelector("#teh-player-length");
 
@@ -167,8 +166,10 @@ function audioDuration() {
 
 function updateAudioProgress() {
   const length = audioDuration();
-  const position = seekingInput ? Number(seekingInput.value) : (pendingSeek ?? (audio.currentTime || 0));
+  const position = seekingInput ? Number(seekingInput.value) : (audio.currentTime || 0);
+  const canSeek = usesAudio() && audio.readyState >= HTMLMediaElement.HAVE_METADATA;
   for (const input of seekInputs) {
+    input.disabled = !canSeek;
     input.max = String(length);
     if (input !== seekingInput) input.value = String(position);
     input.style.setProperty("--progress", length ? `${(position / length) * 100}%` : "0%");
@@ -233,7 +234,6 @@ function showTrack(index, shouldPlay = false) {
   const track = getCurrentTrack();
   isPlaying = false;
   playPending = false;
-  pendingSeek = null;
   if (usesAudio(track)) {
     const source = new URL(track.audio, location.href).href;
     if (audio.src !== source) {
@@ -246,6 +246,7 @@ function showTrack(index, shouldPlay = false) {
     audio.load();
   }
   mountFeatureAudio(track);
+  updateAudioProgress();
   setMediaSession(track);
   if (shouldPlay) playAudio();
   else updatePlayerUi();
@@ -581,13 +582,7 @@ for (const input of seekInputs) {
     updateAudioProgress();
   });
   input.addEventListener("change", () => {
-    const position = Number(input.value);
-    if (audio.readyState >= HTMLMediaElement.HAVE_METADATA) {
-      audio.currentTime = position;
-      pendingSeek = null;
-    } else {
-      pendingSeek = position;
-    }
+    if (audio.readyState >= HTMLMediaElement.HAVE_METADATA) audio.currentTime = Number(input.value);
     seekingInput = null;
     updateAudioProgress();
   });
@@ -621,12 +616,7 @@ audio.addEventListener("error", () => {
   playPending = false;
   updatePlayerUi();
 });
-audio.addEventListener("loadedmetadata", () => {
-  if (pendingSeek === null) return;
-  audio.currentTime = pendingSeek;
-  pendingSeek = null;
-});
-for (const name of ["timeupdate", "durationchange", "loadedmetadata", "seeked"]) {
+for (const name of ["timeupdate", "durationchange", "loadedmetadata", "seeked", "emptied", "loadstart"]) {
   audio.addEventListener(name, updateAudioProgress);
 }
 
