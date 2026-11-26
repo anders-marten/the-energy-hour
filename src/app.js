@@ -24,6 +24,8 @@
  * @property {TrackLinks} links
  */
 
+import { startListenSession, trackListening } from "./listening-stats.js";
+
 /** @type {Track[]} */
 const fallbackPlaylist = [
   {
@@ -48,6 +50,8 @@ const audio = new Audio();
 // The selected track (feature slot and footer) is buffered ahead, so the first
 // tap on it starts without waiting for the network.
 audio.preload = "auto";
+// Registered before the player's own "ended" handler, which moves on to the next track.
+trackListening(audio);
 
 const featureAudio = document.createElement("div");
 featureAudio.className = "feature-audio";
@@ -243,8 +247,10 @@ function showTrack(index, shouldPlay = false) {
       audio.src = source;
       hasStartedTrack = false;
       audio.currentTime = 0;
+      startListenSession(track.id);
     }
   } else {
+    startListenSession("");
     audio.pause();
     audio.removeAttribute("src");
     audio.load();
