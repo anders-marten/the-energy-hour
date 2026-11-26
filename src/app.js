@@ -847,6 +847,7 @@ function moveFeatureDrag(x, y) {
   featureBlock.style.setProperty("--expand", `${expand}px`);
   // Gone by half way, so the title is out of the way of the opening cover.
   featureBlock.style.setProperty("--expand-fade", String(Math.max(0, 1 - expand / (expandDrag.max / 2))));
+  featureBlock.style.setProperty("--expand-shade", String(1 - expand / expandDrag.max));
   return true;
 }
 function endFeatureDrag() {
@@ -857,6 +858,7 @@ function endFeatureDrag() {
   featureBlock.classList.add("is-settling");
   featureBlock.style.removeProperty("--expand");
   featureBlock.style.removeProperty("--expand-fade");
+  featureBlock.style.removeProperty("--expand-shade");
 }
 
 featureBlock?.addEventListener("touchstart", (event) => {

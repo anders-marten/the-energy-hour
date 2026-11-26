@@ -258,6 +258,10 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
        back (--expand-fade, 1 to 0, set from app.js). */
     #teh-design .mobile-feature .feature-copy { opacity:var(--expand-fade, 1); }
     #teh-design .mobile-feature.is-settling .feature-copy { transition:opacity .4s ease; }
+    /* The dark fade at the bottom of the cover goes away gradually over the
+       whole drag (--expand-shade, 1 to 0), showing the cover as it is. */
+    #teh-design .mobile-feature::after { opacity:var(--expand-shade, 1); }
+    #teh-design .mobile-feature.is-settling::after { transition:opacity .5s ease; }
     #teh-design .mobile-feature::after { content:""; grid-column:1; grid-row:1 / -1; z-index:1; border-radius:10px; pointer-events:none; background:linear-gradient(to bottom, rgb(5 5 5 / 0) 30%, rgb(5 5 5 / .7) 62%, #050505 100%); }
     #teh-design .mobile-feature .feature-audio-controls { position:relative; inset:auto; grid-column:1; grid-row:2; z-index:2; padding:0 16px 8px; background:none; }
     #teh-design .mobile-feature .feature-copy { grid-column:1; grid-row:3; z-index:2; padding:0 16px 16px; }
