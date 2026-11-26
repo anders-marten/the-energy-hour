@@ -150,6 +150,9 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
 
 #teh-design .drag-grip { flex:1; touch-action:none; user-select:none; }
 #teh-design .sheet-title { display:flex; gap:12px; align-items:center; margin:5px 0 12px; }
+/* Opening Discover focuses the title (autofocus) instead of the close
+   button, so the browser draws no focus ring on the button. */
+#teh-design #teh-title:focus { outline:none; }
 #teh-design .sheet-title h2 { font-size:28px; letter-spacing:-.035em; margin:8px 0; line-height:1.05; }
 #teh-design .sheet-title .play { flex:0 0 44px; width:44px; height:44px; padding:0; border-radius:50%; background:var(--accent); color:#1b1110; text-align:center; }
 #teh-design #teh-song nav { display:flex; gap:24px; border-bottom:1px solid var(--rule); }
