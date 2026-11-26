@@ -102,7 +102,9 @@ resource "scaleway_iam_policy" "deployer" {
       "ObjectStorageObjectsWrite",
       "ObjectStorageObjectsDelete",
       "ObjectStorageBucketsRead",
-      "EdgeServicesFullAccess"
+      "EdgeServicesFullAccess",
+      # Uploads and deploys the stats function's code (the only function in this project).
+      "FunctionsFullAccess"
     ]
   }
 }

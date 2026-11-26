@@ -49,7 +49,7 @@ En push till `main` bygger och driftsätter sajten automatiskt (se [Infrastruktu
 | Lyssnarsiffror | Scaleway Serverless Function (Node 24) och PostgreSQL 16 | Koden ligger i `stats/`, data i databasen `energy_hour` på den delade instansen `ungap-live-db`. Se [Lyssnarsiffror](#lyssnarsiffror). |
 | DNS och apex | AWS Route 53 och AWS CloudFront | CloudFront ligger framför Scaleway för att apexdomänen ska fungera. |
 | Infrastruktur som kod | OpenTofu (`deploy/infra`) | Scaleway-resurserna, inklusive stats-funktionen och dess databas. CloudFront och DNS ligger i en äldre CDK-stack. |
-| CI/CD | GitHub Actions (`.github/workflows/deploy.yml`) | Bygger, synkar till bucketen och tömmer båda CDN-cacharna. |
+| CI/CD | GitHub Actions (`.github/workflows/deploy.yml`) | Testar och driftsätter stats-funktionen, bygger sajten, synkar till bucketen och tömmer båda CDN-cacharna. |
 | Ljudverktyg | Python (`scripts/encode-audio.py`, `scripts/upload-audio.py`) | Kodar masterfiler och laddar upp dem manuellt. |
 
 ## Projektstruktur
@@ -135,7 +135,13 @@ CloudFront finns där för att apexdomänen ska kunna ligga kvar i Route 53. Sca
 
 ### Deploy
 
-En push till `main` kör `.github/workflows/deploy.yml`:
+En push till `main` kör `.github/workflows/deploy.yml` med tre jobb i ordning:
+
+**`stats-test`** körs vid varje push: stats-funktionens enhetstester, migreringarna och databastesterna mot en tillfällig PostgreSQL 16, och en kontroll av om något under `stats/` har ändrats sedan förra pushen.
+
+**`stats-deploy`** körs bara när `stats/` har ändrats, eller vid manuell körning (`workflow_dispatch`). Jobbet bygger `function.zip` med `stats/scripts/package.sh`, laddar upp den till den befintliga funktionen och driftsätter den. Sedan väntar det på status `ready` och kör ett smoke-test: `/health`, `/stats`, ett anrop med fel ursprung (403) och ett med okänd låt (404). Smoke-testet skriver inget till databasen.
+
+**`deploy`** driftsätter sajten efter funktionen, så att en ny spelare aldrig pratar med gammal funktionskod. Jobbet hoppas över om testerna eller funktionens deploy misslyckas.
 
 1. `npm ci` och `npm run build` (Node 20). Bygget får `VITE_STATS_URL=https://stats.the-energy-hour.com`, vilket slår på lyssningshändelser och siffrorna under Info. Utan variabeln, till exempel lokalt, skickas och hämtas inget.
 2. `dist/assets/` laddas upp med `Cache-Control: public, max-age=31536000, immutable`. Äldre hashade filer behålls, så att en sparad sida fortfarande hittar sina filer.
@@ -145,7 +151,7 @@ En push till `main` kör `.github/workflows/deploy.yml`:
 
 Ljudfilerna ingår inte i deployen. De kodas med `scripts/encode-audio.py` och laddas upp manuellt med `scripts/upload-audio.py`, eftersom GitHub-deployern inte har åtkomst till media-bucketen.
 
-Stats-funktionen ingår inte heller i GitHub-deployen. Den driftsätts med OpenTofu lokalt (se [Lyssnarsiffror](#lyssnarsiffror)).
+Scaleway CLI är låst till en version med kontrollerad SHA-256 (`SCW_CLI_VERSION` och `SCW_CLI_SHA256` i workflowet). Byt båda tillsammans vid uppgradering.
 
 ### Lyssnarsiffror
 
@@ -171,17 +177,17 @@ Driftsatt 26 november 2026. Siffrorna visas under Info i Discover som "Plays: to
 
 **Roller.** `energy_hour_owner` äger schemat och används bara för migreringar. Funktionen ansluter som `energy_hour_app`, som bara har `SELECT`, `INSERT` och `UPDATE` på tabellen. Anslutningen går över TLS med certifikatverifiering och högst en anslutning per instans. Funktionen kör som mest 3 instanser.
 
-**Ändra funktionen eller databasen:**
+**Vem äger vad.** CI laddar upp och driftsätter funktionens kod. OpenTofu (`deploy/infra/stats.tf`) äger funktionens inställningar, hemliga miljövariabler, domänen, databasen och rollerna, och ignorerar koden. Migreringar körs lokalt, eftersom CI inte ska ha ägarens lösenord.
+
+**Ändra koden:** pusha till `main`. Testerna körs, och funktionen driftsätts före sajten.
+
+**Ändra databasen:** lägg en ny fil i `stats/migrations/` och kör den **innan** koden som behöver den pushas:
 
 ```sh
-(cd stats && npm ci && npm test)        # enhetstester
-stats/scripts/package.sh                 # bygger stats/dist/function.zip
-python3 deploy/tofu.py plan -var-file=../../config/the-energy-hour-deploy.local.json -out=deployment.tfplan
-python3 deploy/tofu.py apply deployment.tfplan
-stats/scripts/migrate.sh                 # kör stats/migrations/*.sql som ägaren; tål att köras om
+stats/scripts/migrate.sh   # kör stats/migrations/*.sql som ägaren; tål att köras om
 ```
 
-Planen ska bara visa en ändring av `scaleway_function.stats` (ny `zip_hash`) när enbart koden ändrats.
+**Ändra inställningar eller hemligheter:** ändra `stats.tf` och kör `plan` och `apply` enligt [OpenTofu lokalt](#opentofu-lokalt).
 
 **Lokalt.** `stats/test/db.integration.js` kör SQL:en mot en tillfällig PostgreSQL, till exempel `postgres:16-alpine` i Docker. `stats/scripts/serve-local.js` kör funktionen som en vanlig HTTP-server på port 8787. Bygg sajten med `VITE_STATS_URL=http://127.0.0.1:8787` och sätt `STATS_ALLOWED_ORIGINS=http://127.0.0.1:4173` för att testa hela kedjan i `vite preview`.
 
@@ -237,7 +243,6 @@ Siffrorna är uppskattningar. Kontrollera Scaleways och AWS aktuella prislistor 
 Kvar att göra:
 
 - En statistikvy i adminläget, till exempel per dag och med slutförda lyssningar, som i dag bara finns i databasen.
-- Driftsätta funktionen från GitHub Actions i stället för med OpenTofu lokalt, med en låst version av Scaleway CLI och ett smoke-test mot `/health` och `/stats` efter varje deploy.
 - Övervakning av funktionen, till exempel en extern ping mot `/health`.
 
 ### 3. Multi-tenant (eventuellt)
@@ -259,9 +264,8 @@ Det här är sådant som är värt att åtgärda, ungefär i prioritetsordning:
 - **Inga automatiska tester av sajten.** Stats-funktionen har enhetstester och databastester, men gester och uppspelning har testats manuellt. Ett litet Playwright-test i WebKit och mobil storlek (spela, pausa, spola, öppna och stänga Discover, dra omslaget) skulle fånga många av de fel som hittades den här omgången.
 - **CDK-stacken för CloudFront och DNS.** Den får inte driftsättas igen och inte tas bort (se nedan). Flytta posterna till OpenTofu eller ta bort CloudFront när det går.
 - **Node 20 i GitHub Actions är föråldrat.** Actions varnar redan. Byt till Node 22 eller 24.
-- **Scaleway CLI installeras från `master` vid varje deploy.** En deploy har redan fallerat på det. Lås en version.
 - **Lyssnarsiffrorna går att blåsa upp med flit.** Begränsningen per klient gäller per instans och bara i minnet, och vem som helst kan skicka händelser med rätt `Origin`. Det står lite på spel, men siffrorna ska läsas som ungefärliga.
-- **Stats-funktionen driftsätts lokalt.** Kodändringar i `stats/` kräver `package.sh` och OpenTofu på Anders dator. Se roadmapen.
+- **Migreringar körs för hand.** En ny migrering måste köras med `stats/scripts/migrate.sh` innan koden som behöver den pushas, annars misslyckas skrivningarna tills den körts.
 - **Bilder.** Omslagen är cirka 7,5 MB totalt och serveras som JPEG/PNG i full storlek. AVIF/WebP i några storlekar (`srcset`) ger snabbare mobilladdning.
 - **Säkerhetsrubriker** som Content-Security-Policy, `Referrer-Policy` och `Permissions-Policy` saknas och kan sättas i Edge Services.
 - **Övervakning.** Det finns ingen upptidskontroll eller felrapportering från webbläsaren. En enkel extern ping mot sajten och mot en ljudfil räcker långt.
@@ -288,13 +292,13 @@ CloudFront-distributionen `E27BVM56VP6GE4` och Route 53-posterna för `the-energ
 - Sajtens Edge-pipeline: `af3a7f64-0728-49da-8637-65941dc6d3a1` (`af3a7f64-0728-49da-8637-65941dc6d3a1.svc.edge.scw.cloud`)
 - Media-bucket: `the-energy-hour-media`
 - Media-pipeline: `508dd936-f76d-4c04-8b4a-c249cf22620b`
-- Stats-funktion: namespace `the-energy-hour-stats`, funktion `stats`, domän `stats.the-energy-hour.com`
+- Stats-funktion: namespace `the-energy-hour-stats`, funktion `stats` (`432f062e-f231-4fef-be80-ee64119b7fb8`, även i workflowet), domän `stats.the-energy-hour.com`
 - Stats-databas: `energy_hour` på den delade instansen `ungap-live-db` (`fr-par/56a5d49a-7901-44ec-ba11-8eb9c798846f`, PostgreSQL 16, Live-projektet), med användarna `energy_hour_owner` och `energy_hour_app`. Lösenorden finns bara i OpenTofu-staten och i funktionens hemliga miljövariabler.
 - OpenTofu-state: `s3://ungap-live-tofu-state/the-energy-hour/terraform.tfstate`
 
 ### GitHub Secrets
 
-- `SCW_DEPLOY_ACCESS_KEY`, `SCW_DEPLOY_SECRET_KEY`: deployerns nyckel. Den får skriva till objekt i projektet och tömma Edge-cachen, men media-bucketens policy släpper inte in den.
+- `SCW_DEPLOY_ACCESS_KEY`, `SCW_DEPLOY_SECRET_KEY`: deployerns nyckel. Den får skriva till objekt i projektet, tömma Edge-cachen och driftsätta funktioner i projektet (`FunctionsFullAccess`), men media-bucketens policy släpper inte in den.
 - `SCW_BUCKET_NAME`, `SCW_PROJECT_ID`, `SCW_EDGE_PIPELINE_ID`
 - `AWS_INVALIDATION_ROLE_ARN`, `CLOUDFRONT_DISTRIBUTION_ID`: CloudFront-invalidering via OIDC
 
@@ -312,7 +316,7 @@ python3 deploy/tofu.py plan \
 python3 deploy/tofu.py apply deployment.tfplan
 ```
 
-Planer och statefiler får inte committas. `stats.tf` kräver att `stats/dist/function.zip` finns, så kör `stats/scripts/package.sh` före `plan`.
+Planer och statefiler får inte committas.
 
 ### Repository
 

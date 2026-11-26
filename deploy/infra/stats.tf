@@ -7,12 +7,6 @@ variable "stats_database_instance_id" {
   default     = "56a5d49a-7901-44ec-ba11-8eb9c798846f"
 }
 
-variable "stats_zip_path" {
-  type        = string
-  description = "Function bundle built by stats/scripts/package.sh."
-  default     = "../../stats/dist/function.zip"
-}
-
 variable "stats_hostname" {
   type    = string
   default = "stats.the-energy-hour.com"
@@ -109,9 +103,6 @@ resource "scaleway_function" "stats" {
   max_scale    = 3
   memory_limit = 256
   timeout      = 10
-  zip_file     = var.stats_zip_path
-  zip_hash     = filesha256(var.stats_zip_path)
-  deploy       = true
 
   environment_variables = {
     STATS_ALLOWED_ORIGINS = "https://the-energy-hour.com,https://www.the-energy-hour.com"
@@ -123,6 +114,10 @@ resource "scaleway_function" "stats" {
   }
 
   depends_on = [scaleway_rdb_privilege.stats_app]
+
+  # The code is uploaded and deployed by .github/workflows/deploy.yml; OpenTofu
+  # owns the settings and secrets only.
+  lifecycle { ignore_changes = [zip_file, zip_hash, deploy] }
 }
 
 resource "scaleway_function_domain" "stats" {

@@ -14,8 +14,132 @@ concurrency:
   group: the-energy-hour-production
   cancel-in-progress: false
 
+env:
+  # Pinned Scaleway CLI release and its SHA-256 from the release's SHA256SUMS.
+  SCW_CLI_VERSION: 2.62.0
+  SCW_CLI_SHA256: 7638c385c1a43a5d9022a63791769fd464e14314032a51411726f062f3053e67
+  STATS_FUNCTION_ID: 432f062e-f231-4fef-be80-ee64119b7fb8
+  STATS_URL: https://stats.the-energy-hour.com
+
 jobs:
+  # Unit tests, and the SQL against a throwaway PostgreSQL 16, on every push.
+  stats-test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_PASSWORD: ownerpw
+          POSTGRES_DB: energy_hour
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d energy_hour"
+          --health-interval 2s --health-timeout 5s --health-retries 15
+    defaults:
+      run:
+        working-directory: stats
+    outputs:
+      changed: ${{ steps.changes.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: stats/package-lock.json
+
+      - run: npm ci
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Database tests
+        env:
+          OWNER_URL: postgres://postgres:ownerpw@127.0.0.1:5432/energy_hour
+        run: |
+          psql "$OWNER_URL" -q -c "CREATE ROLE energy_hour_app LOGIN PASSWORD 'apppw'"
+          for file in migrations/*.sql; do
+            psql "$OWNER_URL" -q -v ON_ERROR_STOP=1 -v app_role=energy_hour_app -f "$file"
+          done
+          STATS_TEST_OWNER_URL="$OWNER_URL" \
+          STATS_TEST_APP_URL=postgres://energy_hour_app:apppw@127.0.0.1:5432/energy_hour \
+            npm run test:db
+
+      # Deploy the function only when stats/ changed (or on a manual run).
+      - name: Check for changes in stats/
+        id: changes
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          if [ "${{ github.event_name }}" != "push" ] || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          elif git diff --quiet "$BEFORE" "$GITHUB_SHA" -- .; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  # Uploads new code to the existing function. OpenTofu owns its settings,
+  # secrets and database; migrations still run locally (stats/scripts/migrate.sh).
+  stats-deploy:
+    needs: stats-test
+    if: needs.stats-test.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    env:
+      SCW_ACCESS_KEY: ${{ secrets.SCW_DEPLOY_ACCESS_KEY }}
+      SCW_SECRET_KEY: ${{ secrets.SCW_DEPLOY_SECRET_KEY }}
+      SCW_DEFAULT_PROJECT_ID: ${{ secrets.SCW_PROJECT_ID }}
+      SCW_DEFAULT_ORGANIZATION_ID: 4ee114eb-0bd3-4132-a3a6-41b583031ad0
+      SCW_DEFAULT_REGION: fr-par
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install Scaleway CLI
+        run: |
+          curl -fsSL -o scw "https://github.com/scaleway/scaleway-cli/releases/download/v${SCW_CLI_VERSION}/scaleway-cli_${SCW_CLI_VERSION}_linux_amd64"
+          echo "${SCW_CLI_SHA256}  scw" | sha256sum -c -
+          sudo install -m 755 scw /usr/local/bin/scw && rm scw
+
+      - name: Package
+        run: stats/scripts/package.sh
+
+      - name: Upload and deploy
+        run: |
+          zip=stats/dist/function.zip
+          upload_url=$(scw function function get-upload-url "$STATS_FUNCTION_ID" content-length="$(stat -c %s "$zip")" -o json | jq -r .url)
+          curl -fsS -X PUT -H "Content-Type: application/octet-stream" --data-binary "@$zip" "$upload_url"
+          scw function function deploy "$STATS_FUNCTION_ID" -o json | jq -r .status
+          for i in $(seq 1 60); do
+            status=$(scw function function get "$STATS_FUNCTION_ID" -o json | jq -r .status)
+            echo "status: $status"
+            [ "$status" = ready ] && exit 0
+            [ "$status" = error ] && { scw function function get "$STATS_FUNCTION_ID" -o json | jq -r .error_message; exit 1; }
+            sleep 5
+          done
+          echo "Timed out waiting for the function" && exit 1
+
+      - name: Smoke test
+        run: |
+          check() { test "$(curl -s -o /dev/null -w '%{http_code}' "$@")" = "$expected" || { echo "Expected $expected: $*"; exit 1; }; }
+          expected=200 check "$STATS_URL/health"
+          curl -fsS -H "Origin: https://the-energy-hour.com" "$STATS_URL/stats" | jq -e '.tracks | type == "object"' > /dev/null
+          # Rejected before any write: wrong origin, and a track id that is not in the playlist.
+          expected=403 check -X POST -H "Origin: https://example.com" --data-binary '{"trackId":"0","event":"completed"}' "$STATS_URL/listening-event"
+          expected=404 check -X POST -H "Origin: https://the-energy-hour.com" --data-binary '{"trackId":"0","event":"completed"}' "$STATS_URL/listening-event"
+
+  # The site deploys after the function, so a new player never talks to old
+  # function code. It is skipped if the stats tests or deploy fail.
   deploy:
+    needs: [stats-test, stats-deploy]
+    if: always() && needs.stats-test.result == 'success' && (needs.stats-deploy.result == 'success' || needs.stats-deploy.result == 'skipped')
     runs-on: ubuntu-latest
 
     steps:
@@ -32,7 +156,7 @@ jobs:
       - name: Build
         env:
           # Turns on listening events and play counts (see stats/).
-          VITE_STATS_URL: https://stats.the-energy-hour.com
+          VITE_STATS_URL: ${{ env.STATS_URL }}
         run: npm run build
 
       - name: Sync production bucket
@@ -66,7 +190,9 @@ jobs:
 
       - name: Install Scaleway CLI
         run: |
-          curl -fsSL https://raw.githubusercontent.com/scaleway/scaleway-cli/master/scripts/get.sh | sh
+          curl -fsSL -o scw "https://github.com/scaleway/scaleway-cli/releases/download/v${SCW_CLI_VERSION}/scaleway-cli_${SCW_CLI_VERSION}_linux_amd64"
+          echo "${SCW_CLI_SHA256}  scw" | sha256sum -c -
+          sudo install -m 755 scw /usr/local/bin/scw && rm scw
 
       - name: Purge Edge Services cache
         env:
