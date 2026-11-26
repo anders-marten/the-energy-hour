@@ -792,30 +792,18 @@ sheet.addEventListener("click", (event) => {
 }, true);
 
 // Portrait (narrow): the cover window sits at the top at 2/3 height. Dragging
-// down on it opens it to full height, pushing the track list down with it;
-// on release it snaps open or closed. Dragging up, or scrolling the list,
-// closes it again.
+// down on it opens it up to full height, pushing the track list down with
+// it, and it springs back to 2/3 on release.
 const featureBlock = document.querySelector(".mobile-feature");
-const featureArt = () => featureBlock.querySelector(".feature-audio-art");
 let expandDrag = null;
-let expandedScrollY = 0;
 
 function canExpandFeature() {
   return !wide.matches && matchMedia("(orientation: portrait)").matches && featureBlock && getComputedStyle(featureBlock).position === "sticky";
 }
-function maxFeatureExpand() {
-  return featureArt().getBoundingClientRect().width / 3;
-}
-function setFeatureExpanded(expanded) {
-  featureBlock.style.removeProperty("--expand");
-  featureBlock.classList.toggle("is-settling", !reducedMotion.matches);
-  featureBlock.classList.toggle("is-expanded", expanded);
-  if (expanded) expandedScrollY = window.scrollY;
-}
 function startFeatureDrag(x, y) {
-  if (!canExpandFeature()) return;
-  const max = maxFeatureExpand();
-  expandDrag = { x, y, max, base: featureBlock.classList.contains("is-expanded") ? max : 0, active: false, value: 0 };
+  if (!canExpandFeature() || reducedMotion.matches) return;
+  const max = featureBlock.querySelector(".feature-audio-art").getBoundingClientRect().width / 3;
+  expandDrag = { x, y, max, active: false };
 }
 // Returns true while the drag is ours, so the caller can stop the page scrolling.
 function moveFeatureDrag(x, y) {
@@ -823,24 +811,24 @@ function moveFeatureDrag(x, y) {
   const dx = x - expandDrag.x;
   const dy = y - expandDrag.y;
   if (!expandDrag.active) {
-    const towardsChange = expandDrag.base ? dy < 0 : dy > 0;
-    if (!towardsChange || Math.abs(dx) > Math.abs(dy)) {
-      if (Math.abs(dx) > 8 || Math.abs(dy) > 8) expandDrag = null;
-      return Boolean(expandDrag) && towardsChange;
+    if (dy < 0 || Math.abs(dx) > Math.abs(dy)) {
+      if (Math.abs(dx) > 8 || dy < -8) expandDrag = null;
+      return false;
     }
-    if (Math.abs(dy) < 8) return true;
+    if (dy < 8) return true;
     expandDrag.active = true;
     featureBlock.classList.remove("is-settling");
   }
-  expandDrag.value = Math.min(expandDrag.max, Math.max(0, expandDrag.base + (y - expandDrag.y)));
-  featureBlock.style.setProperty("--expand", `${expandDrag.value}px`);
+  featureBlock.style.setProperty("--expand", `${Math.min(expandDrag.max, Math.max(0, dy))}px`);
   return true;
 }
 function endFeatureDrag() {
   if (!expandDrag) return;
-  const { active, value, max } = expandDrag;
+  const { active } = expandDrag;
   expandDrag = null;
-  if (active) setFeatureExpanded(value > max / 2);
+  if (!active) return;
+  featureBlock.classList.add("is-settling");
+  featureBlock.style.removeProperty("--expand");
 }
 
 featureBlock?.addEventListener("touchstart", (event) => {
@@ -869,11 +857,5 @@ featureBlock?.addEventListener("dragstart", (event) => event.preventDefault());
 featureBlock?.addEventListener("transitionend", (event) => {
   if (event.propertyName === "height") featureBlock.classList.remove("is-settling");
 });
-// Scrolling the list closes the opened cover.
-window.addEventListener("scroll", () => {
-  if (!expandDrag && featureBlock?.classList.contains("is-expanded") && Math.abs(window.scrollY - expandedScrollY) > 24) {
-    setFeatureExpanded(false);
-  }
-}, { passive: true });
 
 loadPlaylist();
