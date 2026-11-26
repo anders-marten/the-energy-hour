@@ -67,9 +67,12 @@ const featureAudioTime = featureAudio.querySelector(".feature-audio-time");
 const playerSeek = document.querySelector("#teh-player-seek");
 const seekInputs = [featureAudioSeek, playerSeek].filter(Boolean);
 let seekingInput = null;
-// iOS loads no audio before play(), and a seek made before the audio has
-// metadata is lost and can leave the element in a broken state. So the seek
-// bars stay disabled until the selected track's metadata has loaded.
+// On iPhone a seek before the selected track's first play() is lost and can
+// leave the audio element in a broken state, even when Safari has already
+// loaded its metadata. So the footer seek bar (the one used on phones) stays
+// disabled until the selected track has started playing; the cover's seek
+// bar (wide layout) only waits for the metadata.
+let hasStartedTrack = false;
 const playerElapsed = document.querySelector("#teh-player-elapsed");
 const playerLength = document.querySelector("#teh-player-length");
 
@@ -169,7 +172,7 @@ function updateAudioProgress() {
   const position = seekingInput ? Number(seekingInput.value) : (audio.currentTime || 0);
   const canSeek = usesAudio() && audio.readyState >= HTMLMediaElement.HAVE_METADATA;
   for (const input of seekInputs) {
-    input.disabled = !canSeek;
+    input.disabled = !canSeek || (input === playerSeek && !hasStartedTrack);
     input.max = String(length);
     if (input !== seekingInput) input.value = String(position);
     input.style.setProperty("--progress", length ? `${(position / length) * 100}%` : "0%");
@@ -238,6 +241,7 @@ function showTrack(index, shouldPlay = false) {
     const source = new URL(track.audio, location.href).href;
     if (audio.src !== source) {
       audio.src = source;
+      hasStartedTrack = false;
       audio.currentTime = 0;
     }
   } else {
@@ -589,6 +593,7 @@ for (const input of seekInputs) {
 }
 
 audio.addEventListener("playing", () => {
+  hasStartedTrack = true;
   if (!usesAudio()) return;
   isPlaying = true;
   playPending = false;
