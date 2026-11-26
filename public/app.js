@@ -426,7 +426,10 @@ async function openDiscover(trackId) {
         : sheet.animate([{ "--sheet-top": sheetTop(collapsedSheetInset()) }, { "--sheet-top": "0px" }], { duration: 320, easing });
     }
   } else {
+    // Reopened while closing: bring the dimmed backdrop back too.
     sheet.classList.add("is-visible");
+    sheetBackdrop.hidden = false;
+    sheetBackdrop.classList.add("is-visible");
     sheetSlide?.cancel();
     sheet.style.transform = "none";
   }
@@ -811,7 +814,9 @@ function moveFeatureDrag(x, y) {
   const dx = x - expandDrag.x;
   const dy = y - expandDrag.y;
   if (!expandDrag.active) {
-    if (dy < 0 || Math.abs(dx) > Math.abs(dy)) {
+    // iOS decides on the first move whether the page scrolls, so claim any
+    // move that is not clearly upward or sideways at once, before it does.
+    if (dy < 0 || Math.abs(dx) > Math.abs(dy) + 8) {
       if (Math.abs(dx) > 8 || dy < -8) expandDrag = null;
       return false;
     }
