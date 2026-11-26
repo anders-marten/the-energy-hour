@@ -2,6 +2,8 @@ html, body { margin: 0; background: #050505; touch-action: manipulation; }
 body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
 .cursor-interaction { cursor: pointer; }
 #teh-mobile-preview { container-type: inline-size; }
+/* Registered so the Discover card's top edge can be animated (see app.js). */
+@property --sheet-top { syntax:"<length>"; inherits:true; initial-value:0px; }
 #teh-design {
   min-height: 100vh;
   min-height: 100dvh;
@@ -99,6 +101,10 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
      footer keeps its frame, so its top edge reads as a divider. */
   #teh-mobile-preview #teh-design #teh-song { inset:auto 8px var(--player-bottom); width:auto; max-height:calc(92dvh - var(--player-bottom)); padding-bottom:80px; border:1px solid var(--rule); border-radius:22px; }
   #teh-design:has(#teh-song[open]) #teh-player { border-radius:0 0 22px 22px; box-shadow:none; }
+  /* --sheet-top (animated from app.js) moves the card's top edge down while
+     it opens, closes or is dragged; the content moves down with the edge. */
+  #teh-mobile-preview #teh-design #teh-song { clip-path:inset(var(--sheet-top) 0 0 0 round 22px); }
+  #teh-design #teh-song > * { transform:translateY(var(--sheet-top)); }
   /* "Discover the story" sits under the playing track's title, in place of
      the play status, so it reads as belonging to that track. The whole
      now-playing button opens Discover. It replaces the chevron and the

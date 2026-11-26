@@ -416,7 +416,7 @@ async function openDiscover(trackId) {
     if (!reducedMotion.matches) {
       sheetSlide = wide.matches
         ? sheet.animate([{ transform: "translateX(100%)" }, { transform: "none" }], { duration: 250, easing, fill: "forwards" })
-        : sheet.animate([{ clipPath: sheetClip(collapsedSheetInset()) }, { clipPath: sheetClip(0) }], { duration: 320, easing });
+        : sheet.animate([{ "--sheet-top": sheetTop(collapsedSheetInset()) }, { "--sheet-top": "0px" }], { duration: 320, easing });
     }
   } else {
     sheet.classList.add("is-visible");
@@ -450,9 +450,13 @@ function animateSheetHeight(startHeight) {
 
 // Narrow layout: the sheet and the player footer form one card. Opening grows
 // the card up from the footer; closing shrinks it back down to the footer.
-// Both are done by clipping the sheet's top edge.
-function sheetClip(top) {
-  return `inset(${Math.max(0, top)}px 0px 0px 0px round 22px)`;
+// --sheet-top moves the card's top edge down: styles.css clips the sheet there
+// and moves its content down with it, so the content travels with the edge.
+function sheetTop(top) {
+  return `${Math.max(0, top)}px`;
+}
+function currentSheetTop() {
+  return getComputedStyle(sheet).getPropertyValue("--sheet-top").trim() || "0px";
 }
 function collapsedSheetInset() {
   return sheet.getBoundingClientRect().height - document.querySelector("#teh-player").getBoundingClientRect().height;
@@ -472,11 +476,11 @@ function closeDiscover() {
   }
   sheetSlide = wide.matches
     ? sheet.animate([{ transform: getComputedStyle(sheet).transform }, { transform: "translateX(100%)" }], { duration: 250, easing, fill: "forwards" })
-    : sheet.animate([{ clipPath: getComputedStyle(sheet).clipPath === "none" ? sheetClip(0) : getComputedStyle(sheet).clipPath }, { clipPath: sheetClip(collapsedSheetInset()) }], { duration: 280, easing, fill: "forwards" });
+    : sheet.animate([{ "--sheet-top": currentSheetTop() }, { "--sheet-top": sheetTop(collapsedSheetInset()) }], { duration: 280, easing, fill: "forwards" });
   sheetSlide.onfinish = () => {
     sheet.close();
     sheetSlide.cancel();
-    sheet.style.clipPath = "";
+    sheet.style.removeProperty("--sheet-top");
     sheetClosing = false;
   };
 }
@@ -682,7 +686,7 @@ sheet.addEventListener("close", () => {
   sheetBackdrop.classList.remove("is-visible");
   sheetResize?.cancel();
   sheet.style.height = "";
-  sheet.style.clipPath = "";
+  sheet.style.removeProperty("--sheet-top");
   if (opener) {
     opener.focus();
     opener = null;
@@ -698,16 +702,16 @@ let drag = null;
 let suppressClickUntil = 0;
 
 function moveSheet(offset) {
-  if (!reducedMotion.matches) sheet.style.clipPath = sheetClip(Math.min(offset, collapsedSheetInset()));
+  if (!reducedMotion.matches) sheet.style.setProperty("--sheet-top", sheetTop(Math.min(offset, collapsedSheetInset())));
 }
 function endSheetDrag(offset) {
   if (offset > DRAG_CLOSE) {
     closeDiscover();
     return;
   }
-  const from = sheet.style.clipPath;
-  sheet.style.clipPath = "";
-  if (from && !reducedMotion.matches) sheet.animate([{ clipPath: from }, { clipPath: sheetClip(0) }], { duration: 200, easing });
+  const from = sheet.style.getPropertyValue("--sheet-top");
+  sheet.style.removeProperty("--sheet-top");
+  if (from && !reducedMotion.matches) sheet.animate([{ "--sheet-top": from }, { "--sheet-top": "0px" }], { duration: 200, easing });
 }
 
 sheet.addEventListener("pointerdown", (event) => {
