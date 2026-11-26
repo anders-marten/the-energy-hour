@@ -24,7 +24,7 @@
  * @property {TrackLinks} links
  */
 
-import { startListenSession, trackListening } from "./listening-stats.js";
+import { loadTrackStats, startListenSession, statsEnabled, trackListening } from "./listening-stats.js";
 
 /** @type {Track[]} */
 const fallbackPlaylist = [
@@ -362,15 +362,30 @@ function formatReleaseDate(value) {
   return date.toLocaleDateString("en-GB", { timeZone: "UTC", year: "numeric", month: "long", ...(day ? { day: "numeric" } : {}) });
 }
 
-// Release facts under Info, as registered in MusicBrainz (playlist.json "release").
-function renderReleaseInfo(release) {
+// Play counts from the stats endpoint: undefined until loaded, null when unavailable.
+let trackStats;
+
+function playsText(trackId) {
+  if (trackStats === undefined) return statsEnabled ? "–" : "";
+  const plays = trackStats?.[trackId];
+  if (!plays?.total) return "";
+  const number = (value) => Number(value || 0).toLocaleString("en-GB");
+  return `${number(plays.total)} · ${number(plays.last30Days)} in the last 30 days`;
+}
+
+// Release facts under Info, as registered in MusicBrainz (playlist.json "release"),
+// followed by the play count when there is one.
+function renderReleaseInfo(release, plays = "") {
   const list = document.querySelector("#teh-release");
-  const rows = release ? [
-    ["Released", [formatReleaseDate(release.date), release.type].filter(Boolean).join(" · ")],
-    ["Label", release.label],
-    ["ISRC", release.isrc],
-    ["Barcode", release.barcode]
-  ].filter(([, value]) => value) : [];
+  const rows = [
+    ...(release ? [
+      ["Released", [formatReleaseDate(release.date), release.type].filter(Boolean).join(" · ")],
+      ["Label", release.label],
+      ["ISRC", release.isrc],
+      ["Barcode", release.barcode]
+    ] : []),
+    ["Plays", plays]
+  ].filter(([, value]) => value);
   list.replaceChildren(...rows.flatMap(([term, value]) => {
     const dt = document.createElement("dt");
     dt.textContent = term;
@@ -379,6 +394,11 @@ function renderReleaseInfo(release) {
     return [dt, dd];
   }));
   list.hidden = rows.length === 0;
+  document.querySelector("#teh-stats-note").hidden = !plays;
+}
+
+function renderTrackInfo(track) {
+  renderReleaseInfo(track.release, playsText(track.id));
 }
 
 // Wide layout: Story, Lyrics and Info are tabs. Narrow layout: the tabs are
@@ -416,7 +436,11 @@ async function openDiscover(trackId) {
   youtubeLink.hidden = !track.links.youtube;
   document.querySelector("#teh-musicbrainz").href = track.links.musicbrainz || "";
   document.querySelector("#teh-musicbrainz").hidden = !track.links.musicbrainz;
-  renderReleaseInfo(track.release);
+  renderTrackInfo(track);
+  loadTrackStats().then((tracks) => {
+    trackStats = tracks ?? trackStats ?? null;
+    if (sheetTrackId === trackId) renderTrackInfo(track);
+  });
   const credits = document.querySelector("#teh-credits");
   credits.textContent = track.credits;
   credits.hidden = !track.credits;

@@ -4,6 +4,7 @@
 
 // Empty unless the build sets VITE_STATS_URL, so local and preview builds send nothing.
 const STATS_URL = (import.meta.env.VITE_STATS_URL || "").replace(/\/$/, "");
+export const statsEnabled = Boolean(STATS_URL);
 const LISTEN_THRESHOLD_SECONDS = 30;
 // Slack between media time and wall-clock time before a step counts as a seek.
 const STEP_TOLERANCE_SECONDS = 0.75;
@@ -66,3 +67,25 @@ export function trackListening(audio) {
     if (session.listened) send("completed", session.trackId);
   });
 }
+
+const STATS_TTL_MS = 10 * 60 * 1000;
+let statsRequest = null;
+
+/**
+ * Play counts for all tracks, `{ [trackId]: { total, last30Days } }`, fetched
+ * once and kept in memory for a while. Resolves null when stats are off or
+ * unavailable, so callers can simply hide them.
+ */
+export function loadTrackStats() {
+  if (!STATS_URL) return Promise.resolve(null);
+  if (statsRequest && Date.now() - statsRequest.at < STATS_TTL_MS) return statsRequest.promise;
+  const promise = fetch(`${STATS_URL}/stats`, { headers: { Accept: "application/json" } })
+    .then((response) => (response.ok ? response.json() : null))
+    .then((body) => (body && typeof body.tracks === "object" ? body.tracks : null))
+    .catch(() => null);
+  statsRequest = { at: Date.now(), promise };
+  // A failed request is retried the next time instead of being cached.
+  promise.then((tracks) => { if (!tracks && statsRequest?.promise === promise) statsRequest = null; });
+  return promise;
+}
+

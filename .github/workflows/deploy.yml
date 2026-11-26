@@ -30,6 +30,9 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          # Turns on listening events and play counts (see stats/).
+          VITE_STATS_URL: https://stats.the-energy-hour.com
         run: npm run build
 
       - name: Sync production bucket

@@ -190,6 +190,7 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
 #teh-design .release-info { display:grid; grid-template-columns:auto minmax(0,1fr); gap:6px 16px; margin:16px 0 4px; font-size:15px; }
 #teh-design .release-info dt { color:var(--muted); }
 #teh-design .release-info dd { margin:0; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+#teh-design .stats-note { margin:4px 0 0; color:var(--muted); font-size:13px; line-height:1.4; }
 #teh-design .services { display:flex; flex-wrap:wrap; gap:8px 16px; margin-top:16px; }
 
 #teh-design #teh-full { position:fixed; inset:0; width:100%; height:100%; max-width:none; max-height:none; margin:0; padding:0; border:0; background:transparent; color:#f8f5ef; overflow:hidden; }
