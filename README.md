@@ -261,5 +261,5 @@ Planer och statefiler får inte committas.
 
 ### Repository
 
-- Namn: `the-energy-hour`, ägare `anders-marten`, repository-id `1212362677`
+- Namn: `the-energy-hour`, ägare `Anders Mårtén (anders-marten)`, repository-id `1212362677`
 - Licens: se `LICENSE`
