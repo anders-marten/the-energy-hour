@@ -6,6 +6,10 @@ terraform {
       source  = "scaleway/scaleway"
       version = "2.83.1"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "3.9.1"
+    }
   }
 
   backend "s3" {
