@@ -1,0 +1,17 @@
+{
+  "name": "the-energy-hour-stats",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Serverless Function that records anonymous listens and serves play counts.",
+  "type": "module",
+  "main": "src/handler.js",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "test:db": "node --test test/db.integration.js",
+    "serve": "node scripts/serve-local.js"
+  },
+  "dependencies": {
+    "pg": "8.23.1"
+  }
+}
