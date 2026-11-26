@@ -62,9 +62,10 @@ jobs:
           OWNER_URL: postgres://postgres:ownerpw@127.0.0.1:5432/energy_hour
         run: |
           psql "$OWNER_URL" -q -c "CREATE ROLE energy_hour_app LOGIN PASSWORD 'apppw'"
-          for file in migrations/*.sql; do
-            psql "$OWNER_URL" -q -v ON_ERROR_STOP=1 -v app_role=energy_hour_app -f "$file"
-          done
+          # Same script as production, run twice: the second run must skip everything.
+          STATS_OWNER_DATABASE_URL="$OWNER_URL" scripts/migrate.sh
+          STATS_OWNER_DATABASE_URL="$OWNER_URL" scripts/migrate.sh | tee second-run.txt
+          ! grep -q '^Applying' second-run.txt
           STATS_TEST_OWNER_URL="$OWNER_URL" \
           STATS_TEST_APP_URL=postgres://energy_hour_app:apppw@127.0.0.1:5432/energy_hour \
             npm run test:db
@@ -83,12 +84,14 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-  # Uploads new code to the existing function. OpenTofu owns its settings,
-  # secrets and database; migrations still run locally (stats/scripts/migrate.sh).
+  # Migrates the database, then uploads new code to the existing function.
+  # OpenTofu owns the function's settings and secrets and the database roles.
+  # The production environment only releases its secrets to the main branch.
   stats-deploy:
     needs: stats-test
     if: needs.stats-test.outputs.changed == 'true'
     runs-on: ubuntu-latest
+    environment: production
     env:
       SCW_ACCESS_KEY: ${{ secrets.SCW_DEPLOY_ACCESS_KEY }}
       SCW_SECRET_KEY: ${{ secrets.SCW_DEPLOY_SECRET_KEY }}
@@ -107,6 +110,17 @@ jobs:
           curl -fsSL -o scw "https://github.com/scaleway/scaleway-cli/releases/download/v${SCW_CLI_VERSION}/scaleway-cli_${SCW_CLI_VERSION}_linux_amd64"
           echo "${SCW_CLI_SHA256}  scw" | sha256sum -c -
           sudo install -m 755 scw /usr/local/bin/scw && rm scw
+
+      # Runs before the new code, so migrations must also work with the code
+      # that is live now. Applied files are recorded and never run twice.
+      - name: Migrate database
+        env:
+          STATS_OWNER_DATABASE_URL: ${{ secrets.STATS_OWNER_DATABASE_URL }}
+          STATS_DATABASE_CA: ${{ secrets.STATS_DATABASE_CA }}
+        run: |
+          export PGSSLROOTCERT="$RUNNER_TEMP/stats-ca.pem"
+          printf '%s\n' "$STATS_DATABASE_CA" > "$PGSSLROOTCERT"
+          stats/scripts/migrate.sh
 
       - name: Package
         run: stats/scripts/package.sh

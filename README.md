@@ -137,9 +137,9 @@ CloudFront finns där för att apexdomänen ska kunna ligga kvar i Route 53. Sca
 
 En push till `main` kör `.github/workflows/deploy.yml` med tre jobb i ordning:
 
-**`stats-test`** körs vid varje push: stats-funktionens enhetstester, migreringarna och databastesterna mot en tillfällig PostgreSQL 16, och en kontroll av om något under `stats/` har ändrats sedan förra pushen.
+**`stats-test`** körs vid varje push: stats-funktionens enhetstester, migreringarna (två gånger, den andra ska inte göra något) och databastesterna mot en tillfällig PostgreSQL 16, och en kontroll av om något under `stats/` har ändrats sedan förra pushen.
 
-**`stats-deploy`** körs bara när `stats/` har ändrats, eller vid manuell körning (`workflow_dispatch`). Jobbet bygger `function.zip` med `stats/scripts/package.sh`, laddar upp den till den befintliga funktionen och driftsätter den. Sedan väntar det på status `ready` och kör ett smoke-test: `/health`, `/stats`, ett anrop med fel ursprung (403) och ett med okänd låt (404). Smoke-testet skriver inget till databasen.
+**`stats-deploy`** körs bara när `stats/` har ändrats, eller vid manuell körning (`workflow_dispatch`). Jobbet kör först nya migreringar i produktionsdatabasen med `stats/scripts/migrate.sh`, bygger sedan `function.zip` med `stats/scripts/package.sh`, laddar upp den till den befintliga funktionen och driftsätter den. Sedan väntar det på status `ready` och kör ett smoke-test: `/health`, `/stats`, ett anrop med fel ursprung (403) och ett med okänd låt (404). Smoke-testet skriver inget till databasen.
 
 **`deploy`** driftsätter sajten efter funktionen, så att en ny spelare aldrig pratar med gammal funktionskod. Jobbet hoppas över om testerna eller funktionens deploy misslyckas.
 
@@ -177,15 +177,18 @@ Driftsatt 26 november 2026. Siffrorna visas under Info i Discover som "Plays: to
 
 **Roller.** `energy_hour_owner` äger schemat och används bara för migreringar. Funktionen ansluter som `energy_hour_app`, som bara har `SELECT`, `INSERT` och `UPDATE` på tabellen. Anslutningen går över TLS med certifikatverifiering och högst en anslutning per instans. Funktionen kör som mest 3 instanser.
 
-**Vem äger vad.** CI laddar upp och driftsätter funktionens kod. OpenTofu (`deploy/infra/stats.tf`) äger funktionens inställningar, hemliga miljövariabler, domänen, databasen och rollerna, och ignorerar koden. Migreringar körs lokalt, eftersom CI inte ska ha ägarens lösenord.
+**Vem äger vad.** CI laddar upp och driftsätter funktionens kod. OpenTofu (`deploy/infra/stats.tf`) äger funktionens inställningar, hemliga miljövariabler, domänen, databasen och rollerna, och ignorerar koden. CI kör också migreringarna som `energy_hour_owner`. Ägarens inloggning och databasens CA-certifikat ligger som secrets i GitHub-miljön `production`, som bara släpper dem till `main`.
 
 **Ändra koden:** pusha till `main`. Testerna körs, och funktionen driftsätts före sajten.
 
-**Ändra databasen:** lägg en ny fil i `stats/migrations/` och kör den **innan** koden som behöver den pushas:
+**Ändra databasen:** lägg en ny fil i `stats/migrations/` med ett högre nummer (till exempel `002_….sql`) och pusha. CI kör den före den nya koden.
 
-```sh
-stats/scripts/migrate.sh   # kör stats/migrations/*.sql som ägaren; tål att köras om
-```
+- Varje fil körs en gång, i en egen transaktion, och registreras i `energy_hour.schema_migrations`. Går den fel rullas den tillbaka och deployen stoppas.
+- Ändra aldrig en fil som redan körts. Lägg en ny i stället.
+- Migreringen körs medan den gamla koden fortfarande är live, så den måste fungera med båda. Lägg till kolumner och tabeller först, och ta bort gamla i en senare migrering.
+- `-v app_role` sätts till `energy_hour_app`, så att filerna kan ge funktionens roll rättigheter med `:"app_role"`.
+
+`stats/scripts/migrate.sh` kan också köras lokalt. Utan `STATS_OWNER_DATABASE_URL` hämtar det inloggningen från OpenTofu-staten.
 
 **Ändra inställningar eller hemligheter:** ändra `stats.tf` och kör `plan` och `apply` enligt [OpenTofu lokalt](#opentofu-lokalt).
 
@@ -265,7 +268,6 @@ Det här är sådant som är värt att åtgärda, ungefär i prioritetsordning:
 - **CDK-stacken för CloudFront och DNS.** Den får inte driftsättas igen och inte tas bort (se nedan). Flytta posterna till OpenTofu eller ta bort CloudFront när det går.
 - **Node 20 i GitHub Actions är föråldrat.** Actions varnar redan. Byt till Node 22 eller 24.
 - **Lyssnarsiffrorna går att blåsa upp med flit.** Begränsningen per klient gäller per instans och bara i minnet, och vem som helst kan skicka händelser med rätt `Origin`. Det står lite på spel, men siffrorna ska läsas som ungefärliga.
-- **Migreringar körs för hand.** En ny migrering måste köras med `stats/scripts/migrate.sh` innan koden som behöver den pushas, annars misslyckas skrivningarna tills den körts.
 - **Bilder.** Omslagen är cirka 7,5 MB totalt och serveras som JPEG/PNG i full storlek. AVIF/WebP i några storlekar (`srcset`) ger snabbare mobilladdning.
 - **Säkerhetsrubriker** som Content-Security-Policy, `Referrer-Policy` och `Permissions-Policy` saknas och kan sättas i Edge Services.
 - **Övervakning.** Det finns ingen upptidskontroll eller felrapportering från webbläsaren. En enkel extern ping mot sajten och mot en ljudfil räcker långt.
@@ -301,6 +303,13 @@ CloudFront-distributionen `E27BVM56VP6GE4` och Route 53-posterna för `the-energ
 - `SCW_DEPLOY_ACCESS_KEY`, `SCW_DEPLOY_SECRET_KEY`: deployerns nyckel. Den får skriva till objekt i projektet, tömma Edge-cachen och driftsätta funktioner i projektet (`FunctionsFullAccess`), men media-bucketens policy släpper inte in den.
 - `SCW_BUCKET_NAME`, `SCW_PROJECT_ID`, `SCW_EDGE_PIPELINE_ID`
 - `AWS_INVALIDATION_ROLE_ARN`, `CLOUDFRONT_DISTRIBUTION_ID`: CloudFront-invalidering via OIDC
+
+Miljön `production` (bara `main`) har:
+
+- `STATS_OWNER_DATABASE_URL`: `energy_hour_owner` för migreringar. Rollen har bara rättigheter i databasen `energy_hour`.
+- `STATS_DATABASE_CA`: CA-certifikatet för `ungap-live-db`.
+
+Båda sattes direkt från OpenTofu-staten med `python3 deploy/tofu.py output -raw <namn> | gh secret set <NAMN> --env production`. Gör om det om ägarens lösenord eller certifikatet byts.
 
 Hemligheter ska aldrig committas.
 
