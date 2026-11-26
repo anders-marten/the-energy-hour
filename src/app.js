@@ -843,7 +843,10 @@ function moveFeatureDrag(x, y) {
     expandDrag.active = true;
     featureBlock.classList.remove("is-settling");
   }
-  featureBlock.style.setProperty("--expand", `${Math.min(expandDrag.max, Math.max(0, dy))}px`);
+  const expand = Math.min(expandDrag.max, Math.max(0, dy));
+  featureBlock.style.setProperty("--expand", `${expand}px`);
+  // Gone by half way, so the title is out of the way of the opening cover.
+  featureBlock.style.setProperty("--expand-fade", String(Math.max(0, 1 - expand / (expandDrag.max / 2))));
   return true;
 }
 function endFeatureDrag() {
@@ -853,6 +856,7 @@ function endFeatureDrag() {
   if (!active) return;
   featureBlock.classList.add("is-settling");
   featureBlock.style.removeProperty("--expand");
+  featureBlock.style.removeProperty("--expand-fade");
 }
 
 featureBlock?.addEventListener("touchstart", (event) => {

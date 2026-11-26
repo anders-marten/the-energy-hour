@@ -94,7 +94,8 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
    down behind it, so the panel floats over the sheet while it is open. */
 @container (max-width:899px) {
   #teh-design { --player-bottom:max(8px, env(safe-area-inset-bottom)); --player-panel-h:116px; --player-h:calc(var(--player-panel-h) + var(--player-bottom)); }
-  #teh-design #teh-player { inset:auto 8px var(--player-bottom); height:var(--player-panel-h); flex-wrap:wrap; align-content:center; row-gap:6px; padding:0 8px 0 12px; border:1px solid var(--rule); border-radius:22px; box-shadow:0 8px 28px rgb(0 0 0 / 55%); }
+  /* A shade lighter than the rows and the page, so the panel stands out. */
+  #teh-design #teh-player { inset:auto 8px var(--player-bottom); height:var(--player-panel-h); flex-wrap:wrap; align-content:center; row-gap:6px; padding:0 8px 0 12px; border:1px solid #4a4453; border-radius:22px; background:#26222d; box-shadow:0 8px 28px rgb(0 0 0 / 55%); }
   #teh-design #teh-player .player-skip { width:44px; }
   /* Progress and seeking: a row of its own at the top of the panel, with
      elapsed and total time (the cover has no player controls on narrow
@@ -116,7 +117,9 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
   /* With Discover open, the sheet and the footer are one card: the sheet
      sits on the same insets with the footer inside its bottom, and the
      footer keeps its frame, so its top edge reads as a divider. */
-  #teh-mobile-preview #teh-design #teh-song { inset:auto 8px var(--player-bottom); width:auto; max-height:calc(92dvh - var(--player-bottom)); padding-bottom:calc(var(--player-panel-h) + 4px); border:1px solid var(--rule); border-radius:22px; }
+  #teh-mobile-preview #teh-design #teh-song { inset:auto 8px var(--player-bottom); width:auto; max-height:calc(92dvh - var(--player-bottom)); padding-bottom:calc(var(--player-panel-h) + 4px); border:1px solid #4a4453; border-radius:22px; background:#26222d; }
+  /* The card has the control panel's colour, so the two read as one. */
+  #teh-design #teh-song .sheet-handle { background:#26222d; }
   #teh-design:has(#teh-song[open]) #teh-player { border-radius:0 0 22px 22px; box-shadow:none; }
   /* --sheet-top (animated from app.js) moves the card's top edge down while
      it opens, closes or is dragged; the content moves down with the edge. */
@@ -245,9 +248,16 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
        Scroll anchoring is off, or the browser would keep the list in place
        while the cover grows. */
     #teh-design { overflow-anchor:none; }
-    #teh-design .mobile-feature { --expand:0px; position:sticky; top:12px; z-index:5; background:#050505; box-shadow:0 -12px 0 #050505; }
+    /* Flush with the top of the page; the solid shadow covers everything
+       above it (the status bar area too), so no rows show there on scroll. */
+    #teh-design:has(#teh-tracks) main { padding-top:0; }
+    #teh-design .mobile-feature { --expand:0px; position:sticky; top:0; z-index:5; background:#050505; box-shadow:0 -200px 0 200px #050505; }
     #teh-design .mobile-feature .feature-audio-art { grid-column:1; grid-row:1 / -1; width:100%; height:calc((100cqw - 32px) * 2 / 3 + var(--expand)); aspect-ratio:auto; object-fit:cover; object-position:center; border-radius:10px; touch-action:pan-x pan-y; }
     #teh-design .mobile-feature.is-settling .feature-audio-art { transition:height .5s cubic-bezier(.34,1.3,.64,1); }
+    /* Title and teaser fade out as the cover opens and back in as it springs
+       back (--expand-fade, 1 to 0, set from app.js). */
+    #teh-design .mobile-feature .feature-copy { opacity:var(--expand-fade, 1); }
+    #teh-design .mobile-feature.is-settling .feature-copy { transition:opacity .4s ease; }
     #teh-design .mobile-feature::after { content:""; grid-column:1; grid-row:1 / -1; z-index:1; border-radius:10px; pointer-events:none; background:linear-gradient(to bottom, rgb(5 5 5 / 0) 30%, rgb(5 5 5 / .7) 62%, #050505 100%); }
     #teh-design .mobile-feature .feature-audio-controls { position:relative; inset:auto; grid-column:1; grid-row:2; z-index:2; padding:0 16px 8px; background:none; }
     #teh-design .mobile-feature .feature-copy { grid-column:1; grid-row:3; z-index:2; padding:0 16px 16px; }
