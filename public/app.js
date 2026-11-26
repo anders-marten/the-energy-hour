@@ -67,6 +67,10 @@ const featureAudioTime = featureAudio.querySelector(".feature-audio-time");
 const playerSeek = document.querySelector("#teh-player-seek");
 const seekInputs = [featureAudioSeek, playerSeek].filter(Boolean);
 let seekingInput = null;
+// iOS loads no audio before the first play(), and a seek made before the
+// audio has metadata is lost. Such a seek is kept here and applied once the
+// metadata arrives.
+let pendingSeek = null;
 const playerElapsed = document.querySelector("#teh-player-elapsed");
 const playerLength = document.querySelector("#teh-player-length");
 
@@ -163,7 +167,7 @@ function audioDuration() {
 
 function updateAudioProgress() {
   const length = audioDuration();
-  const position = seekingInput ? Number(seekingInput.value) : (audio.currentTime || 0);
+  const position = seekingInput ? Number(seekingInput.value) : (pendingSeek ?? (audio.currentTime || 0));
   for (const input of seekInputs) {
     input.max = String(length);
     if (input !== seekingInput) input.value = String(position);
@@ -189,8 +193,10 @@ function playAudio() {
   updatePlayerUi();
   audio.play().catch((error) => {
     if (error?.name !== "AbortError") console.warn("Audio playback did not start.", error);
+    // A rejected play() (for example interrupted by a seek) does not always
+    // mean the audio is stopped, so ask the element.
     playPending = false;
-    isPlaying = false;
+    isPlaying = !audio.paused;
     updatePlayerUi();
   });
 }
@@ -227,6 +233,7 @@ function showTrack(index, shouldPlay = false) {
   const track = getCurrentTrack();
   isPlaying = false;
   playPending = false;
+  pendingSeek = null;
   if (usesAudio(track)) {
     const source = new URL(track.audio, location.href).href;
     if (audio.src !== source) {
@@ -271,7 +278,9 @@ function showTrackById(trackId, shouldPlay = true) {
 
 function toggleCurrentTrack() {
   if (!getCurrentTrack()) return;
-  if (isPlaying) audio.pause();
+  // The element, not isPlaying, decides, so a stale state can never leave
+  // playback impossible to stop.
+  if (!audio.paused) audio.pause();
   else playAudio();
 }
 
@@ -572,7 +581,13 @@ for (const input of seekInputs) {
     updateAudioProgress();
   });
   input.addEventListener("change", () => {
-    audio.currentTime = Number(input.value);
+    const position = Number(input.value);
+    if (audio.readyState >= HTMLMediaElement.HAVE_METADATA) {
+      audio.currentTime = position;
+      pendingSeek = null;
+    } else {
+      pendingSeek = position;
+    }
     seekingInput = null;
     updateAudioProgress();
   });
@@ -605,6 +620,11 @@ audio.addEventListener("error", () => {
   isPlaying = false;
   playPending = false;
   updatePlayerUi();
+});
+audio.addEventListener("loadedmetadata", () => {
+  if (pendingSeek === null) return;
+  audio.currentTime = pendingSeek;
+  pendingSeek = null;
 });
 for (const name of ["timeupdate", "durationchange", "loadedmetadata", "seeked"]) {
   audio.addEventListener(name, updateAudioProgress);
