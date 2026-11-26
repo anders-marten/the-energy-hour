@@ -1,6 +1,6 @@
 # the-energy-hour
 
-Webbplatsen och musikspelaren för The Energy Hour, live på [the-energy-hour.com](https://the-energy-hour.com). Sajten har 64 spår med egen spelare, berättelser, sångtexter och releasefakta. Den är byggd som en statisk sajt utan ramverk och fungerar som en webbapp på mobilen, även från hemskärmen på iPhone.
+Webbplatsen och musikspelaren för The Energy Hour, live på [the-energy-hour.com](https://the-energy-hour.com). Sajten har 64 spår med egen spelare, berättelser, sångtexter, releasefakta och anonyma lyssnarsiffror. Den är byggd som en statisk sajt utan ramverk och fungerar som en webbapp på mobilen, även från hemskärmen på iPhone.
 
 ## Innehåll
 
@@ -40,14 +40,15 @@ En push till `main` bygger och driftsätter sajten automatiskt (se [Infrastruktu
 
 | Del | Val | Kommentar |
 | --- | --- | --- |
-| Frontend | HTML, CSS och JavaScript utan ramverk | All appkod finns i `src/app.js` och `src/styles.css`. Inga beroenden i webbläsaren. |
+| Frontend | HTML, CSS och JavaScript utan ramverk | Appkoden finns i `src/app.js`, `src/listening-stats.js` och `src/styles.css`. Inga beroenden i webbläsaren. |
 | Bygge | Vite 7 | Bygger JS och CSS med hash i filnamnet. Inga andra plugins. |
 | Genererat innehåll | Node-skript i `scripts/` | Statisk HTML för låtlistan, sidor per spår, JSON-LD, sitemap och `llms.txt`, för sökmotorer och AI-crawlers. |
 | Data | `public/playlist.json` | En fil med alla spår, beskriven av `public/playlist.schema.json`. Bygget kontrollerar inte filen mot schemat. Sångtexter ligger som textfiler i `public/lyrics/`. |
 | Ljud | Egen spelare på ett delat `<audio>`-element | AAC/MP3-filer på `media.the-energy-hour.com`. Ingen SoundCloud-widget. |
 | Hosting | Scaleway Object Storage och Edge Services | Två buckets: sajten och ljudfilerna. |
+| Lyssnarsiffror | Scaleway Serverless Function (Node 24) och PostgreSQL 16 | Koden ligger i `stats/`, data i databasen `energy_hour` på den delade instansen `ungap-live-db`. Se [Lyssnarsiffror](#lyssnarsiffror). |
 | DNS och apex | AWS Route 53 och AWS CloudFront | CloudFront ligger framför Scaleway för att apexdomänen ska fungera. |
-| Infrastruktur som kod | OpenTofu (`deploy/infra`) | Scaleway-resurserna. CloudFront och DNS ligger i en äldre CDK-stack. |
+| Infrastruktur som kod | OpenTofu (`deploy/infra`) | Scaleway-resurserna, inklusive stats-funktionen och dess databas. CloudFront och DNS ligger i en äldre CDK-stack. |
 | CI/CD | GitHub Actions (`.github/workflows/deploy.yml`) | Bygger, synkar till bucketen och tömmer båda CDN-cacharna. |
 | Ljudverktyg | Python (`scripts/encode-audio.py`, `scripts/upload-audio.py`) | Kodar masterfiler och laddar upp dem manuellt. |
 
@@ -56,6 +57,7 @@ En push till `main` bygger och driftsätter sajten automatiskt (se [Infrastruktu
 ```text
 index.html                  Sidans skal; låtlistan m.m. genereras in i den
 src/app.js                  Spelare, Discover, gester och spellistelogik
+src/listening-stats.js      Lyssningshändelser och hämtning av lyssnarsiffror
 src/styles.css              All stil: smal layout under 900 px, två kolumner från 900 px
 public/playlist.json        Spåren: titel, texter, länkar, ljudfil, release
 public/playlist.schema.json Schema för spellistan
@@ -63,7 +65,8 @@ public/lyrics/              Sångtexter som UTF-8-text
 public/images/              Omslag, tumnaglar, logotyper och appikoner
 public/manifest.webmanifest Webbappens namn och ikoner
 scripts/                    Generatorer (Node) och ljudverktyg (Python)
-deploy/infra/               OpenTofu för Scaleway
+stats/                      Serverless-funktionen för lyssnarsiffror, migreringar och tester
+deploy/infra/               OpenTofu för Scaleway (stats.tf för lyssnarsiffrorna)
 .github/workflows/          Deploy
 ```
 
@@ -121,6 +124,11 @@ Spelaren
   -> media.the-energy-hour.com (CNAME i Route 53)
   -> Scaleway Edge Services (pipeline för media)
   -> Scaleway Object Storage (the-energy-hour-media)
+
+Lyssnarsiffror
+  -> stats.the-energy-hour.com (CNAME i Route 53)
+  -> Scaleway Serverless Function (namespace the-energy-hour-stats, funktion stats)
+  -> PostgreSQL 16 på ungap-live-db (databasen energy_hour)
 ```
 
 CloudFront finns där för att apexdomänen ska kunna ligga kvar i Route 53. Scaleway Edge Services är det egentliga ursprunget, och CloudFront kan tas bort när Scaleway kan hantera apexdomänen på ett lämpligt sätt.
@@ -129,13 +137,53 @@ CloudFront finns där för att apexdomänen ska kunna ligga kvar i Route 53. Sca
 
 En push till `main` kör `.github/workflows/deploy.yml`:
 
-1. `npm ci` och `npm run build` (Node 20).
+1. `npm ci` och `npm run build` (Node 20). Bygget får `VITE_STATS_URL=https://stats.the-energy-hour.com`, vilket slår på lyssningshändelser och siffrorna under Info. Utan variabeln, till exempel lokalt, skickas och hämtas inget.
 2. `dist/assets/` laddas upp med `Cache-Control: public, max-age=31536000, immutable`. Äldre hashade filer behålls, så att en sparad sida fortfarande hittar sina filer.
 3. Resten av `dist/` synkas med `--delete`. HTML skickas med `no-cache` och textfiler med UTF-8.
 4. Edge Services-cachen töms.
 5. CloudFront-cachen töms (`/*`) via en IAM-roll som bara får göra invalideringar på den här distributionen (GitHub OIDC, bara från `main`).
 
 Ljudfilerna ingår inte i deployen. De kodas med `scripts/encode-audio.py` och laddas upp manuellt med `scripts/upload-audio.py`, eftersom GitHub-deployern inte har åtkomst till media-bucketen.
+
+Stats-funktionen ingår inte heller i GitHub-deployen. Den driftsätts med OpenTofu lokalt (se [Lyssnarsiffror](#lyssnarsiffror)).
+
+### Lyssnarsiffror
+
+Driftsatt 26 november 2026. Siffrorna visas under Info i Discover som "Plays: totalt · senaste 30 dagarna", med en kort integritetstext under.
+
+**Vad som räknas.** Spelaren (`src/listening-stats.js`) startar en lyssningssession varje gång en låt laddas och när samma låt spelas om efter slutet.
+
+- `listened-30-seconds` skickas en gång per session när låten faktiskt har spelats i 30 sekunder. Bara tid som går framåt i takt med verklig tid räknas, så spolning och paus ger ingen lyssning. Det fungerar även när `timeupdate` kommer glest på en låst iPhone.
+- `completed` skickas vid `ended`, men bara om lyssningen redan har räknats.
+- Händelserna skickas med `navigator.sendBeacon` som `text/plain` (ingen CORS-preflight) och innehåller bara `trackId` och `event`.
+
+**Funktionen** (`stats/src/service.js`, startpunkt `src/handler.handle`):
+
+| Anrop | Beteende |
+| --- | --- |
+| `POST /listening-event` | Kräver `Origin` från the-energy-hour.com eller www. Högst 1 kB. Låt-ID:t kontrolleras mot sajtens `playlist.json` (sparas 10 minuter). Gör en atomisk UPSERT och svarar 204. |
+| `GET /stats` | Alla spår i ett svar: `{ "tracks": { "<id>": { "total", "last30Days" } } }`. `Cache-Control: public, max-age=600` och 60 sekunders cache i funktionens minne. |
+| `GET /health` | 200 om funktionen svarar. Rör inte databasen. |
+
+"Senaste 30 dagarna" är idag plus de 29 dagarna före, räknat i kalenderdagar i Europe/Stockholm. Webbläsaren sparar `/stats` i upp till 10 minuter, så nya lyssningar syns med viss fördröjning.
+
+**Data.** Tabellen `energy_hour.listening_daily` har en rad per spår och dag med `listens` och `completed`. Inga enskilda händelser, ID:n, cookies eller IP-adresser sparas. Begränsningen till 20 händelser per klient och 10 minuter använder en saltad hash av IP-adressen som bara finns i funktionens minne.
+
+**Roller.** `energy_hour_owner` äger schemat och används bara för migreringar. Funktionen ansluter som `energy_hour_app`, som bara har `SELECT`, `INSERT` och `UPDATE` på tabellen. Anslutningen går över TLS med certifikatverifiering och högst en anslutning per instans. Funktionen kör som mest 3 instanser.
+
+**Ändra funktionen eller databasen:**
+
+```sh
+(cd stats && npm ci && npm test)        # enhetstester
+stats/scripts/package.sh                 # bygger stats/dist/function.zip
+python3 deploy/tofu.py plan -var-file=../../config/the-energy-hour-deploy.local.json -out=deployment.tfplan
+python3 deploy/tofu.py apply deployment.tfplan
+stats/scripts/migrate.sh                 # kör stats/migrations/*.sql som ägaren; tål att köras om
+```
+
+Planen ska bara visa en ändring av `scaleway_function.stats` (ny `zip_hash`) när enbart koden ändrats.
+
+**Lokalt.** `stats/test/db.integration.js` kör SQL:en mot en tillfällig PostgreSQL, till exempel `postgres:16-alpine` i Docker. `stats/scripts/serve-local.js` kör funktionen som en vanlig HTTP-server på port 8787. Bygg sajten med `VITE_STATS_URL=http://127.0.0.1:8787` och sätt `STATS_ALLOWED_ORIGINS=http://127.0.0.1:4173` för att testa hela kedjan i `vite preview`.
 
 ## Lagring, skalbarhet och kostnader
 
@@ -146,12 +194,13 @@ Ljudfilerna ingår inte i deployen. De kodas med `scripts/encode-audio.py` och l
 | Ljud, 64 spår | Bucket `the-energy-hour-media` | ca 433 MB |
 | Sajten (HTML, JS, CSS, bilder, texter) | Bucket `ungap-the-energy-hour-prod` | under 10 MB, mest bilder |
 | Spellista och texter | Git (`public/`) | under 1 MB |
+| Lyssnarsiffror | Tabellen `energy_hour.listening_daily` på `ungap-live-db` | en rad per spår och dag, några kB per år |
 
-Spellistan och texterna versionshanteras i Git och är därmed säkerhetskopierade. Ljudfilerna finns bara i media-bucketen (versionshantering avstängd) och i Anders lokala masterfiler. Se [Kända brister](#kända-brister-och-teknisk-skuld).
+Spellistan och texterna versionshanteras i Git och är därmed säkerhetskopierade. Lyssnarsiffrorna ingår i instansens dagliga backup, som sparas i 7 dagar. Ljudfilerna finns bara i media-bucketen (versionshantering avstängd) och i Anders lokala masterfiler. Se [Kända brister](#kända-brister-och-teknisk-skuld).
 
 ### Skalbarhet
 
-Sajten är helt statisk och har ingen server eller databas. Allt serveras från CDN, så den klarar i princip hur många besökare som helst utan ändringar. Varje besökare hämtar spellistan och en ljudfil i taget. Ljudet strömmas med `Range`-anrop, så bara det som spelas laddas ner. Det som växer med trafiken är utgående data, i första hand ljudet.
+Sajten är statisk och serveras från CDN, så den klarar i princip hur många besökare som helst utan ändringar. Den enda dynamiska delen är stats-funktionen. Den skalar mellan 0 och 3 instanser med en databasanslutning var, och om den blir överbelastad tappas som mest lyssningshändelser. Spelaren och sajten påverkas inte. Varje besökare hämtar spellistan och en ljudfil i taget. Ljudet strömmas med `Range`-anrop, så bara det som spelas laddas ner. Det som växer med trafiken är utgående data, i första hand ljudet.
 
 ### Kostnader
 
@@ -163,6 +212,8 @@ Kostnaderna är små och domineras av ljudtrafiken. Grovt räknat ger AAC 256 kb
 | Edge Services (två pipelines) | Månadsavgift per pipeline plus trafik enligt Scaleways prislista | Den största fasta posten |
 | CloudFront | Utgående trafik och anrop | Bör rymmas i AWS kostnadsfria nivå (1 TB och 10 miljoner anrop per månad) vid nuvarande trafik |
 | Route 53 | Per hostad zon och antal DNS-frågor | Under en dollar i månaden |
+| Serverless Functions (stats) | Anrop och GB-sekunder | Bör rymmas i Scaleways gratiskvot vid nuvarande trafik: två små anrop per lyssning plus ett `/stats` per besök |
+| PostgreSQL (stats) | Delar instansen `ungap-live-db` med andra appar | Ingen egen kostnad, några kB data |
 | GitHub Actions | Minuter | Ingår i gratiskvoten |
 
 Siffrorna är uppskattningar. Kontrollera Scaleways och AWS aktuella prislistor innan de används för budget. Det som framför allt kan driva kostnaderna är många fullständiga lyssningar: 1 000 lyssningar ger ungefär 7–8 GB ljudtrafik genom Edge Services. Att ta bort CloudFront-lagret skulle minska både komplexitet och antalet leverantörer.
@@ -181,13 +232,13 @@ Siffrorna är uppskattningar. Kontrollera Scaleways och AWS aktuella prislistor 
 
 ### 2. Lyssnarsiffror
 
-**Mål:** Att se hur mycket varje låt spelas, utan cookies och utan att spåra personer.
+**Klart (november 2026):** lyssningar efter 30 sekunder och slutförda lyssningar räknas anonymt per spår och dag, och Info visar totalt och senaste 30 dagarna. Se [Lyssnarsiffror](#lyssnarsiffror) under Infrastruktur.
 
-- Spelaren skickar en enkel händelse vid start, efter 30 sekunder (räknas som en lyssning) och när låten spelats klart. Händelsen skickas med `navigator.sendBeacon`, är anonym och innehåller bara spår-id och tidpunkt.
-- En liten endpoint, till exempel en Scaleway Serverless Function, tar emot händelserna och summerar dem per spår och dag, i en databas eller som filer i en bucket.
-- Ett alternativ eller komplement är att räkna `Range`-anrop i Edge Services-loggarna för media. Det kräver ingen kod i spelaren men blir mindre exakt.
-- En enkel statistikvy i adminläget.
-- Integritet: ingen IP-lagring, inga cookies och en kort text om detta på sajten.
+Kvar att göra:
+
+- En statistikvy i adminläget, till exempel per dag och med slutförda lyssningar, som i dag bara finns i databasen.
+- Driftsätta funktionen från GitHub Actions i stället för med OpenTofu lokalt, med en låst version av Scaleway CLI och ett smoke-test mot `/health` och `/stats` efter varje deploy.
+- Övervakning av funktionen, till exempel en extern ping mot `/health`.
 
 ### 3. Multi-tenant (eventuellt)
 
@@ -205,10 +256,12 @@ Det här är sådant som är värt att åtgärda, ungefär i prioritetsordning:
 
 - **Ingen säkerhetskopia av ljudet i molnet.** Versionshantering är avstängd på media-bucketen. Ett felaktigt `--delete` eller en felaktig uppladdning går inte att ångra. Aktivera versionshantering eller replikera till en andra plats.
 - **Spellistan kontrolleras inte mot schemat.** Ett fel i `playlist.json` märks först på sajten. Lägg till validering i `npm run build`.
-- **Inga automatiska tester.** Gester och uppspelning har testats manuellt. Ett litet Playwright-test i WebKit och mobil storlek (spela, pausa, spola, öppna och stänga Discover, dra omslaget) skulle fånga många av de fel som hittades den här omgången.
+- **Inga automatiska tester av sajten.** Stats-funktionen har enhetstester och databastester, men gester och uppspelning har testats manuellt. Ett litet Playwright-test i WebKit och mobil storlek (spela, pausa, spola, öppna och stänga Discover, dra omslaget) skulle fånga många av de fel som hittades den här omgången.
 - **CDK-stacken för CloudFront och DNS.** Den får inte driftsättas igen och inte tas bort (se nedan). Flytta posterna till OpenTofu eller ta bort CloudFront när det går.
 - **Node 20 i GitHub Actions är föråldrat.** Actions varnar redan. Byt till Node 22 eller 24.
 - **Scaleway CLI installeras från `master` vid varje deploy.** En deploy har redan fallerat på det. Lås en version.
+- **Lyssnarsiffrorna går att blåsa upp med flit.** Begränsningen per klient gäller per instans och bara i minnet, och vem som helst kan skicka händelser med rätt `Origin`. Det står lite på spel, men siffrorna ska läsas som ungefärliga.
+- **Stats-funktionen driftsätts lokalt.** Kodändringar i `stats/` kräver `package.sh` och OpenTofu på Anders dator. Se roadmapen.
 - **Bilder.** Omslagen är cirka 7,5 MB totalt och serveras som JPEG/PNG i full storlek. AVIF/WebP i några storlekar (`srcset`) ger snabbare mobilladdning.
 - **Säkerhetsrubriker** som Content-Security-Policy, `Referrer-Policy` och `Permissions-Policy` saknas och kan sättas i Edge Services.
 - **Övervakning.** Det finns ingen upptidskontroll eller felrapportering från webbläsaren. En enkel extern ping mot sajten och mot en ljudfil räcker långt.
@@ -225,7 +278,7 @@ CloudFront-distributionen `E27BVM56VP6GE4` och Route 53-posterna för `the-energ
 - **Driftsätt inte stacken igen.** Distributionens origin pekar nu på Scaleway, vilket har ändrats utanför CDK. En ny CDK-driftsättning kan återställa origin till den gamla S3-bucketen.
 - **Stackens pipeline används inte.** `the-energy-hour-main-pipeline` och `the-energy-hour-pipeline-3` är avstängda sedan 2026-11-25. Driftsättningen görs av `.github/workflows/deploy.yml`.
 
-`media.the-energy-hour.com` är en CNAME i Route 53-zonen `Z02620932D0CX2U386KT4` som pekar på Edge Services-pipelinen för media.
+`media.the-energy-hour.com` är en CNAME i Route 53-zonen `Z02620932D0CX2U386KT4` som pekar på Edge Services-pipelinen för media. `stats.the-energy-hour.com` är en CNAME i samma zon som pekar på stats-funktionen (`theenergyhourstatsipb3sl7j-stats.functions.fnc.fr-par.scw.cloud`). Båda posterna har lagts in för hand och ingår inte i någon stack.
 
 ### Scaleway
 
@@ -235,6 +288,8 @@ CloudFront-distributionen `E27BVM56VP6GE4` och Route 53-posterna för `the-energ
 - Sajtens Edge-pipeline: `af3a7f64-0728-49da-8637-65941dc6d3a1` (`af3a7f64-0728-49da-8637-65941dc6d3a1.svc.edge.scw.cloud`)
 - Media-bucket: `the-energy-hour-media`
 - Media-pipeline: `508dd936-f76d-4c04-8b4a-c249cf22620b`
+- Stats-funktion: namespace `the-energy-hour-stats`, funktion `stats`, domän `stats.the-energy-hour.com`
+- Stats-databas: `energy_hour` på den delade instansen `ungap-live-db` (`fr-par/56a5d49a-7901-44ec-ba11-8eb9c798846f`, PostgreSQL 16, Live-projektet), med användarna `energy_hour_owner` och `energy_hour_app`. Lösenorden finns bara i OpenTofu-staten och i funktionens hemliga miljövariabler.
 - OpenTofu-state: `s3://ungap-live-tofu-state/the-energy-hour/terraform.tfstate`
 
 ### GitHub Secrets
@@ -257,7 +312,7 @@ python3 deploy/tofu.py plan \
 python3 deploy/tofu.py apply deployment.tfplan
 ```
 
-Planer och statefiler får inte committas.
+Planer och statefiler får inte committas. `stats.tf` kräver att `stats/dist/function.zip` finns, så kör `stats/scripts/package.sh` före `plan`.
 
 ### Repository
 
