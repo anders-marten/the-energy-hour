@@ -62,7 +62,11 @@ const featureAudioArt = featureAudio.querySelector(".feature-audio-art");
 const featureAudioToggle = featureAudio.querySelector(".feature-audio-toggle");
 const featureAudioSeek = featureAudio.querySelector(".feature-audio-seek");
 const featureAudioTime = featureAudio.querySelector(".feature-audio-time");
-let isSeeking = false;
+// Narrow layout: the cover has no player controls; progress and seeking live
+// in a thin bar on the player footer's top edge instead.
+const playerSeek = document.querySelector("#teh-player-seek");
+const seekInputs = [featureAudioSeek, playerSeek].filter(Boolean);
+let seekingInput = null;
 
 const root = document.querySelector("#teh-design");
 const trackList = document.querySelector("#teh-tracks");
@@ -157,10 +161,13 @@ function audioDuration() {
 
 function updateAudioProgress() {
   const length = audioDuration();
-  featureAudioSeek.max = String(length);
-  if (!isSeeking) featureAudioSeek.value = String(audio.currentTime || 0);
-  featureAudioSeek.style.setProperty("--progress", length ? `${(Number(featureAudioSeek.value) / length) * 100}%` : "0%");
-  featureAudioTime.textContent = `${formatTime(Number(featureAudioSeek.value))} / ${formatTime(length)}`;
+  const position = seekingInput ? Number(seekingInput.value) : (audio.currentTime || 0);
+  for (const input of seekInputs) {
+    input.max = String(length);
+    if (input !== seekingInput) input.value = String(position);
+    input.style.setProperty("--progress", length ? `${(position / length) * 100}%` : "0%");
+  }
+  featureAudioTime.textContent = `${formatTime(position)} / ${formatTime(length)}`;
   if ("mediaSession" in navigator && length && navigator.mediaSession.setPositionState) {
     try {
       navigator.mediaSession.setPositionState({ duration: length, position: Math.min(audio.currentTime || 0, length), playbackRate: audio.playbackRate || 1 });
@@ -552,15 +559,17 @@ trackList.addEventListener("click", (event) => {
 
 document.querySelector("#teh-toggle").addEventListener("click", toggleCurrentTrack);
 featureAudioToggle.addEventListener("click", toggleCurrentTrack);
-featureAudioSeek.addEventListener("input", () => {
-  isSeeking = true;
-  updateAudioProgress();
-});
-featureAudioSeek.addEventListener("change", () => {
-  audio.currentTime = Number(featureAudioSeek.value);
-  isSeeking = false;
-  updateAudioProgress();
-});
+for (const input of seekInputs) {
+  input.addEventListener("input", () => {
+    seekingInput = input;
+    updateAudioProgress();
+  });
+  input.addEventListener("change", () => {
+    audio.currentTime = Number(input.value);
+    seekingInput = null;
+    updateAudioProgress();
+  });
+}
 
 audio.addEventListener("playing", () => {
   if (!usesAudio()) return;
@@ -782,57 +791,89 @@ sheet.addEventListener("click", (event) => {
   }
 }, true);
 
-// Portrait feature: dragging down on the cover slides the controls and title
-// panel down to show more of the image, and springs back on release.
+// Portrait (narrow): the cover window sits at the top at 2/3 height. Dragging
+// down on it opens it to full height, pushing the track list down with it;
+// on release it snaps open or closed. Dragging up, or scrolling the list,
+// closes it again.
 const featureBlock = document.querySelector(".mobile-feature");
-let reveal = null;
-function setReveal(offset, max) {
-  featureBlock.style.setProperty("--reveal", `${offset}px`);
-  featureBlock.style.setProperty("--reveal-fade", String(max ? Math.max(0, 1 - offset / max) : 1));
+const featureArt = () => featureBlock.querySelector(".feature-audio-art");
+let expandDrag = null;
+let expandedScrollY = 0;
+
+function canExpandFeature() {
+  return !wide.matches && matchMedia("(orientation: portrait)").matches && featureBlock && getComputedStyle(featureBlock).position === "sticky";
 }
+function maxFeatureExpand() {
+  return featureArt().getBoundingClientRect().width / 3;
+}
+function setFeatureExpanded(expanded) {
+  featureBlock.style.removeProperty("--expand");
+  featureBlock.classList.toggle("is-settling", !reducedMotion.matches);
+  featureBlock.classList.toggle("is-expanded", expanded);
+  if (expanded) expandedScrollY = window.scrollY;
+}
+function startFeatureDrag(x, y) {
+  if (!canExpandFeature()) return;
+  const max = maxFeatureExpand();
+  expandDrag = { x, y, max, base: featureBlock.classList.contains("is-expanded") ? max : 0, active: false, value: 0 };
+}
+// Returns true while the drag is ours, so the caller can stop the page scrolling.
+function moveFeatureDrag(x, y) {
+  if (!expandDrag) return false;
+  const dx = x - expandDrag.x;
+  const dy = y - expandDrag.y;
+  if (!expandDrag.active) {
+    const towardsChange = expandDrag.base ? dy < 0 : dy > 0;
+    if (!towardsChange || Math.abs(dx) > Math.abs(dy)) {
+      if (Math.abs(dx) > 8 || Math.abs(dy) > 8) expandDrag = null;
+      return Boolean(expandDrag) && towardsChange;
+    }
+    if (Math.abs(dy) < 8) return true;
+    expandDrag.active = true;
+    featureBlock.classList.remove("is-settling");
+  }
+  expandDrag.value = Math.min(expandDrag.max, Math.max(0, expandDrag.base + (y - expandDrag.y)));
+  featureBlock.style.setProperty("--expand", `${expandDrag.value}px`);
+  return true;
+}
+function endFeatureDrag() {
+  if (!expandDrag) return;
+  const { active, value, max } = expandDrag;
+  expandDrag = null;
+  if (active) setFeatureExpanded(value > max / 2);
+}
+
 featureBlock?.addEventListener("touchstart", (event) => {
-  if (event.touches.length !== 1 || !event.target.closest(".feature-audio-art")) return;
-  if (getComputedStyle(featureBlock).display !== "grid" || window.scrollY > 0) return;
-  const touch = event.touches[0];
-  const panel = featureBlock.querySelector(".feature-copy").offsetHeight + featureAudio.querySelector(".feature-audio-controls").offsetHeight;
-  reveal = { x: touch.clientX, y: touch.clientY, active: false, max: panel };
-  featureBlock.classList.remove("is-settling");
+  if (event.touches.length !== 1 || event.target.closest("button, a, input")) return;
+  startFeatureDrag(event.touches[0].clientX, event.touches[0].clientY);
 }, { passive: true });
 featureBlock?.addEventListener("touchmove", (event) => {
-  if (!reveal) return;
   const touch = event.touches[0];
-  const dx = touch.clientX - reveal.x;
-  const dy = touch.clientY - reveal.y;
-  if (!reveal.active) {
-    if (dy < -8 || Math.abs(dx) > Math.max(8, dy)) {
-      reveal = null;
-      return;
-    }
-    if (dy < 8) return;
-    reveal.active = true;
-    reveal.y = touch.clientY;
-  }
-  if (event.cancelable) event.preventDefault();
-  const pull = Math.max(0, touch.clientY - reveal.y);
-  // Rubber-band: follows the finger at first, then resists.
-  const offset = reveal.max * (1 - Math.exp(-pull / reveal.max));
-  setReveal(reduceMotionOffset(offset), reveal.max);
+  if (moveFeatureDrag(touch.clientX, touch.clientY) && event.cancelable) event.preventDefault();
 }, { passive: false });
-function reduceMotionOffset(offset) {
-  return reducedMotion.matches ? 0 : offset;
-}
-function settleReveal() {
-  if (!reveal) return;
-  const wasActive = reveal.active;
-  reveal = null;
-  if (!wasActive) return;
-  featureBlock.classList.add("is-settling");
-  setReveal(0, 0);
-}
-featureBlock?.addEventListener("touchend", settleReveal);
-featureBlock?.addEventListener("touchcancel", settleReveal);
-featureBlock?.addEventListener("transitionend", (event) => {
-  if (event.propertyName === "transform") featureBlock.classList.remove("is-settling");
+featureBlock?.addEventListener("touchend", endFeatureDrag);
+featureBlock?.addEventListener("touchcancel", endFeatureDrag);
+// Mouse drag, so it also works with a pointer.
+featureBlock?.addEventListener("pointerdown", (event) => {
+  if (event.pointerType === "touch" || event.button !== 0 || event.target.closest("button, a, input")) return;
+  startFeatureDrag(event.clientX, event.clientY);
+  if (expandDrag) featureBlock.setPointerCapture(event.pointerId);
 });
+featureBlock?.addEventListener("pointermove", (event) => {
+  if (event.pointerType !== "touch") moveFeatureDrag(event.clientX, event.clientY);
+});
+featureBlock?.addEventListener("pointerup", (event) => {
+  if (event.pointerType !== "touch") endFeatureDrag();
+});
+featureBlock?.addEventListener("dragstart", (event) => event.preventDefault());
+featureBlock?.addEventListener("transitionend", (event) => {
+  if (event.propertyName === "height") featureBlock.classList.remove("is-settling");
+});
+// Scrolling the list closes the opened cover.
+window.addEventListener("scroll", () => {
+  if (!expandDrag && featureBlock?.classList.contains("is-expanded") && Math.abs(window.scrollY - expandedScrollY) > 24) {
+    setFeatureExpanded(false);
+  }
+}, { passive: true });
 
 loadPlaylist();

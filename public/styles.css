@@ -88,6 +88,7 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
 #teh-design .player-expand .chevron { position:absolute; top:6px; left:50%; margin:0; transform:translateX(-50%); }
 #teh-design:has(#teh-song[open]) .player-expand .chevron { visibility:hidden; }
 #teh-design .now-discover { display:none; }
+#teh-design .player-seek { display:none; }
 /* Narrow layout: the footer is a floating panel with rounded corners near
    the bottom edge, content centred vertically. The Discover sheet reaches
    down behind it, so the panel floats over the sheet while it is open. */
@@ -95,6 +96,15 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
   #teh-design { --player-bottom:max(8px, env(safe-area-inset-bottom)); --player-h:calc(76px + var(--player-bottom)); }
   #teh-design #teh-player { inset:auto 8px var(--player-bottom); height:76px; padding:0 8px 0 12px; border:1px solid var(--rule); border-radius:22px; box-shadow:0 8px 28px rgb(0 0 0 / 55%); }
   #teh-design #teh-player .player-skip { width:44px; }
+  /* Progress and seeking: a thin bar along the panel's top edge (the cover
+     has no player controls on narrow screens). */
+  #teh-design .feature-audio-controls { display:none !important; }
+  #teh-design #teh-player .player-seek { --progress:0%; display:block; position:absolute; z-index:2; top:-10px; left:22px; right:22px; width:auto; height:20px; margin:0; background:transparent; appearance:none; -webkit-appearance:none; cursor:pointer; }
+  #teh-design .player-seek::-webkit-slider-runnable-track { height:3px; border-radius:2px; background:linear-gradient(to right, var(--accent) var(--progress), #39343e var(--progress)); }
+  #teh-design .player-seek::-moz-range-track { height:3px; border-radius:2px; background:#39343e; }
+  #teh-design .player-seek::-moz-range-progress { height:3px; border-radius:2px; background:var(--accent); }
+  #teh-design .player-seek::-webkit-slider-thumb { -webkit-appearance:none; width:11px; height:11px; margin-top:-4px; border-radius:50%; background:#fff; }
+  #teh-design .player-seek::-moz-range-thumb { width:11px; height:11px; border:0; border-radius:50%; background:#fff; }
   #teh-design .player-expand .chevron { display:none; }
   /* With Discover open, the sheet and the footer are one card: the sheet
      sits on the same insets with the footer inside its bottom, and the
@@ -194,7 +204,8 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
   #teh-design .mobile-feature { margin:0 8px 12px; }
   #teh-design .feature-copy { margin:0; padding:14px 8px 4px; }
   #teh-design .feature-discover { width:100%; }
-  #teh-design .feature-copy h2 { font-size:clamp(24px,11.4cqw,45px); margin:0 0 9px; text-wrap:balance; overflow-wrap:anywhere; }
+  /* At most two lines; the full title is in Discover. */
+  #teh-design .feature-copy h2 { font-size:clamp(24px,8.5cqw,32px); margin:0 0 8px; text-wrap:balance; overflow-wrap:anywhere; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; }
   #teh-design .feature-copy p { font-size:14px; color:var(--muted); }
   /* Compact row: 48px cover, title over a one-line teaser, Discover centred. */
   #teh-design #teh-tracks .row { margin:0 8px; padding:10px 8px; grid-template-columns:48px minmax(0,1fr) auto; gap:0 12px; background:#141217; align-items:center; }
@@ -214,21 +225,17 @@ body { min-height: 100vh; min-height: 100dvh; -webkit-text-size-adjust:100%; }
     #teh-design .mobile-feature .feature-art,
     #teh-design .mobile-feature .feature-player-slot,
     #teh-design .mobile-feature .feature-audio { display:contents; }
-    #teh-design .mobile-feature .feature-audio-art { grid-column:1; grid-row:1 / -1; width:100%; height:auto; aspect-ratio:1; border-radius:10px; }
+    /* The cover window is 2/3 of the square cover's height, with the image
+       centred in it, and stays at the top while the track list scrolls
+       under it. Dragging down on it opens it to full height (--expand, set
+       from app.js); the list moves down with it. */
+    #teh-design .mobile-feature { --expand:0px; position:sticky; top:12px; z-index:5; background:#050505; box-shadow:0 -12px 0 #050505; }
+    #teh-design .mobile-feature .feature-audio-art { grid-column:1; grid-row:1 / -1; width:100%; height:calc((100cqw - 32px) * 2 / 3 + var(--expand)); aspect-ratio:auto; object-fit:cover; object-position:center; border-radius:10px; touch-action:pan-x pan-y; }
+    #teh-design .mobile-feature.is-expanded { --expand:calc((100cqw - 32px) / 3); }
+    #teh-design .mobile-feature.is-settling .feature-audio-art { transition:height .35s cubic-bezier(.22,.61,.36,1); }
     #teh-design .mobile-feature::after { content:""; grid-column:1; grid-row:1 / -1; z-index:1; border-radius:10px; pointer-events:none; background:linear-gradient(to bottom, rgb(5 5 5 / 0) 30%, rgb(5 5 5 / .7) 62%, #050505 100%); }
     #teh-design .mobile-feature .feature-audio-controls { position:relative; inset:auto; grid-column:1; grid-row:2; z-index:2; padding:0 16px 8px; background:none; }
     #teh-design .mobile-feature .feature-copy { grid-column:1; grid-row:3; z-index:2; padding:0 16px 16px; }
-    /* Drag-to-reveal (set from app.js) */
-    #teh-design .mobile-feature { --reveal:0px; --reveal-fade:1; overflow:hidden; border-radius:10px; }
-    #teh-design .mobile-feature .feature-audio-art { touch-action:pan-x pan-y; }
-    #teh-design .mobile-feature::after,
-    #teh-design .mobile-feature .feature-audio-controls,
-    #teh-design .mobile-feature .feature-copy { transform:translateY(var(--reveal)); }
-    #teh-design .mobile-feature .feature-audio-controls,
-    #teh-design .mobile-feature .feature-copy { opacity:var(--reveal-fade); }
-    #teh-design .mobile-feature.is-settling::after,
-    #teh-design .mobile-feature.is-settling .feature-audio-controls,
-    #teh-design .mobile-feature.is-settling .feature-copy { transition:transform .5s cubic-bezier(.34,1.45,.64,1), opacity .3s ease; }
   }
 }
 
